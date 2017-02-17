@@ -446,7 +446,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = V4SYMZQA29;
-				GCC_PREFIX_HEADER = /Users/xinhoujiang/Desktop/Xcode/SDGMemoryGame/SDGMemoryGame/SDGPrefix.pch;
+				GCC_PREFIX_HEADER = /Users/xinhoujiang/Desktop/Git/SDGMemoryGame/SDGMemoryGame/SDGPrefix.pch;
 				INFOPLIST_FILE = SDGMemoryGame/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jiangxh.SDGMemoryGame;
@@ -459,7 +459,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = V4SYMZQA29;
-				GCC_PREFIX_HEADER = /Users/xinhoujiang/Desktop/Xcode/SDGMemoryGame/SDGMemoryGame/SDGPrefix.pch;
+				GCC_PREFIX_HEADER = /Users/xinhoujiang/Desktop/Git/SDGMemoryGame/SDGMemoryGame/SDGPrefix.pch;
 				INFOPLIST_FILE = SDGMemoryGame/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jiangxh.SDGMemoryGame;
