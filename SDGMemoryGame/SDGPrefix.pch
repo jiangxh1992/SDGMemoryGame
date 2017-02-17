@@ -1,0 +1,27 @@
+//
+//  SDGPrefix.pch
+//  SDGMemoryGame
+//
+//  Created by Xinhou Jiang on 17/2/17.
+//  Copyright © 2017年 Xinhou Jiang. All rights reserved.
+//
+
+#ifndef SDGPrefix_pch
+#define SDGPrefix_pch
+
+#import <UIKit/UIKit.h>
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+// 游戏难度参数
+typedef NS_ENUM(NSInteger, SDGGameLevel) {
+    SDGGameLevelEasy,
+    SDGGameLevelMedium,
+    SDGGameLevelDifficult
+};
+
+#define SDGScreenHeight [UIScreen mainScreen].bounds.size.height
+#define SDGScreenWidth [UIScreen mainScreen].bounds.size.width
+
+#endif /* SDGPrefix_pch */

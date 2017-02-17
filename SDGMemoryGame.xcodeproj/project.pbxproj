@@ -1,0 +1,566 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D2D6E6131E55AD1200DB39B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D6E6121E55AD1200DB39B9 /* main.m */; };
+		D2D6E6161E55AD1300DB39B9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D6E6151E55AD1300DB39B9 /* AppDelegate.m */; };
+		D2D6E61C1E55AD1300DB39B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2D6E61A1E55AD1300DB39B9 /* Main.storyboard */; };
+		D2D6E61E1E55AD1300DB39B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D2D6E61D1E55AD1300DB39B9 /* Assets.xcassets */; };
+		D2D6E6211E55AD1300DB39B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2D6E61F1E55AD1300DB39B9 /* LaunchScreen.storyboard */; };
+		D2D6E62C1E55AD1300DB39B9 /* SDGMemoryGameTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D6E62B1E55AD1300DB39B9 /* SDGMemoryGameTests.m */; };
+		D2D6E6371E55AD1300DB39B9 /* SDGMemoryGameUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D6E6361E55AD1300DB39B9 /* SDGMemoryGameUITests.m */; };
+		D2D6E64C1E55EADF00DB39B9 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D6E64A1E55EADF00DB39B9 /* GameViewController.m */; };
+		D2D6E6511E56F43800DB39B9 /* RootNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D6E6501E56F43800DB39B9 /* RootNavigationController.m */; };
+		D2D6E65D1E56F81700DB39B9 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D6E65B1E56F81700DB39B9 /* MenuViewController.m */; };
+		D2D6E65E1E56F81700DB39B9 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2D6E65C1E56F81700DB39B9 /* MenuViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D2D6E6281E55AD1300DB39B9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2D6E6061E55AD1200DB39B9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2D6E60D1E55AD1200DB39B9;
+			remoteInfo = SDGMemoryGame;
+		};
+		D2D6E6331E55AD1300DB39B9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2D6E6061E55AD1200DB39B9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2D6E60D1E55AD1200DB39B9;
+			remoteInfo = SDGMemoryGame;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D2D6E60E1E55AD1200DB39B9 /* SDGMemoryGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SDGMemoryGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2D6E6121E55AD1200DB39B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D2D6E6141E55AD1200DB39B9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D2D6E6151E55AD1300DB39B9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		D2D6E61B1E55AD1300DB39B9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D2D6E61D1E55AD1300DB39B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D2D6E6201E55AD1300DB39B9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D2D6E6221E55AD1300DB39B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D2D6E6271E55AD1300DB39B9 /* SDGMemoryGameTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SDGMemoryGameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2D6E62B1E55AD1300DB39B9 /* SDGMemoryGameTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDGMemoryGameTests.m; sourceTree = "<group>"; };
+		D2D6E62D1E55AD1300DB39B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D2D6E6321E55AD1300DB39B9 /* SDGMemoryGameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SDGMemoryGameUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2D6E6361E55AD1300DB39B9 /* SDGMemoryGameUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SDGMemoryGameUITests.m; sourceTree = "<group>"; };
+		D2D6E6381E55AD1300DB39B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D2D6E6491E55EADF00DB39B9 /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
+		D2D6E64A1E55EADF00DB39B9 /* GameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameViewController.m; sourceTree = "<group>"; };
+		D2D6E64E1E56CC5300DB39B9 /* SDGPrefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SDGPrefix.pch; sourceTree = "<group>"; };
+		D2D6E64F1E56F43800DB39B9 /* RootNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootNavigationController.h; sourceTree = "<group>"; };
+		D2D6E6501E56F43800DB39B9 /* RootNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootNavigationController.m; sourceTree = "<group>"; };
+		D2D6E65A1E56F81700DB39B9 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
+		D2D6E65B1E56F81700DB39B9 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		D2D6E65C1E56F81700DB39B9 /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D2D6E60B1E55AD1200DB39B9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2D6E6241E55AD1300DB39B9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2D6E62F1E55AD1300DB39B9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D2D6E6051E55AD1200DB39B9 = {
+			isa = PBXGroup;
+			children = (
+				D2D6E6101E55AD1200DB39B9 /* SDGMemoryGame */,
+				D2D6E62A1E55AD1300DB39B9 /* SDGMemoryGameTests */,
+				D2D6E6351E55AD1300DB39B9 /* SDGMemoryGameUITests */,
+				D2D6E60F1E55AD1200DB39B9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D2D6E60F1E55AD1200DB39B9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2D6E60E1E55AD1200DB39B9 /* SDGMemoryGame.app */,
+				D2D6E6271E55AD1300DB39B9 /* SDGMemoryGameTests.xctest */,
+				D2D6E6321E55AD1300DB39B9 /* SDGMemoryGameUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D2D6E6101E55AD1200DB39B9 /* SDGMemoryGame */ = {
+			isa = PBXGroup;
+			children = (
+				D2D6E6141E55AD1200DB39B9 /* AppDelegate.h */,
+				D2D6E6151E55AD1300DB39B9 /* AppDelegate.m */,
+				D2D6E6491E55EADF00DB39B9 /* GameViewController.h */,
+				D2D6E64A1E55EADF00DB39B9 /* GameViewController.m */,
+				D2D6E64F1E56F43800DB39B9 /* RootNavigationController.h */,
+				D2D6E6501E56F43800DB39B9 /* RootNavigationController.m */,
+				D2D6E65A1E56F81700DB39B9 /* MenuViewController.h */,
+				D2D6E65B1E56F81700DB39B9 /* MenuViewController.m */,
+				D2D6E65C1E56F81700DB39B9 /* MenuViewController.xib */,
+				D2D6E61A1E55AD1300DB39B9 /* Main.storyboard */,
+				D2D6E61D1E55AD1300DB39B9 /* Assets.xcassets */,
+				D2D6E61F1E55AD1300DB39B9 /* LaunchScreen.storyboard */,
+				D2D6E6221E55AD1300DB39B9 /* Info.plist */,
+				D2D6E6111E55AD1200DB39B9 /* Supporting Files */,
+			);
+			path = SDGMemoryGame;
+			sourceTree = "<group>";
+		};
+		D2D6E6111E55AD1200DB39B9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D2D6E6121E55AD1200DB39B9 /* main.m */,
+				D2D6E64E1E56CC5300DB39B9 /* SDGPrefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D2D6E62A1E55AD1300DB39B9 /* SDGMemoryGameTests */ = {
+			isa = PBXGroup;
+			children = (
+				D2D6E62B1E55AD1300DB39B9 /* SDGMemoryGameTests.m */,
+				D2D6E62D1E55AD1300DB39B9 /* Info.plist */,
+			);
+			path = SDGMemoryGameTests;
+			sourceTree = "<group>";
+		};
+		D2D6E6351E55AD1300DB39B9 /* SDGMemoryGameUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D2D6E6361E55AD1300DB39B9 /* SDGMemoryGameUITests.m */,
+				D2D6E6381E55AD1300DB39B9 /* Info.plist */,
+			);
+			path = SDGMemoryGameUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D2D6E60D1E55AD1200DB39B9 /* SDGMemoryGame */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2D6E63B1E55AD1300DB39B9 /* Build configuration list for PBXNativeTarget "SDGMemoryGame" */;
+			buildPhases = (
+				D2D6E60A1E55AD1200DB39B9 /* Sources */,
+				D2D6E60B1E55AD1200DB39B9 /* Frameworks */,
+				D2D6E60C1E55AD1200DB39B9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SDGMemoryGame;
+			productName = SDGMemoryGame;
+			productReference = D2D6E60E1E55AD1200DB39B9 /* SDGMemoryGame.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D2D6E6261E55AD1300DB39B9 /* SDGMemoryGameTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2D6E63E1E55AD1300DB39B9 /* Build configuration list for PBXNativeTarget "SDGMemoryGameTests" */;
+			buildPhases = (
+				D2D6E6231E55AD1300DB39B9 /* Sources */,
+				D2D6E6241E55AD1300DB39B9 /* Frameworks */,
+				D2D6E6251E55AD1300DB39B9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D2D6E6291E55AD1300DB39B9 /* PBXTargetDependency */,
+			);
+			name = SDGMemoryGameTests;
+			productName = SDGMemoryGameTests;
+			productReference = D2D6E6271E55AD1300DB39B9 /* SDGMemoryGameTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D2D6E6311E55AD1300DB39B9 /* SDGMemoryGameUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2D6E6411E55AD1300DB39B9 /* Build configuration list for PBXNativeTarget "SDGMemoryGameUITests" */;
+			buildPhases = (
+				D2D6E62E1E55AD1300DB39B9 /* Sources */,
+				D2D6E62F1E55AD1300DB39B9 /* Frameworks */,
+				D2D6E6301E55AD1300DB39B9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D2D6E6341E55AD1300DB39B9 /* PBXTargetDependency */,
+			);
+			name = SDGMemoryGameUITests;
+			productName = SDGMemoryGameUITests;
+			productReference = D2D6E6321E55AD1300DB39B9 /* SDGMemoryGameUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D2D6E6061E55AD1200DB39B9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Xinhou Jiang";
+				TargetAttributes = {
+					D2D6E60D1E55AD1200DB39B9 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = V4SYMZQA29;
+						ProvisioningStyle = Automatic;
+					};
+					D2D6E6261E55AD1300DB39B9 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = V4SYMZQA29;
+						ProvisioningStyle = Automatic;
+						TestTargetID = D2D6E60D1E55AD1200DB39B9;
+					};
+					D2D6E6311E55AD1300DB39B9 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = V4SYMZQA29;
+						ProvisioningStyle = Automatic;
+						TestTargetID = D2D6E60D1E55AD1200DB39B9;
+					};
+				};
+			};
+			buildConfigurationList = D2D6E6091E55AD1200DB39B9 /* Build configuration list for PBXProject "SDGMemoryGame" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D2D6E6051E55AD1200DB39B9;
+			productRefGroup = D2D6E60F1E55AD1200DB39B9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D2D6E60D1E55AD1200DB39B9 /* SDGMemoryGame */,
+				D2D6E6261E55AD1300DB39B9 /* SDGMemoryGameTests */,
+				D2D6E6311E55AD1300DB39B9 /* SDGMemoryGameUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D2D6E60C1E55AD1200DB39B9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2D6E6211E55AD1300DB39B9 /* LaunchScreen.storyboard in Resources */,
+				D2D6E61E1E55AD1300DB39B9 /* Assets.xcassets in Resources */,
+				D2D6E61C1E55AD1300DB39B9 /* Main.storyboard in Resources */,
+				D2D6E65E1E56F81700DB39B9 /* MenuViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2D6E6251E55AD1300DB39B9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2D6E6301E55AD1300DB39B9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2D6E60A1E55AD1200DB39B9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2D6E64C1E55EADF00DB39B9 /* GameViewController.m in Sources */,
+				D2D6E65D1E56F81700DB39B9 /* MenuViewController.m in Sources */,
+				D2D6E6161E55AD1300DB39B9 /* AppDelegate.m in Sources */,
+				D2D6E6511E56F43800DB39B9 /* RootNavigationController.m in Sources */,
+				D2D6E6131E55AD1200DB39B9 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2D6E6231E55AD1300DB39B9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2D6E62C1E55AD1300DB39B9 /* SDGMemoryGameTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2D6E62E1E55AD1300DB39B9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2D6E6371E55AD1300DB39B9 /* SDGMemoryGameUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D2D6E6291E55AD1300DB39B9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2D6E60D1E55AD1200DB39B9 /* SDGMemoryGame */;
+			targetProxy = D2D6E6281E55AD1300DB39B9 /* PBXContainerItemProxy */;
+		};
+		D2D6E6341E55AD1300DB39B9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2D6E60D1E55AD1200DB39B9 /* SDGMemoryGame */;
+			targetProxy = D2D6E6331E55AD1300DB39B9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D2D6E61A1E55AD1300DB39B9 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D2D6E61B1E55AD1300DB39B9 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D2D6E61F1E55AD1300DB39B9 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D2D6E6201E55AD1300DB39B9 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D2D6E6391E55AD1300DB39B9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D2D6E63A1E55AD1300DB39B9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D2D6E63C1E55AD1300DB39B9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = V4SYMZQA29;
+				GCC_PREFIX_HEADER = /Users/xinhoujiang/Desktop/Xcode/SDGMemoryGame/SDGMemoryGame/SDGPrefix.pch;
+				INFOPLIST_FILE = SDGMemoryGame/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = jiangxh.SDGMemoryGame;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D2D6E63D1E55AD1300DB39B9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = V4SYMZQA29;
+				GCC_PREFIX_HEADER = /Users/xinhoujiang/Desktop/Xcode/SDGMemoryGame/SDGMemoryGame/SDGPrefix.pch;
+				INFOPLIST_FILE = SDGMemoryGame/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = jiangxh.SDGMemoryGame;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		D2D6E63F1E55AD1300DB39B9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = V4SYMZQA29;
+				GCC_PREFIX_HEADER = /Users/xinhoujiang/Desktop/Xcode/SDGMemoryGame/SDGMemoryGame/SDGPrefix.pch;
+				INFOPLIST_FILE = SDGMemoryGameTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = jiangxh.SDGMemoryGameTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SDGMemoryGame.app/SDGMemoryGame";
+			};
+			name = Debug;
+		};
+		D2D6E6401E55AD1300DB39B9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = V4SYMZQA29;
+				GCC_PREFIX_HEADER = /Users/xinhoujiang/Desktop/Xcode/SDGMemoryGame/SDGMemoryGame/SDGPrefix.pch;
+				INFOPLIST_FILE = SDGMemoryGameTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = jiangxh.SDGMemoryGameTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SDGMemoryGame.app/SDGMemoryGame";
+			};
+			name = Release;
+		};
+		D2D6E6421E55AD1300DB39B9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = V4SYMZQA29;
+				GCC_PREFIX_HEADER = /SDGPrefix.pch;
+				INFOPLIST_FILE = SDGMemoryGameUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = jiangxh.SDGMemoryGameUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = SDGMemoryGame;
+			};
+			name = Debug;
+		};
+		D2D6E6431E55AD1300DB39B9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = V4SYMZQA29;
+				GCC_PREFIX_HEADER = /SDGPrefix.pch;
+				INFOPLIST_FILE = SDGMemoryGameUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = jiangxh.SDGMemoryGameUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = SDGMemoryGame;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D2D6E6091E55AD1200DB39B9 /* Build configuration list for PBXProject "SDGMemoryGame" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2D6E6391E55AD1300DB39B9 /* Debug */,
+				D2D6E63A1E55AD1300DB39B9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2D6E63B1E55AD1300DB39B9 /* Build configuration list for PBXNativeTarget "SDGMemoryGame" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2D6E63C1E55AD1300DB39B9 /* Debug */,
+				D2D6E63D1E55AD1300DB39B9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2D6E63E1E55AD1300DB39B9 /* Build configuration list for PBXNativeTarget "SDGMemoryGameTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2D6E63F1E55AD1300DB39B9 /* Debug */,
+				D2D6E6401E55AD1300DB39B9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2D6E6411E55AD1300DB39B9 /* Build configuration list for PBXNativeTarget "SDGMemoryGameUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2D6E6421E55AD1300DB39B9 /* Debug */,
+				D2D6E6431E55AD1300DB39B9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D2D6E6061E55AD1200DB39B9 /* Project object */;
+}
