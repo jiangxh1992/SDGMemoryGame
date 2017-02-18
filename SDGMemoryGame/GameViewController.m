@@ -8,10 +8,12 @@
 
 #import "GameViewController.h"
 #import <QuartzCore/CAAnimation.h>
-#define SDGMargin 5
+#define SDGMargin 5 // 间隙
+#define AniDuration 0.2 // 翻转动画持续时间
 
 @interface GameViewController ()<CAAnimationDelegate>
 
+@property (nonatomic, assign)float delayDuration; // 卡牌显示停顿时间
 @property (nonatomic, assign)NSInteger sizeN; // N宫格
 @property (nonatomic, strong)NSMutableArray *cardArray; // 卡片按钮数组
 @property (nonatomic, strong)UIButton *currentButton;
@@ -30,12 +32,15 @@
     switch (_GameLevel) {
         case SDGGameLevelEasy:
             _sizeN = 4;
+            _delayDuration = 1.0;
             break;
         case SDGGameLevelMedium:
             _sizeN = 5;
+            _delayDuration = 0.6;
             break;
         case SDGGameLevelDifficult:
             _sizeN = 7;
+            _delayDuration = 0.4;
             break;
         default:
             break;
@@ -49,7 +54,7 @@
 }
 
 
-#pragma instance methods
+#pragma -mark instance methods
 - (void)initData {
     _cardArray = [[NSMutableArray alloc] initWithCapacity:(_sizeN * _sizeN)];
 }
@@ -64,6 +69,9 @@
     [self createCards];
 }
 
+/**
+ * 创建卡片
+ */
 - (void)createCards {
     // card size
     int width = (SDGScreenWidth - SDGMargin * (_sizeN + 1)) / _sizeN;
@@ -83,29 +91,61 @@
     }
 }
 
+/**
+ * 翻转动画
+ */
 - (CAAnimation *)animationRotate {
     CATransform3D rotationTransform = CATransform3DMakeScale(0, 1, 1);//CATransform3DMakeRotation(M_PI/2, 0, 1, 0);
     CABasicAnimation* animation;
     animation = [CABasicAnimation animationWithKeyPath:@"transform"];
     animation.toValue = [NSValue valueWithCATransform3D:rotationTransform];
-    animation.duration = 0.1;
+    animation.duration = AniDuration;
     animation.repeatCount = 1;
-    animation.fillMode = kCAFillModeForwards;
-    animation.removedOnCompletion = NO;
     animation.delegate = self;
     return animation;
 }
 
+/**
+ * 按钮点击事件
+ */
 - (void) cardSelected:(UIButton *)sender {
+    // 当前卡片按钮
     _currentButton = sender;
-    [sender.layer addAnimation:[self animationRotate] forKey:@"animationRotate"];
+    
+    NSOperationQueue *aniQueue = [[NSOperationQueue alloc] init];
+    [aniQueue addOperationWithBlock:^{
+        // 启动翻转动画
+        // 1. 翻转90度
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [sender.layer addAnimation:[self animationRotate] forKey:@"animationRotate"];
+        });
+        // 2. 替换图片
+        [NSThread sleepForTimeInterval:AniDuration];
+        int i = arc4random()%8 + 1; // 1..8
+        NSString *imageName = [NSString stringWithFormat:@"card_%i", i];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [sender setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+        });
+        
+        // 卡片显示延迟
+        [NSThread sleepForTimeInterval:_delayDuration];
+        
+        // 1. 翻转90度
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [sender.layer addAnimation:[self animationRotate] forKey:@"animationRotate"];
+        });
+        // 2. 替换图片
+        [NSThread sleepForTimeInterval:AniDuration];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [sender setBackgroundImage:[UIImage imageNamed:@"card_empty"] forState:UIControlStateNormal];
+        });
+    }];
+    
 }
 
+#pragma -mark CAAnimation Delegate
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-    int i = arc4random()%8 + 1; // 1..8
-    NSString *imageName = [NSString stringWithFormat:@"card_%i", i];
-    [_currentButton setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-    [_currentButton.layer removeAnimationForKey:@"animationRotate"];
+    
 }
 
 @end
