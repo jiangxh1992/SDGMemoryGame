@@ -14,8 +14,9 @@
 @interface GameViewController ()<CAAnimationDelegate>
 
 @property (nonatomic, assign)float delayDuration; // 卡牌显示停顿时间
-@property (nonatomic, assign)NSInteger sizeN; // N宫格
+@property (nonatomic, assign)int sizeN; // N宫格
 @property (nonatomic, strong)NSMutableArray *cardArray; // 卡片按钮数组
+@property (nonatomic, strong)NSMutableArray *imageArray; // 卡片图片数组
 @property (nonatomic, strong)UIButton *currentButton;
 
 @end
@@ -35,11 +36,11 @@
             _delayDuration = 1.0;
             break;
         case SDGGameLevelMedium:
-            _sizeN = 5;
+            _sizeN = 6;
             _delayDuration = 0.6;
             break;
         case SDGGameLevelDifficult:
-            _sizeN = 7;
+            _sizeN = 8;
             _delayDuration = 0.4;
             break;
         default:
@@ -57,6 +58,20 @@
 #pragma -mark instance methods
 - (void)initData {
     _cardArray = [[NSMutableArray alloc] initWithCapacity:(_sizeN * _sizeN)];
+    _imageArray = [[NSMutableArray alloc] initWithCapacity:(_sizeN * _sizeN)];
+    
+    // 产生随机图片
+    for (int i = 0; i <  _sizeN * _sizeN; i++) {
+        NSString *imageName = [NSString stringWithFormat:@"card_%i", i/2+1];
+        [_imageArray addObject:[UIImage imageNamed:imageName]];
+    }
+    for (int j; j <  _sizeN*_sizeN; j++) {
+        // 随机交换
+        int random = arc4random() % (_sizeN * _sizeN);
+        if(random == j) continue;
+        [_imageArray exchangeObjectAtIndex:j withObjectAtIndex:random];
+    }
+    
 }
 
 - (void)initUI {
@@ -121,10 +136,8 @@
         });
         // 2. 替换图片
         [NSThread sleepForTimeInterval:AniDuration];
-        int i = arc4random()%8 + 1; // 1..8
-        NSString *imageName = [NSString stringWithFormat:@"card_%i", i];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [sender setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+            [sender setBackgroundImage:[_imageArray objectAtIndex:sender.tag] forState:UIControlStateNormal];
         });
         
         // 卡片显示延迟
