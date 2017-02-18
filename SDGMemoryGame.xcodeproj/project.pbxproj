@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D23E61DF1E58331200E3870C /* SDGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = D23E61DE1E58331200E3870C /* SDGImage.m */; };
 		D2D6E6131E55AD1200DB39B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D6E6121E55AD1200DB39B9 /* main.m */; };
 		D2D6E6161E55AD1300DB39B9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D6E6151E55AD1300DB39B9 /* AppDelegate.m */; };
 		D2D6E61C1E55AD1300DB39B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2D6E61A1E55AD1300DB39B9 /* Main.storyboard */; };
@@ -38,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D23E61DD1E58331200E3870C /* SDGImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDGImage.h; sourceTree = "<group>"; };
+		D23E61DE1E58331200E3870C /* SDGImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDGImage.m; sourceTree = "<group>"; };
 		D2D6E60E1E55AD1200DB39B9 /* SDGMemoryGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SDGMemoryGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2D6E6121E55AD1200DB39B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D2D6E6141E55AD1200DB39B9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -124,6 +127,8 @@
 				D2D6E61F1E55AD1300DB39B9 /* LaunchScreen.storyboard */,
 				D2D6E6221E55AD1300DB39B9 /* Info.plist */,
 				D2D6E6111E55AD1200DB39B9 /* Supporting Files */,
+				D23E61DD1E58331200E3870C /* SDGImage.h */,
+				D23E61DE1E58331200E3870C /* SDGImage.m */,
 			);
 			path = SDGMemoryGame;
 			sourceTree = "<group>";
@@ -292,6 +297,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D23E61DF1E58331200E3870C /* SDGImage.m in Sources */,
 				D2D6E64C1E55EADF00DB39B9 /* GameViewController.m in Sources */,
 				D2D6E65D1E56F81700DB39B9 /* MenuViewController.m in Sources */,
 				D2D6E6161E55AD1300DB39B9 /* AppDelegate.m in Sources */,
@@ -448,6 +454,7 @@
 				DEVELOPMENT_TEAM = V4SYMZQA29;
 				GCC_PREFIX_HEADER = /Users/xinhoujiang/Desktop/Git/SDGMemoryGame/SDGMemoryGame/SDGPrefix.pch;
 				INFOPLIST_FILE = SDGMemoryGame/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jiangxh.SDGMemoryGame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -461,6 +468,7 @@
 				DEVELOPMENT_TEAM = V4SYMZQA29;
 				GCC_PREFIX_HEADER = /Users/xinhoujiang/Desktop/Git/SDGMemoryGame/SDGMemoryGame/SDGPrefix.pch;
 				INFOPLIST_FILE = SDGMemoryGame/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = jiangxh.SDGMemoryGame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
