@@ -49,6 +49,7 @@
 - (void)enterGame:(UIButton *)sender {
     GameViewController *gameViewController = [[GameViewController alloc] init];
     gameViewController.GameLevel = sender.tag;
+    gameViewController.round = 1;
     [self.navigationController pushViewController:gameViewController animated:YES];
 }
 

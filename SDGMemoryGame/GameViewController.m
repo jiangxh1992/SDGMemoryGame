@@ -11,12 +11,14 @@
 #import <QuartzCore/CAAnimation.h>
 #define SDGMargin 5     // 间隙
 #define AniDuration 0.1 // 翻转动画持续时间
+#define maxRound 9       // 最大关卡
+#define maxDelay 10     // 最大停顿时间
 
 @interface GameViewController ()
 
 @property (nonatomic, assign)int matchedCount;             // 匹配成功计数
-@property (nonatomic, assign)float delayDuration;          // 卡牌显示停顿时间
-@property (nonatomic, assign)int sizeN;                    // N宫格
+@property (nonatomic, assign)float delayDuration;          // 卡牌显示停顿时间(关卡越往后时间越短)
+@property (nonatomic, assign)int sizeN;                    // N宫格(难度越大规模越大)
 @property (nonatomic, strong)NSMutableArray *cardArray;    // 卡片按钮数组
 @property (nonatomic, strong)NSMutableArray *imageArray;   // 卡片图片数组
 @property (nonatomic, strong)NSMutableArray *cardStack;    // 翻开的卡片按钮堆栈
@@ -30,25 +32,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"SDG MEMORY GAME";
-    
-    // 根据游戏难度设置棋局规模
+    // 1.根据游戏难度设置棋局规模
     switch (_GameLevel) {
         case SDGGameLevelEasy:
+            self.title = [NSString stringWithFormat:@"Easy Round %i", _round];
             _sizeN = 4;
-            _delayDuration = 5.0;
             break;
         case SDGGameLevelMedium:
+            self.title = [NSString stringWithFormat:@"Medium Round %i", _round];
             _sizeN = 6;
-            _delayDuration = 3.0;
             break;
         case SDGGameLevelDifficult:
+            self.title = [NSString stringWithFormat:@"Difficult Round %i", _round];
             _sizeN = 8;
-            _delayDuration = 1.0;
             break;
         default:
             break;
     }
+    
+    // 2. 根据关卡调整难度，卡片停顿的时间
+    _delayDuration = maxDelay - _round;
     
     // 数据初始化
     [self initData];
@@ -236,7 +239,16 @@
  * 游戏结束
  */
 - (void)gameOver {
-    [self.navigationController popViewControllerAnimated:YES];
+    // 关底
+    if (_round >= maxRound) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    else {
+        GameViewController *nextGame = [[GameViewController alloc] init];
+        nextGame.GameLevel = _GameLevel;
+        nextGame.round = _round + 1;
+        [self.navigationController pushViewController:nextGame animated:YES];
+    }
 }
 
 /**

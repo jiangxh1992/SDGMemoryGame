@@ -11,5 +11,6 @@
 @interface GameViewController : UIViewController
 
 @property (nonatomic, assign)SDGGameLevel GameLevel; // 游戏难度
+@property (nonatomic, assign)int round;        // 第几关
 
 @end
