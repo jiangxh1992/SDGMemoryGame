@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "card_15.png",
+      "filename" : "屏幕快照 2017-02-21 14.17.32的副本 12.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "card_15-1.png",
+      "filename" : "屏幕快照 2017-02-21 14.17.32的副本 12-1.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "card_15-2.png",
+      "filename" : "屏幕快照 2017-02-21 14.17.32的副本 12-2.png",
       "scale" : "3x"
     }
   ],

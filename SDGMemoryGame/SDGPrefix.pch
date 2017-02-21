@@ -23,5 +23,9 @@ typedef NS_ENUM(NSInteger, SDGGameLevel) {
 
 #define SDGScreenHeight [UIScreen mainScreen].bounds.size.height
 #define SDGScreenWidth [UIScreen mainScreen].bounds.size.width
+#define SDGTopBarHeight 64
+
+// 通过RGB创建颜色
+#define SDGRGBColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 
 #endif /* SDGPrefix_pch */

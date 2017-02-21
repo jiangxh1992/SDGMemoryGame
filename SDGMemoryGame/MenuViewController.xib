@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,17 +18,13 @@
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="614"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="game_bg" translatesAutoresizingMaskIntoConstraints="NO" id="06Y-6y-VlE">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="682"/>
-                    <color key="backgroundColor" red="0.53717681693926811" green="1" blue="0.46193689424368645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hc3-7c-bJD">
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hc3-7c-bJD">
                     <rect key="frame" x="26" y="303" width="323" height="50"/>
-                    <color key="backgroundColor" red="0.2218785154" green="1" blue="0.87085334960000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.98591107130050659" green="0.76967960596084595" blue="0.069274067878723145" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="hIe-9Q-fTu"/>
                     </constraints>
@@ -38,9 +33,9 @@
                         <color key="titleColor" red="0.96430884029999997" green="0.99937826649999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ok-Kh-hXC">
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ok-Kh-hXC">
                     <rect key="frame" x="26" y="203" width="323" height="50"/>
-                    <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.36302414536476135" green="0.73163998126983643" blue="0.27077281475067139" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="W1c-na-QeB"/>
                     </constraints>
@@ -49,9 +44,9 @@
                         <color key="titleColor" red="0.96430884029999997" green="0.99937826649999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3ca-BC-TPK">
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3ca-BC-TPK">
                     <rect key="frame" x="26" y="404" width="323" height="50"/>
-                    <color key="backgroundColor" red="0.36973282429999998" green="0.91614718260000005" blue="0.37299063760000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.9041704535484314" green="0.13254812359809875" blue="0.21761736273765564" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="a8E-SV-16V"/>
                     </constraints>
@@ -60,27 +55,40 @@
                         <color key="titleColor" red="0.96430884029999997" green="0.99937826649999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="ocean" translatesAutoresizingMaskIntoConstraints="NO" id="i7H-7f-1CF">
+                    <rect key="frame" x="57" y="34" width="260" height="100"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="100" id="T2e-Ys-x2g"/>
+                        <constraint firstAttribute="width" constant="260" id="c02-FL-4P3"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="sea" translatesAutoresizingMaskIntoConstraints="NO" id="oPk-qd-k6r">
+                    <rect key="frame" x="0.0" y="505" width="375" height="162"/>
+                </imageView>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="Hc3-7c-bJD" firstAttribute="top" secondItem="4Ok-Kh-hXC" secondAttribute="bottom" constant="50" id="2oS-ft-R6T"/>
-                <constraint firstItem="06Y-6y-VlE" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="3dt-5u-qgu"/>
+                <constraint firstAttribute="bottom" secondItem="oPk-qd-k6r" secondAttribute="bottom" id="4y3-pp-3uL"/>
                 <constraint firstAttribute="trailing" secondItem="3ca-BC-TPK" secondAttribute="trailing" constant="26" id="5Hu-Jr-b1W"/>
+                <constraint firstItem="oPk-qd-k6r" firstAttribute="top" secondItem="3ca-BC-TPK" secondAttribute="bottom" constant="51" id="6nU-5U-RyV"/>
                 <constraint firstItem="Hc3-7c-bJD" firstAttribute="trailing" secondItem="4Ok-Kh-hXC" secondAttribute="trailing" id="8pu-Wx-UQK"/>
+                <constraint firstItem="Hc3-7c-bJD" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="Ait-Gc-Myq"/>
                 <constraint firstItem="3ca-BC-TPK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="26" id="CAR-3s-ayz"/>
-                <constraint firstAttribute="bottomMargin" secondItem="06Y-6y-VlE" secondAttribute="bottom" constant="-68" id="SOR-Ik-sIk"/>
+                <constraint firstItem="oPk-qd-k6r" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="KUJ-Mq-gJE"/>
                 <constraint firstItem="Hc3-7c-bJD" firstAttribute="leading" secondItem="4Ok-Kh-hXC" secondAttribute="leading" id="UZ5-d2-Yi5"/>
-                <constraint firstItem="06Y-6y-VlE" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="awg-DE-snd"/>
-                <constraint firstItem="Hc3-7c-bJD" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="303" id="beW-jK-OHd"/>
-                <constraint firstAttribute="trailing" secondItem="06Y-6y-VlE" secondAttribute="trailing" id="dwP-7l-19l"/>
+                <constraint firstAttribute="trailing" secondItem="oPk-qd-k6r" secondAttribute="trailing" id="VXm-Ra-aa9"/>
                 <constraint firstAttribute="trailing" secondItem="4Ok-Kh-hXC" secondAttribute="trailing" constant="26" id="hIT-q5-4AW"/>
                 <constraint firstItem="3ca-BC-TPK" firstAttribute="top" secondItem="Hc3-7c-bJD" secondAttribute="bottom" constant="51" id="kLu-jy-Guv"/>
+                <constraint firstItem="i7H-7f-1CF" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="u2n-Vf-fZ0"/>
+                <constraint firstItem="4Ok-Kh-hXC" firstAttribute="top" secondItem="i7H-7f-1CF" secondAttribute="bottom" constant="80" id="x18-LJ-BjJ"/>
                 <constraint firstItem="4Ok-Kh-hXC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="26" id="xu7-gE-wGx"/>
             </constraints>
             <point key="canvasLocation" x="27.5" y="43.5"/>
         </view>
     </objects>
     <resources>
-        <image name="game_bg" width="720" height="450"/>
+        <image name="ocean" width="464" height="187"/>
+        <image name="sea" width="1024" height="398"/>
     </resources>
 </document>

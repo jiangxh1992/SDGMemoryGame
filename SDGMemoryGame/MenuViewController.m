@@ -32,8 +32,7 @@
  */
 - (void)setUI {
     
-    self.title = @"SDG MEMORY GAME";
-    
+    [self.navigationController setNavigationBarHidden:YES];
     // 注册点击事件
     [_easyButton addTarget:self action:@selector(enterGame:) forControlEvents:UIControlEventTouchUpInside];
     [_easyButton setTag:SDGGameLevelEasy];

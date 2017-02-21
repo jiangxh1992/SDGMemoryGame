@@ -9,9 +9,9 @@
 #import "GameViewController.h"
 #import "SDGImage.h"
 #import <QuartzCore/CAAnimation.h>
-#define SDGMargin 5     // 间隙
+#define SDGMargin 2     // 间隙
 #define AniDuration 0.1 // 翻转动画持续时间
-#define maxRound 9       // 最大关卡
+#define maxRound 9      // 最大关卡
 #define maxDelay 10     // 最大停顿时间
 
 @interface GameViewController ()
@@ -23,6 +23,9 @@
 @property (nonatomic, strong)NSMutableArray *imageArray;   // 卡片图片数组
 @property (nonatomic, strong)NSMutableArray *cardStack;    // 翻开的卡片按钮堆栈
 @property (nonatomic, strong)UIImageView *gameBackGround;  // 背景图片
+@property (nonatomic, strong)UILabel *textItem;            // 导航栏标签项
+@property (nonatomic, strong)UILabel *timerItem;           // 计时标签
+@property (nonatomic, copy)NSString *textContent;
 
 @end
 
@@ -32,18 +35,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title = @"00:00";
+    
     // 1.根据游戏难度设置棋局规模
     switch (_GameLevel) {
         case SDGGameLevelEasy:
-            self.title = [NSString stringWithFormat:@"Easy Round %i", _round];
+            _textContent = [NSString stringWithFormat:@"Easy: R%i", _round];
             _sizeN = 4;
             break;
         case SDGGameLevelMedium:
-            self.title = [NSString stringWithFormat:@"Medium Round %i", _round];
+            _textContent = [NSString stringWithFormat:@"Medium: R%i", _round];
             _sizeN = 6;
             break;
         case SDGGameLevelDifficult:
-            self.title = [NSString stringWithFormat:@"Difficult Round %i", _round];
+            _textContent = [NSString stringWithFormat:@"Difficult: R%i", _round];
             _sizeN = 8;
             break;
         default:
@@ -58,6 +63,8 @@
     
     // 初始化界面UI
     [self initUI];
+    
+    _timerItem.text = [NSString stringWithFormat:@"%lu", (unsigned long)_cardStack.count];
     
     // 注册屏幕旋转通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceChanged) name:UIDeviceOrientationDidChangeNotification object:nil];
@@ -93,10 +100,40 @@
 }
 
 - (void)initUI {
+    
+    // 隐藏导航栏
+    [self.navigationController setNavigationBarHidden:YES];
+    // 1. 自定义导航栏
+    UIView *navBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SDGScreenWidth, SDGTopBarHeight)];
+    navBar.backgroundColor = SDGRGBColor(196, 142, 64);
+    [self.view addSubview:navBar];
+    // 1.1 返回按钮
+    UIButton *home = [[UIButton alloc] init];
+    [home setTitle:@"Home" forState:UIControlStateNormal];
+    [home sizeToFit];
+    home.titleLabel.textColor = SDGRGBColor(68, 149, 211);
+    home.center = CGPointMake(5 + home.frame.size.width/2, SDGTopBarHeight / 3 * 2);
+    [home addTarget:self action:@selector(home) forControlEvents:UIControlEventTouchUpInside];
+    [navBar addSubview:home];
+    // 1.2 计时标签
+    _timerItem = [[UILabel alloc] init];
+    _timerItem.text = @"00:00";
+    [_timerItem sizeToFit];
+    _timerItem.center = CGPointMake(SDGScreenWidth/2, SDGTopBarHeight / 3 * 2);
+    [navBar addSubview:_timerItem];
+    
+    // 1.3 关卡
+    _textItem = [[UILabel alloc] init];
+    _textItem.text = _textContent;
+    [_textItem sizeToFit];
+    _textItem.center = CGPointMake(SDGScreenWidth - 5 - _textItem.frame.size.width/2, SDGTopBarHeight / 3 * 2);
+    [navBar addSubview:_textItem];
+    
     // 背景图片
     _gameBackGround = [[UIImageView alloc] initWithFrame:self.view.frame];
     _gameBackGround.image = [UIImage imageNamed:@"game_bg"];
-    [self.view addSubview:_gameBackGround];
+    //[self.view addSubview:_gameBackGround];
+    [self.view setBackgroundColor:SDGRGBColor(34, 83, 135)];
     
     // 创建卡片
     [self createCards];
@@ -107,15 +144,19 @@
  */
 - (void)createCards {
     // card size
-    int width = (SDGScreenWidth - SDGMargin * (_sizeN + 1)) / _sizeN;
-    int height = (SDGScreenHeight - 64 - SDGMargin * (_sizeN + 1)) / _sizeN;
+    int width = (SDGScreenWidth - (SDGMargin / 2) * (_sizeN + 1)) / _sizeN;
+    int height = (SDGScreenHeight - SDGTopBarHeight - SDGMargin * (_sizeN + 1)) / _sizeN;
     
     for (int i = 0; i < _sizeN; i++) {
         for (int j = 0; j < _sizeN; j++) {
             int x = (j + 1) * SDGMargin + j * width;
-            int y = 64 + (i + 1) * SDGMargin + i * height;
+            int y = SDGTopBarHeight + (i + 1) * SDGMargin + i * height;
             UIButton *card = [[UIButton alloc] initWithFrame:CGRectMake(x, y, width, height)];
             [card setBackgroundImage:[UIImage imageNamed:@"card_empty"] forState:UIControlStateNormal];
+            card.layer.cornerRadius = 5;
+            card.layer.borderWidth = 2;
+            card.layer.borderColor = [UIColor orangeColor].CGColor;
+            [card.layer setMasksToBounds:YES];
             [card addTarget:self action:@selector(cardSelected:) forControlEvents:UIControlEventTouchUpInside];
             card.tag = i * _sizeN + j;
             [_cardArray addObject:card];
@@ -155,62 +196,70 @@
  */
 - (void) cardSelected:(UIButton *)sender {
     if (sender.isSelected || _cardStack.count >=3) return;
-    NSOperationQueue *aniQueue = [[NSOperationQueue alloc] init];
-    [aniQueue addOperationWithBlock:^{
-        // 显示卡片
-        [self openCard:sender];
-        // 卡片显示延迟
-        [NSThread sleepForTimeInterval:_delayDuration];
-        // 关闭卡片
-        if (sender && sender.isSelected) {
-            [self closeCard:sender];
-        }
-    }];
+    // 显示卡片
+    [self openCard:sender];
     
 }
 
 - (void)openCard: (UIButton *)sender {
-    // 1. 翻转90度
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [sender.layer addAnimation:[self animationRotate] forKey:@"animationRotate"];
-    });
-    // 2. 替换图片
-    [NSThread sleepForTimeInterval:AniDuration];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        SDGImage *sdgImage = [_imageArray objectAtIndex:sender.tag];
-        [sender setBackgroundImage:sdgImage.image forState:UIControlStateNormal];
-    });
-    [NSThread sleepForTimeInterval:AniDuration];
+    sender.selected = YES;
+    // 入栈
+    [_cardStack addObject:sender];
+    _timerItem.text = [NSString stringWithFormat:@"%lu", (unsigned long)_cardStack.count];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        sender.selected = YES;
-        // 入栈
-        [_cardStack addObject:sender];
-
+    dispatch_queue_t aniQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(aniQueue, ^{
+        // 1. 翻转90度
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [sender.layer addAnimation:[self animationRotate] forKey:@"animationRotate"];
+        });
+        [NSThread sleepForTimeInterval:AniDuration];
+        // 2. 替换图片
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            SDGImage *sdgImage = [_imageArray objectAtIndex:sender.tag];
+            [sender setBackgroundImage:sdgImage.image forState:UIControlStateNormal];
+        });
+        [NSThread sleepForTimeInterval:AniDuration];
+        
         // 判断是否匹配成功
-        if (_cardStack.count == 2) {
-            UIButton *lastButton = [_cardStack objectAtIndex:0];
-            SDGImage *lastImage = [_imageArray objectAtIndex:lastButton.tag];
-            SDGImage *currentImage = [_imageArray objectAtIndex:sender.tag];
-            if ([lastImage.card_id isEqualToString:currentImage.card_id]) {
-                // 隐藏匹配成功的卡片按钮
-                [_cardStack removeObject:lastButton];
-                [lastButton.layer addAnimation:[self animationFade] forKey:@"animationFade"];
-                [sender.layer addAnimation:[self animationFade] forKey:@"animationFade"];
-                //[lastButton setHidden:YES];
-                //[sender setHidden:YES];
-                _matchedCount += 2;
-                
-                // 判断游戏结束
-                if (_matchedCount == _sizeN * _sizeN) [self gameOver];
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            if (_cardStack.count == 2) {
+                UIButton *lastButton = [_cardStack objectAtIndex:0];
+                SDGImage *lastImage = [_imageArray objectAtIndex:lastButton.tag];
+                SDGImage *currentImage = [_imageArray objectAtIndex:sender.tag];
+                if ([lastImage.card_id isEqualToString:currentImage.card_id]) {
+                    // 隐藏匹配成功的卡片按钮
+                    [_cardStack removeObject:sender];
+                    [_cardStack removeObject:lastButton];
+                    lastButton.userInteractionEnabled = NO;
+                    sender.userInteractionEnabled = NO;
+                    _matchedCount += 2;
+                    _timerItem.text = [NSString stringWithFormat:@"%lu", (unsigned long)_cardStack.count];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [lastButton.layer addAnimation:[self animationFade] forKey:@"animationFade"];
+                        [sender.layer addAnimation:[self animationFade] forKey:@"animationFade"];
+                    });
+                    // 判断游戏结束
+                    if (_matchedCount == _sizeN * _sizeN) [self gameOver];
+                }
+                else {
+                    // 延时关闭显示的两张卡片
+                    dispatch_async(aniQueue, ^{
+                        [NSThread sleepForTimeInterval:_delayDuration];
+                        if (lastButton && lastButton.selected) [self closeCard:lastButton];
+                        if (sender && sender.selected) [self closeCard:sender];
+                    });
+                }
             }
-        }
-        else if (_cardStack.count == 3) {
-            UIButton *card1 = [_cardStack objectAtIndex:0];
-            UIButton *card2 = [_cardStack objectAtIndex:1];
-            [self closeCard:card1];
-            [self closeCard:card2];
-        }
+            else if (_cardStack.count == 3) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    UIButton *card1 = [_cardStack objectAtIndex:0];
+                    UIButton *card2 = [_cardStack objectAtIndex:1];
+                    [self closeCard:card1];
+                    [self closeCard:card2];
+                });
+            }
+        });
     });
 }
 
@@ -218,21 +267,22 @@
  * 关闭卡片
  */
 - (void)closeCard: (UIButton *)sender {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        sender.selected = NO;
-        // 出栈
-        [_cardStack removeObject:sender];
+    sender.selected = NO;
+    // 出栈
+    [_cardStack removeObject:sender];
+    dispatch_queue_t aniQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(aniQueue, ^{
+        // 1. 翻转90度
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            _timerItem.text = [NSString stringWithFormat:@"%lu", (unsigned long)_cardStack.count];
+            [sender.layer addAnimation:[self animationRotate] forKey:@"animationRotate"];
+        });
+        [NSThread sleepForTimeInterval:AniDuration];
+        // 2. 替换图片
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [sender setBackgroundImage:[UIImage imageNamed:@"card_empty"] forState:UIControlStateNormal];
+        });
     });
-    // 1. 翻转90度
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [sender.layer addAnimation:[self animationRotate] forKey:@"animationRotate"];
-    });
-    // 2. 替换图片
-    [NSThread sleepForTimeInterval:AniDuration];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [sender setBackgroundImage:[UIImage imageNamed:@"card_empty"] forState:UIControlStateNormal];
-    });
-
 }
 
 /**
@@ -247,8 +297,12 @@
         GameViewController *nextGame = [[GameViewController alloc] init];
         nextGame.GameLevel = _GameLevel;
         nextGame.round = _round + 1;
-        [self.navigationController pushViewController:nextGame animated:YES];
+        [self.navigationController pushViewController:nextGame animated:NO];
     }
+}
+
+- (void)home {
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 /**
