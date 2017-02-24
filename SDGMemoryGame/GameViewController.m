@@ -32,6 +32,11 @@
 @property (nonatomic, strong)UILabel *timerItem;              // 计时标签
 @property (nonatomic, copy)NSString *textContent;             // 关卡文字内容
 
+@property (nonatomic, strong)NSTimer *timer;                  // 计时器
+@property (nonatomic, assign)int matchCount;                  // 匹配总数统计
+@property (nonatomic, assign)int errorCount;                  // 匹配错误统计
+@property (nonatomic, assign)int secTimer;                    // 已用的秒数
+
 @property (nonatomic, strong)dispatch_queue_t animationQueue; // 异步动画队列
 
 @end
@@ -57,7 +62,7 @@
     BOOL isportrait = [UIDevice currentDevice].orientation == UIDeviceOrientationPortrait || [UIDevice currentDevice].orientation == UIDeviceOrientationPortraitUpsideDown;
     float barHeight = isportrait ? SDGTopBarHeight : SDGTopBarHeight / 3 * 2;
     _navBar.frame = CGRectMake(0, 0, SDGScreenWidth, barHeight);
-    _homeButton.center = CGPointMake(5 + _homeButton.frame.size.width/2, barHeight / 3 * 2);
+    _homeButton.center = CGPointMake(15 + _homeButton.frame.size.width/2, barHeight / 3 * 2);
     _timerItem.center = CGPointMake(SDGScreenWidth/2, _navBar.frame.size.height / 3 * 2);
     _textItem.center = CGPointMake(SDGScreenWidth - 5 - _textItem.frame.size.width/2, _navBar.frame.size.height / 3 * 2);
     
@@ -108,7 +113,11 @@
     _cardArray = [[NSMutableArray alloc] initWithCapacity:(_sizeRow * _sizeCol)];
     _imageArray = [[NSMutableArray alloc] initWithCapacity:(_sizeRow * _sizeCol)];
     _cardStack = [[NSMutableArray alloc] init];
+    _matchCount = 0;
+    _errorCount = 0;
+    _secTimer = 0;
     _animationQueue = dispatch_queue_create("animation.memorygame.sdg", DISPATCH_QUEUE_CONCURRENT);
+    _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(update) userInfo:nil repeats:YES];
     
     // 4.产生随机图片
     for (int i = 0; i <  _sizeRow * _sizeCol; i += 2) {
@@ -143,6 +152,9 @@
     _homeButton = [[UIButton alloc] init];
     [_homeButton setTitle:@"Home" forState:UIControlStateNormal];
     [_homeButton sizeToFit];
+    _homeButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    _homeButton.layer.borderWidth = 1;
+    _homeButton.layer.cornerRadius = 2;
     _homeButton.titleLabel.textColor = SDGRGBColor(68, 149, 211);
     [_homeButton addTarget:self action:@selector(home) forControlEvents:UIControlEventTouchUpInside];
     [_navBar addSubview:_homeButton];
@@ -176,7 +188,7 @@
             card.layer.borderColor = [UIColor whiteColor].CGColor;
             [card.layer setMasksToBounds:YES];
             [card addTarget:self action:@selector(cardSelected:) forControlEvents:UIControlEventTouchUpInside];
-            card.tag = i * _sizeRow + j;
+            card.tag = i * _sizeCol + j;
             [_cardArray addObject:card];
             [self.view addSubview:card];
         }
@@ -329,6 +341,16 @@
 
 - (void)home {
     [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
+/**
+ * 定时刷新
+ */
+- (void)update {
+    _secTimer ++;
+    int seconds = _secTimer % 60;
+    int mins = _secTimer / 60;
+    _timerItem.text = [NSString stringWithFormat:@"%2d:%2d",mins,seconds];
 }
 
 /**
