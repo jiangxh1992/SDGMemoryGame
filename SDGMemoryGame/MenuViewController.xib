@@ -55,8 +55,8 @@
                         <color key="titleColor" red="0.96430884029999997" green="0.99937826649999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="ocean" translatesAutoresizingMaskIntoConstraints="NO" id="i7H-7f-1CF">
-                    <rect key="frame" x="57" y="34" width="260" height="100"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ocean" translatesAutoresizingMaskIntoConstraints="NO" id="i7H-7f-1CF">
+                    <rect key="frame" x="57" y="60" width="260" height="100"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="100" id="T2e-Ys-x2g"/>
                         <constraint firstAttribute="width" constant="260" id="c02-FL-4P3"/>
@@ -68,7 +68,7 @@
             </subviews>
             <color key="backgroundColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="Hc3-7c-bJD" firstAttribute="top" secondItem="4Ok-Kh-hXC" secondAttribute="bottom" constant="50" id="2oS-ft-R6T"/>
+                <constraint firstItem="Hc3-7c-bJD" firstAttribute="top" secondItem="4Ok-Kh-hXC" secondAttribute="bottom" constant="40" id="2oS-ft-R6T"/>
                 <constraint firstAttribute="bottom" secondItem="oPk-qd-k6r" secondAttribute="bottom" id="4y3-pp-3uL"/>
                 <constraint firstAttribute="trailing" secondItem="3ca-BC-TPK" secondAttribute="trailing" constant="26" id="5Hu-Jr-b1W"/>
                 <constraint firstItem="oPk-qd-k6r" firstAttribute="top" secondItem="3ca-BC-TPK" secondAttribute="bottom" constant="51" id="6nU-5U-RyV"/>
@@ -79,9 +79,9 @@
                 <constraint firstItem="Hc3-7c-bJD" firstAttribute="leading" secondItem="4Ok-Kh-hXC" secondAttribute="leading" id="UZ5-d2-Yi5"/>
                 <constraint firstAttribute="trailing" secondItem="oPk-qd-k6r" secondAttribute="trailing" id="VXm-Ra-aa9"/>
                 <constraint firstAttribute="trailing" secondItem="4Ok-Kh-hXC" secondAttribute="trailing" constant="26" id="hIT-q5-4AW"/>
-                <constraint firstItem="3ca-BC-TPK" firstAttribute="top" secondItem="Hc3-7c-bJD" secondAttribute="bottom" constant="51" id="kLu-jy-Guv"/>
+                <constraint firstItem="3ca-BC-TPK" firstAttribute="top" secondItem="Hc3-7c-bJD" secondAttribute="bottom" constant="40" id="kLu-jy-Guv"/>
+                <constraint firstItem="i7H-7f-1CF" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="60" id="rFI-Xn-S7B"/>
                 <constraint firstItem="i7H-7f-1CF" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="u2n-Vf-fZ0"/>
-                <constraint firstItem="4Ok-Kh-hXC" firstAttribute="top" secondItem="i7H-7f-1CF" secondAttribute="bottom" constant="80" id="x18-LJ-BjJ"/>
                 <constraint firstItem="4Ok-Kh-hXC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="26" id="xu7-gE-wGx"/>
             </constraints>
             <point key="canvasLocation" x="27.5" y="43.5"/>
@@ -89,6 +89,6 @@
     </objects>
     <resources>
         <image name="ocean" width="464" height="187"/>
-        <image name="sea" width="1024" height="398"/>
+        <image name="sea" width="496" height="184"/>
     </resources>
 </document>

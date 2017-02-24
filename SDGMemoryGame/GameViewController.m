@@ -42,7 +42,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"00:00";
-    self.view.backgroundColor = [UIColor whiteColor];
     
     // 数据初始化
     [self initData];
@@ -80,16 +79,19 @@
     // 1.根据游戏难度设置棋局规模
     switch (_GameLevel) {
         case SDGGameLevelEasy:
+            self.view.backgroundColor = SDGRGBColor(117, 184, 86);
             _textContent = [NSString stringWithFormat:@"Easy: R%i", _round];
             _sizeRow = 3;
             _sizeCol = 4;
             break;
         case SDGGameLevelMedium:
+            self.view.backgroundColor = SDGRGBColor(243, 198, 70);
             _textContent = [NSString stringWithFormat:@"Medium: R%i", _round];
             _sizeRow = 4;
             _sizeCol = 4;
             break;
         case SDGGameLevelDifficult:
+            self.view.backgroundColor = SDGRGBColor(205, 56, 61);
             _textContent = [NSString stringWithFormat:@"Difficult: R%i", _round];
             _sizeRow = 4;
             _sizeCol = 5;
@@ -135,7 +137,7 @@
     [self.navigationController setNavigationBarHidden:YES];
     // 1. 自定义导航栏
     _navBar = [[UIView alloc] init];
-    _navBar.backgroundColor = SDGRGBColor(196, 142, 64);
+    _navBar.backgroundColor = [UIColor clearColor];//SDGRGBColor(196, 142, 64);
     [self.view addSubview:_navBar];
     // 1.1 返回按钮
     _homeButton = [[UIButton alloc] init];
@@ -171,7 +173,7 @@
             [card setBackgroundImage:[UIImage imageNamed:@"card_back"] forState:UIControlStateNormal];
             card.layer.cornerRadius = 5;
             card.layer.borderWidth = 2;
-            card.layer.borderColor = [UIColor orangeColor].CGColor;
+            card.layer.borderColor = [UIColor whiteColor].CGColor;
             [card.layer setMasksToBounds:YES];
             [card addTarget:self action:@selector(cardSelected:) forControlEvents:UIControlEventTouchUpInside];
             card.tag = i * _sizeRow + j;
