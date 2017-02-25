@@ -65,6 +65,15 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="sea" translatesAutoresizingMaskIntoConstraints="NO" id="oPk-qd-k6r">
                     <rect key="frame" x="0.0" y="505" width="375" height="162"/>
                 </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sr2-33-rK7">
+                    <rect key="frame" x="100.5" y="613" width="175.5" height="24"/>
+                    <string key="text" base64-UTF8="YES">
+VU5WwqlKaWFuZyBYaW5ob3UDAw
+</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <color key="textColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -75,7 +84,9 @@
                 <constraint firstItem="Hc3-7c-bJD" firstAttribute="trailing" secondItem="4Ok-Kh-hXC" secondAttribute="trailing" id="8pu-Wx-UQK"/>
                 <constraint firstItem="Hc3-7c-bJD" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="Ait-Gc-Myq"/>
                 <constraint firstItem="3ca-BC-TPK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="26" id="CAR-3s-ayz"/>
+                <constraint firstAttribute="bottom" secondItem="Sr2-33-rK7" secondAttribute="bottom" constant="30" id="EWA-Ga-wOw"/>
                 <constraint firstItem="oPk-qd-k6r" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="KUJ-Mq-gJE"/>
+                <constraint firstItem="Sr2-33-rK7" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="LZF-mY-93G"/>
                 <constraint firstItem="Hc3-7c-bJD" firstAttribute="leading" secondItem="4Ok-Kh-hXC" secondAttribute="leading" id="UZ5-d2-Yi5"/>
                 <constraint firstAttribute="trailing" secondItem="oPk-qd-k6r" secondAttribute="trailing" id="VXm-Ra-aa9"/>
                 <constraint firstAttribute="trailing" secondItem="4Ok-Kh-hXC" secondAttribute="trailing" constant="26" id="hIT-q5-4AW"/>

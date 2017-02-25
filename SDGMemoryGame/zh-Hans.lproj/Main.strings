@@ -1,0 +1,12 @@
+
+/* Class = "UIButton"; normalTitle = "Easy"; ObjectID = "4OT-N5-Bio"; */
+"4OT-N5-Bio.normalTitle" = "Easy";
+
+/* Class = "UILabel"; text = "SDG MEMORY GAME"; ObjectID = "are-wb-E6G"; */
+"are-wb-E6G.text" = "SDG MEMORY GAME";
+
+/* Class = "UIButton"; normalTitle = "Medium"; ObjectID = "t1Y-SL-AYv"; */
+"t1Y-SL-AYv.normalTitle" = "Medium";
+
+/* Class = "UIButton"; normalTitle = "Difficult"; ObjectID = "xh5-wp-9Ue"; */
+"xh5-wp-9Ue.normalTitle" = "Difficult";

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -21,63 +20,7 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t1Y-SL-AYv">
-                                <rect key="frame" x="26" y="308" width="323" height="50"/>
-                                <color key="backgroundColor" red="0.2218785154" green="1" blue="0.87085334960000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="cBL-jw-JSL"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <state key="normal" title="Medium">
-                                    <color key="titleColor" red="0.96430884029999997" green="0.99937826649999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4OT-N5-Bio">
-                                <rect key="frame" x="26" y="208" width="323" height="50"/>
-                                <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="rBr-t2-8LW"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="25"/>
-                                <state key="normal" title="Easy">
-                                    <color key="titleColor" red="0.96430884029999997" green="0.99937826649999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xh5-wp-9Ue">
-                                <rect key="frame" x="26" y="408" width="323" height="50"/>
-                                <color key="backgroundColor" red="0.36973282426030457" green="0.91614718264248707" blue="0.37299063756675543" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="ccM-qD-07P"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <state key="normal" title="Difficult">
-                                    <color key="titleColor" red="0.96430884029999997" green="0.99937826649999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SDG MEMORY GAME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="are-wb-E6G">
-                                <rect key="frame" x="22" y="70" width="333" height="43"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                                <color key="textColor" red="0.71144856829584291" green="0.30321422909619133" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="highlightedColor" red="0.36973282429999998" green="0.91614718260000005" blue="0.37299063760000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="shadowColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="xh5-wp-9Ue" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="10" id="BMR-QV-UUH"/>
-                            <constraint firstItem="are-wb-E6G" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="50" id="GlC-gn-lZg"/>
-                            <constraint firstItem="t1Y-SL-AYv" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Hhh-iL-VTj"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="t1Y-SL-AYv" secondAttribute="trailing" constant="10" id="MGG-rM-KvD"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="4OT-N5-Bio" secondAttribute="trailing" constant="10" id="YzZ-9A-a8g"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="xh5-wp-9Ue" secondAttribute="trailing" constant="10" id="azq-G9-QIb"/>
-                            <constraint firstItem="xh5-wp-9Ue" firstAttribute="top" secondItem="t1Y-SL-AYv" secondAttribute="bottom" constant="50" id="bO7-sh-PfQ"/>
-                            <constraint firstItem="t1Y-SL-AYv" firstAttribute="top" secondItem="4OT-N5-Bio" secondAttribute="bottom" constant="50" id="csb-QK-HTZ"/>
-                            <constraint firstItem="t1Y-SL-AYv" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="10" id="hww-Wh-W4L"/>
-                            <constraint firstItem="are-wb-E6G" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="lva-pQ-Aht"/>
-                            <constraint firstItem="4OT-N5-Bio" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="10" id="pQK-ad-zvp"/>
-                            <constraint firstItem="t1Y-SL-AYv" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="uzQ-9T-gcT"/>
-                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
