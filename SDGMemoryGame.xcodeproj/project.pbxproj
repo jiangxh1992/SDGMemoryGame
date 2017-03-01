@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D21A2B051E66B1140041AA98 /* UILabel+DynamicFontSize.m in Sources */ = {isa = PBXBuildFile; fileRef = D21A2B041E66B1140041AA98 /* UILabel+DynamicFontSize.m */; };
 		D23E61DF1E58331200E3870C /* SDGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = D23E61DE1E58331200E3870C /* SDGImage.m */; };
+		D260DB631E6430FB0008115E /* SDGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D260DB621E6430FB0008115E /* SDGButton.m */; };
 		D2D6E6131E55AD1200DB39B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D6E6121E55AD1200DB39B9 /* main.m */; };
 		D2D6E6161E55AD1300DB39B9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D6E6151E55AD1300DB39B9 /* AppDelegate.m */; };
 		D2D6E61C1E55AD1300DB39B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2D6E61A1E55AD1300DB39B9 /* Main.storyboard */; };
@@ -18,7 +20,6 @@
 		D2D6E64C1E55EADF00DB39B9 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D6E64A1E55EADF00DB39B9 /* GameViewController.m */; };
 		D2D6E6511E56F43800DB39B9 /* RootNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D6E6501E56F43800DB39B9 /* RootNavigationController.m */; };
 		D2D6E65D1E56F81700DB39B9 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D6E65B1E56F81700DB39B9 /* MenuViewController.m */; };
-		D2D6E65E1E56F81700DB39B9 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2D6E65C1E56F81700DB39B9 /* MenuViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,8 +40,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D21A2B031E66B1140041AA98 /* UILabel+DynamicFontSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+DynamicFontSize.h"; sourceTree = "<group>"; };
+		D21A2B041E66B1140041AA98 /* UILabel+DynamicFontSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+DynamicFontSize.m"; sourceTree = "<group>"; };
 		D23E61DD1E58331200E3870C /* SDGImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDGImage.h; sourceTree = "<group>"; };
 		D23E61DE1E58331200E3870C /* SDGImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDGImage.m; sourceTree = "<group>"; };
+		D260DB611E6430FB0008115E /* SDGButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDGButton.h; sourceTree = "<group>"; };
+		D260DB621E6430FB0008115E /* SDGButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDGButton.m; sourceTree = "<group>"; };
 		D2D6E60E1E55AD1200DB39B9 /* SDGMemoryGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SDGMemoryGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2D6E6121E55AD1200DB39B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D2D6E6141E55AD1200DB39B9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -62,7 +67,6 @@
 		D2D6E6501E56F43800DB39B9 /* RootNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootNavigationController.m; sourceTree = "<group>"; };
 		D2D6E65A1E56F81700DB39B9 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		D2D6E65B1E56F81700DB39B9 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
-		D2D6E65C1E56F81700DB39B9 /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,7 +125,6 @@
 				D2D6E6501E56F43800DB39B9 /* RootNavigationController.m */,
 				D2D6E65A1E56F81700DB39B9 /* MenuViewController.h */,
 				D2D6E65B1E56F81700DB39B9 /* MenuViewController.m */,
-				D2D6E65C1E56F81700DB39B9 /* MenuViewController.xib */,
 				D2D6E61A1E55AD1300DB39B9 /* Main.storyboard */,
 				D2D6E61D1E55AD1300DB39B9 /* Assets.xcassets */,
 				D2D6E61F1E55AD1300DB39B9 /* LaunchScreen.storyboard */,
@@ -129,6 +132,10 @@
 				D2D6E6111E55AD1200DB39B9 /* Supporting Files */,
 				D23E61DD1E58331200E3870C /* SDGImage.h */,
 				D23E61DE1E58331200E3870C /* SDGImage.m */,
+				D260DB611E6430FB0008115E /* SDGButton.h */,
+				D260DB621E6430FB0008115E /* SDGButton.m */,
+				D21A2B031E66B1140041AA98 /* UILabel+DynamicFontSize.h */,
+				D21A2B041E66B1140041AA98 /* UILabel+DynamicFontSize.m */,
 			);
 			path = SDGMemoryGame;
 			sourceTree = "<group>";
@@ -272,7 +279,6 @@
 				D2D6E6211E55AD1300DB39B9 /* LaunchScreen.storyboard in Resources */,
 				D2D6E61E1E55AD1300DB39B9 /* Assets.xcassets in Resources */,
 				D2D6E61C1E55AD1300DB39B9 /* Main.storyboard in Resources */,
-				D2D6E65E1E56F81700DB39B9 /* MenuViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,9 +303,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D260DB631E6430FB0008115E /* SDGButton.m in Sources */,
 				D23E61DF1E58331200E3870C /* SDGImage.m in Sources */,
 				D2D6E64C1E55EADF00DB39B9 /* GameViewController.m in Sources */,
 				D2D6E65D1E56F81700DB39B9 /* MenuViewController.m in Sources */,
+				D21A2B051E66B1140041AA98 /* UILabel+DynamicFontSize.m in Sources */,
 				D2D6E6161E55AD1300DB39B9 /* AppDelegate.m in Sources */,
 				D2D6E6511E56F43800DB39B9 /* RootNavigationController.m in Sources */,
 				D2D6E6131E55AD1200DB39B9 /* main.m in Sources */,

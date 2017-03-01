@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -29,21 +28,11 @@
                                     <constraint firstAttribute="height" constant="130" id="BPl-Tf-44j"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SDG Memory Game" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kpH-82-Gek">
-                                <rect key="frame" x="16" y="20" width="343" height="198.5"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="30"/>
-                                <color key="textColor" red="0.32131670414335206" green="0.47377936038238105" blue="0.92841240284974091" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="kpH-82-Gek" secondAttribute="trailing" id="Hs1-qF-c9g"/>
                             <constraint firstItem="zZX-eO-UeN" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Ie9-U4-oOo"/>
-                            <constraint firstItem="zZX-eO-UeN" firstAttribute="top" secondItem="kpH-82-Gek" secondAttribute="bottom" constant="50" id="OUE-np-Jsj"/>
-                            <constraint firstItem="kpH-82-Gek" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" id="agx-Dg-Yc6"/>
                             <constraint firstItem="zZX-eO-UeN" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="jdz-UD-C1W"/>
-                            <constraint firstItem="kpH-82-Gek" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" id="joN-Lu-N5t"/>
                         </constraints>
                     </view>
                 </viewController>

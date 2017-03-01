@@ -13,6 +13,7 @@
 #define AniDuration 0.1 // 翻转动画持续时间
 #define maxRound 9      // 最大关卡
 #define maxDelay 10     // 最大停顿时间
+#define roundHeight 50  // 关卡标识高度
 
 @interface GameViewController ()
 
@@ -30,6 +31,9 @@
 @property (nonatomic, strong)UIButton *homeButton;            // home按钮
 @property (nonatomic, strong)UILabel *textItem;               // 导航栏标签项
 @property (nonatomic, strong)UILabel *timerItem;              // 计时标签
+@property (nonatomic, strong)UIView *roundView;               // 关卡视图
+@property (nonatomic, strong)UIImageView *roundImage;
+@property (nonatomic, strong)UILabel *roundLabel;
 @property (nonatomic, copy)NSString *textContent;             // 关卡文字内容
 
 @property (nonatomic, strong)NSTimer *timer;                  // 计时器
@@ -46,8 +50,6 @@
 #pragma -mark life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"00:00";
-    
     // 数据初始化
     [self initData];
     
@@ -59,22 +61,39 @@
 }
 
 - (void)viewWillLayoutSubviews {
-    BOOL isportrait = [UIDevice currentDevice].orientation == UIDeviceOrientationPortrait || [UIDevice currentDevice].orientation == UIDeviceOrientationPortraitUpsideDown;
-    float barHeight = isportrait ? SDGTopBarHeight : SDGTopBarHeight / 3 * 2;
+    //float height = SDGScreenHeight > SDGScreenWidth ? SDGScreenHeight : SDGScreenWidth;
+    float width = SDGScreenWidth < SDGScreenHeight ? SDGScreenWidth : SDGScreenHeight;
+    
+    //BOOL isportrait = [UIDevice currentDevice].orientation == UIDeviceOrientationPortrait || [UIDevice currentDevice].orientation == UIDeviceOrientationPortraitUpsideDown;
+    
+    float barHeight = SDGTopBarHeight;//isportrait ? SDGTopBarHeight : SDGTopBarHeight / 3 * 2;
+    
+    int maxSize = _sizeCol > _sizeRow ? _sizeCol : _sizeRow;
+    if (_sizeRow == _sizeCol) ++maxSize;
+    int btn_width = (width - SDGMargin * maxSize - roundHeight) / maxSize;
+    int btn_height = btn_width;//(SDGScreenHeight - barHeight - SDGMargin * (_sizeRow + 1)) / _sizeRow;
+    int gap_height = (SDGScreenHeight - barHeight -_sizeRow * (btn_height + SDGMargin) + SDGMargin) / 2;
+    int gap_width = (SDGScreenWidth - _sizeCol * (btn_width + SDGMargin) + SDGMargin) / 2;
+    
+    _gameBackGround.frame = self.view.frame;
     _navBar.frame = CGRectMake(0, 0, SDGScreenWidth, barHeight);
-    _homeButton.center = CGPointMake(15 + _homeButton.frame.size.width/2, barHeight / 3 * 2);
+    _homeButton.frame = CGRectMake(15, barHeight, barHeight, barHeight / 1.5);
     _timerItem.center = CGPointMake(SDGScreenWidth/2, _navBar.frame.size.height / 3 * 2);
     _textItem.center = CGPointMake(SDGScreenWidth - 5 - _textItem.frame.size.width/2, _navBar.frame.size.height / 3 * 2);
     
-    // card size
-    int width = (SDGScreenWidth - SDGMargin * (_sizeCol + 1)) / _sizeCol;
-    int height = (SDGScreenHeight - barHeight - SDGMargin * (_sizeRow + 1)) / _sizeRow;
+    _roundView.frame = CGRectMake(gap_width, barHeight + gap_height - btn_width/2, SDGScreenWidth - 2 * gap_width, gap_height);
+    _roundImage.frame = CGRectMake(0, 0, btn_height / 2, btn_width / 2);
+    
+    _roundLabel.frame = CGRectMake(_roundImage.frame.size.width + 5, 0, btn_width * 1.5, btn_height / 2);
+    [_roundLabel adjustFontSizeToFillItsContents];
+    
+    // card
     for (int i = 0; i < _sizeRow; i++) {
         for (int j = 0; j < _sizeCol; j++) {
-            int x = (j + 1) * SDGMargin + j * width;
-            int y = barHeight + (i + 1) * SDGMargin + i * height;
+            int x = gap_width + j * SDGMargin + j * btn_width;
+            int y = barHeight + gap_height + i * SDGMargin + i * btn_height;
             UIButton *card = _cardArray[i * _sizeCol + j];
-            card.frame = CGRectMake(x, y, width, height);
+            card.frame = CGRectMake(x, y, btn_width, btn_height);
         }
     }
 }
@@ -84,19 +103,16 @@
     // 1.根据游戏难度设置棋局规模
     switch (_GameLevel) {
         case SDGGameLevelEasy:
-            self.view.backgroundColor = SDGRGBColor(117, 184, 86);
             _textContent = [NSString stringWithFormat:@"Easy: R%i", _round];
             _sizeRow = 3;
             _sizeCol = 4;
             break;
         case SDGGameLevelMedium:
-            self.view.backgroundColor = SDGRGBColor(243, 198, 70);
             _textContent = [NSString stringWithFormat:@"Medium: R%i", _round];
             _sizeRow = 4;
             _sizeCol = 4;
             break;
         case SDGGameLevelDifficult:
-            self.view.backgroundColor = SDGRGBColor(205, 56, 61);
             _textContent = [NSString stringWithFormat:@"Difficult: R%i", _round];
             _sizeRow = 4;
             _sizeCol = 5;
@@ -106,7 +122,7 @@
     }
     
     // 2. 根据关卡调整难度，卡片停顿的时间
-    _delayDuration = maxDelay - _round;
+    _delayDuration = (maxDelay - _round) / 3;
 
     // 3.变量初始化
     _matchedCount = 0;
@@ -144,31 +160,47 @@
 - (void)initUI {
     // 隐藏导航栏
     [self.navigationController setNavigationBarHidden:YES];
+    
+    // 背景图片
+    self.view.backgroundColor = [UIColor whiteColor];
+    _gameBackGround = [[UIImageView alloc] init];
+    [_gameBackGround setImage:[UIImage imageNamed:@"menu_bg"]];
+    _gameBackGround.layer.opacity = 0.6;
+    [self.view addSubview:_gameBackGround];
+    
     // 1. 自定义导航栏
     _navBar = [[UIView alloc] init];
-    _navBar.backgroundColor = [UIColor clearColor];//SDGRGBColor(196, 142, 64);
+    _navBar.backgroundColor = [UIColor blackColor];//SDGRGBColor(196, 142, 64);
+    _navBar.layer.opacity = 0.6;
     [self.view addSubview:_navBar];
     // 1.1 返回按钮
-    _homeButton = [[UIButton alloc] init];
-    [_homeButton setTitle:@"Home" forState:UIControlStateNormal];
-    [_homeButton sizeToFit];
-    _homeButton.layer.borderColor = [UIColor whiteColor].CGColor;
-    _homeButton.layer.borderWidth = 1;
-    _homeButton.layer.cornerRadius = 2;
-    _homeButton.titleLabel.textColor = SDGRGBColor(68, 149, 211);
+    _homeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_homeButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     [_homeButton addTarget:self action:@selector(home) forControlEvents:UIControlEventTouchUpInside];
-    [_navBar addSubview:_homeButton];
+    [self.view addSubview:_homeButton];
     // 1.2 计时标签
     _timerItem = [[UILabel alloc] init];
     _timerItem.text = @"00:00";
+    _timerItem.textColor = [UIColor whiteColor];
     [_timerItem sizeToFit];
     [_navBar addSubview:_timerItem];
     
     // 1.3 关卡
     _textItem = [[UILabel alloc] init];
     _textItem.text = _textContent;
+    _textItem.textColor = [UIColor whiteColor];
     [_textItem sizeToFit];
     [_navBar addSubview:_textItem];
+    
+    _roundView = [[UIView alloc] init];
+    [self.view addSubview:_roundView];
+    _roundImage = [[UIImageView alloc] init];
+    [_roundView addSubview:_roundImage];
+    [_roundImage setImage:[UIImage imageNamed:@"round"]];
+    _roundLabel = [[UILabel alloc] init];
+    _roundLabel.text = _textContent;
+    _roundLabel.textColor = SDGRGBColor(71, 123, 186);
+    [_roundView addSubview:_roundLabel];
     
     // 创建卡片
     [self createCards];

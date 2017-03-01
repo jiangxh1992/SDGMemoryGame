@@ -8,18 +8,22 @@
 
 #import "MenuViewController.h"
 #import "GameViewController.h"
+#import "SDGButton.h"
 
 @interface MenuViewController ()
 
+// 背景图片
+@property (nonatomic, strong)UIImageView *bgView;
 // 按钮
-@property (nonatomic, weak) IBOutlet UIButton *easyButton;
-@property (nonatomic, weak) IBOutlet UIButton *mediumButton;
-@property (nonatomic, weak) IBOutlet UIButton *difficultButton;
+@property (nonatomic, strong)SDGButton *easyButton;
+@property (nonatomic, strong)SDGButton *mediumButton;
+@property (nonatomic, strong)SDGButton *difficultButton;
 
 @end
 
 @implementation MenuViewController
 
+#pragma -marks life-cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -27,12 +31,45 @@
     [self setUI];
 }
 
+- (void)viewWillLayoutSubviews {
+    _bgView.frame = self.view.frame;
+    
+    float height = SDGScreenHeight > SDGScreenWidth ? SDGScreenHeight : SDGScreenWidth;
+    float width = SDGScreenWidth < SDGScreenHeight ? SDGScreenWidth : SDGScreenHeight;
+    
+    // 尺寸调整
+    float button_width = width/3;
+    float button_height = button_width/2;
+    _easyButton.frame = CGRectMake(0, 0, button_width, button_height);
+    _easyButton.center = self.view.center;
+    _mediumButton.frame = CGRectMake(0, 0, button_width, button_height);
+    _mediumButton.center = CGPointMake(_easyButton.center.x, _easyButton.center.y + button_height + 10);
+    _difficultButton.frame = CGRectMake(0, 0, button_width, button_height);
+    _difficultButton.center = CGPointMake(_mediumButton.center.x, _mediumButton.center.y + button_height + 10);
+
+}
+
 /**
  * 配置UI
  */
 - (void)setUI {
-    
     [self.navigationController setNavigationBarHidden:YES];
+    self.view.backgroundColor = [UIColor orangeColor];
+
+    // 背景图片
+    _bgView = [[UIImageView alloc] init];
+    [_bgView setImage:[UIImage imageNamed:@"menu_bg"]];
+    [self.view addSubview:_bgView];
+    // ...
+    
+    // 按钮
+    _easyButton = [SDGButton sdg_buttonWithName:@"btn_easy"];
+    _mediumButton = [SDGButton sdg_buttonWithName:@"btn_medium"];
+    _difficultButton = [SDGButton sdg_buttonWithName:@"btn_difficult"];
+    // 添加按钮
+    [self.view addSubview:_easyButton];
+    [self.view addSubview:_mediumButton];
+    [self.view addSubview:_difficultButton];
     // 注册点击事件
     [_easyButton addTarget:self action:@selector(enterGame:) forControlEvents:UIControlEventTouchUpInside];
     [_easyButton setTag:SDGGameLevelEasy];
