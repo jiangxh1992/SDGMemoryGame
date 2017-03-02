@@ -29,4 +29,7 @@ typedef NS_ENUM(NSInteger, SDGGameLevel) {
 // 通过RGB创建颜色
 #define SDGRGBColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 
+// 字体
+#define SDGFont [UIFont fontWithName:@"MarkerFelt-Wide" size:12] //MarkerFelt-Thin","MarkerFelt-Wide",MarkerFelt
+
 #endif /* SDGPrefix_pch */

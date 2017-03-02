@@ -27,9 +27,7 @@
 @property (nonatomic, strong)NSMutableArray *cardStack;       // 翻开的卡片按钮堆栈
 
 @property (nonatomic, strong)UIImageView *gameBackGround;     // 背景图片
-@property (nonatomic, strong)UIView *navBar;                  // 导航栏
 @property (nonatomic, strong)UIButton *homeButton;            // home按钮
-@property (nonatomic, strong)UILabel *textItem;               // 导航栏标签项
 @property (nonatomic, strong)UILabel *timerItem;              // 计时标签
 @property (nonatomic, strong)UIView *roundView;               // 关卡视图
 @property (nonatomic, strong)UIImageView *roundImage;
@@ -61,13 +59,8 @@
 }
 
 - (void)viewWillLayoutSubviews {
-    //float height = SDGScreenHeight > SDGScreenWidth ? SDGScreenHeight : SDGScreenWidth;
     float width = SDGScreenWidth < SDGScreenHeight ? SDGScreenWidth : SDGScreenHeight;
-    
-    //BOOL isportrait = [UIDevice currentDevice].orientation == UIDeviceOrientationPortrait || [UIDevice currentDevice].orientation == UIDeviceOrientationPortraitUpsideDown;
-    
     float barHeight = SDGTopBarHeight;//isportrait ? SDGTopBarHeight : SDGTopBarHeight / 3 * 2;
-    
     int maxSize = _sizeCol > _sizeRow ? _sizeCol : _sizeRow;
     if (_sizeRow == _sizeCol) ++maxSize;
     int btn_width = (width - SDGMargin * maxSize - roundHeight) / maxSize;
@@ -75,19 +68,21 @@
     int gap_height = (SDGScreenHeight - barHeight -_sizeRow * (btn_height + SDGMargin) + SDGMargin) / 2;
     int gap_width = (SDGScreenWidth - _sizeCol * (btn_width + SDGMargin) + SDGMargin) / 2;
     
+    // 背景图片
     _gameBackGround.frame = self.view.frame;
-    _navBar.frame = CGRectMake(0, 0, SDGScreenWidth, barHeight);
+    // 返回按钮
     _homeButton.frame = CGRectMake(15, barHeight, barHeight, barHeight / 1.5);
-    _timerItem.center = CGPointMake(SDGScreenWidth/2, _navBar.frame.size.height / 3 * 2);
-    _textItem.center = CGPointMake(SDGScreenWidth - 5 - _textItem.frame.size.width/2, _navBar.frame.size.height / 3 * 2);
-    
+    // 指示视图
     _roundView.frame = CGRectMake(gap_width, barHeight + gap_height - btn_width/2, SDGScreenWidth - 2 * gap_width, gap_height);
     _roundImage.frame = CGRectMake(0, 0, btn_height / 2, btn_width / 2);
-    
+    // 关卡
     _roundLabel.frame = CGRectMake(_roundImage.frame.size.width + 5, 0, btn_width * 1.5, btn_height / 2);
     [_roundLabel adjustFontSizeToFillItsContents];
-    
-    // card
+    // 计时器
+    _timerItem.frame = CGRectMake(_roundView.frame.size.width / 2, 0, btn_width * 2, btn_height / 2);
+    [_timerItem adjustFontSizeToFillItsContents];
+
+    // 卡片尺寸位置
     for (int i = 0; i < _sizeRow; i++) {
         for (int j = 0; j < _sizeCol; j++) {
             int x = gap_width + j * SDGMargin + j * btn_width;
@@ -160,49 +155,38 @@
 - (void)initUI {
     // 隐藏导航栏
     [self.navigationController setNavigationBarHidden:YES];
-    
-    // 背景图片
+    // 0. 背景图片
     self.view.backgroundColor = [UIColor whiteColor];
     _gameBackGround = [[UIImageView alloc] init];
     [_gameBackGround setImage:[UIImage imageNamed:@"menu_bg"]];
     _gameBackGround.layer.opacity = 0.6;
     [self.view addSubview:_gameBackGround];
-    
-    // 1. 自定义导航栏
-    _navBar = [[UIView alloc] init];
-    _navBar.backgroundColor = [UIColor blackColor];//SDGRGBColor(196, 142, 64);
-    _navBar.layer.opacity = 0.6;
-    [self.view addSubview:_navBar];
-    // 1.1 返回按钮
+    // 1. 返回按钮
     _homeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_homeButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     [_homeButton addTarget:self action:@selector(home) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_homeButton];
-    // 1.2 计时标签
-    _timerItem = [[UILabel alloc] init];
-    _timerItem.text = @"00:00";
-    _timerItem.textColor = [UIColor whiteColor];
-    [_timerItem sizeToFit];
-    [_navBar addSubview:_timerItem];
-    
-    // 1.3 关卡
-    _textItem = [[UILabel alloc] init];
-    _textItem.text = _textContent;
-    _textItem.textColor = [UIColor whiteColor];
-    [_textItem sizeToFit];
-    [_navBar addSubview:_textItem];
-    
+    // 2. 关卡提醒视图
     _roundView = [[UIView alloc] init];
     [self.view addSubview:_roundView];
+    // 环图片
     _roundImage = [[UIImageView alloc] init];
     [_roundView addSubview:_roundImage];
     [_roundImage setImage:[UIImage imageNamed:@"round"]];
+    // 关卡
     _roundLabel = [[UILabel alloc] init];
     _roundLabel.text = _textContent;
     _roundLabel.textColor = SDGRGBColor(71, 123, 186);
+    _roundLabel.font = SDGFont;
     [_roundView addSubview:_roundLabel];
-    
-    // 创建卡片
+    // 计时标签
+    _timerItem = [[UILabel alloc] init];
+    _timerItem.text = @"00:00";
+    _timerItem.textAlignment = NSTextAlignmentRight;
+    _timerItem.textColor = SDGRGBColor(71, 123, 186);
+    _timerItem.font = SDGFont;
+    [_roundView addSubview:_timerItem];
+    // 3. 创建卡片
     [self createCards];
 }
 
@@ -219,6 +203,9 @@
             card.layer.borderWidth = 2;
             card.layer.borderColor = [UIColor whiteColor].CGColor;
             [card.layer setMasksToBounds:YES];
+            card.layer.shadowOffset = CGSizeMake(1, 1);
+            card.layer.shadowColor = [UIColor blackColor].CGColor;
+            card.layer.shadowOpacity = 0.8;
             [card addTarget:self action:@selector(cardSelected:) forControlEvents:UIControlEventTouchUpInside];
             card.tag = i * _sizeCol + j;
             [_cardArray addObject:card];

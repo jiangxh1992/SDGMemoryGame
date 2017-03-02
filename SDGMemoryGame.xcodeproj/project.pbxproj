@@ -10,6 +10,7 @@
 		D21A2B051E66B1140041AA98 /* UILabel+DynamicFontSize.m in Sources */ = {isa = PBXBuildFile; fileRef = D21A2B041E66B1140041AA98 /* UILabel+DynamicFontSize.m */; };
 		D23E61DF1E58331200E3870C /* SDGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = D23E61DE1E58331200E3870C /* SDGImage.m */; };
 		D260DB631E6430FB0008115E /* SDGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D260DB621E6430FB0008115E /* SDGButton.m */; };
+		D282E4121E68297000527E38 /* MarkerFelt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D282E4111E6828E100527E38 /* MarkerFelt.ttf */; };
 		D2D6E6131E55AD1200DB39B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D6E6121E55AD1200DB39B9 /* main.m */; };
 		D2D6E6161E55AD1300DB39B9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D6E6151E55AD1300DB39B9 /* AppDelegate.m */; };
 		D2D6E61C1E55AD1300DB39B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2D6E61A1E55AD1300DB39B9 /* Main.storyboard */; };
@@ -46,6 +47,7 @@
 		D23E61DE1E58331200E3870C /* SDGImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDGImage.m; sourceTree = "<group>"; };
 		D260DB611E6430FB0008115E /* SDGButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDGButton.h; sourceTree = "<group>"; };
 		D260DB621E6430FB0008115E /* SDGButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDGButton.m; sourceTree = "<group>"; };
+		D282E4111E6828E100527E38 /* MarkerFelt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MarkerFelt.ttf; sourceTree = "<group>"; };
 		D2D6E60E1E55AD1200DB39B9 /* SDGMemoryGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SDGMemoryGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2D6E6121E55AD1200DB39B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D2D6E6141E55AD1200DB39B9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 		D2D6E6111E55AD1200DB39B9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D282E4111E6828E100527E38 /* MarkerFelt.ttf */,
 				D2D6E6121E55AD1200DB39B9 /* main.m */,
 				D2D6E64E1E56CC5300DB39B9 /* SDGPrefix.pch */,
 			);
@@ -276,6 +279,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D282E4121E68297000527E38 /* MarkerFelt.ttf in Resources */,
 				D2D6E6211E55AD1300DB39B9 /* LaunchScreen.storyboard in Resources */,
 				D2D6E61E1E55AD1300DB39B9 /* Assets.xcassets in Resources */,
 				D2D6E61C1E55AD1300DB39B9 /* Main.storyboard in Resources */,

@@ -38,8 +38,8 @@
     float width = SDGScreenWidth < SDGScreenHeight ? SDGScreenWidth : SDGScreenHeight;
     
     // 尺寸调整
-    float button_width = width/3;
-    float button_height = button_width/2;
+    float button_width = width/2;
+    float button_height = button_width/3;
     _easyButton.frame = CGRectMake(0, 0, button_width, button_height);
     _easyButton.center = self.view.center;
     _mediumButton.frame = CGRectMake(0, 0, button_width, button_height);
