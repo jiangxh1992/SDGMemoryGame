@@ -59,6 +59,7 @@
 }
 
 - (void)viewWillLayoutSubviews {
+    float height = SDGScreenHeight > SDGScreenWidth ? SDGScreenHeight : SDGScreenWidth;
     float width = SDGScreenWidth < SDGScreenHeight ? SDGScreenWidth : SDGScreenHeight;
     float barHeight = SDGTopBarHeight;//isportrait ? SDGTopBarHeight : SDGTopBarHeight / 3 * 2;
     int maxSize = _sizeCol > _sizeRow ? _sizeCol : _sizeRow;
@@ -69,7 +70,8 @@
     int gap_width = (SDGScreenWidth - _sizeCol * (btn_width + SDGMargin) + SDGMargin) / 2;
     
     // 背景图片
-    _gameBackGround.frame = self.view.frame;
+    _gameBackGround.frame = CGRectMake(0, 0, SDGScreenHeight * (width/height), SDGScreenHeight);
+    _gameBackGround.center = self.view.center;
     // 返回按钮
     _homeButton.frame = CGRectMake(15, barHeight, barHeight, barHeight / 1.5);
     // 指示视图
@@ -161,31 +163,34 @@
     [_gameBackGround setImage:[UIImage imageNamed:@"menu_bg"]];
     _gameBackGround.layer.opacity = 0.6;
     [self.view addSubview:_gameBackGround];
+    
     // 1. 返回按钮
     _homeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_homeButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
     [_homeButton addTarget:self action:@selector(home) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_homeButton];
+    
     // 2. 关卡提醒视图
     _roundView = [[UIView alloc] init];
     [self.view addSubview:_roundView];
-    // 环图片
+    // 2.1环图片
     _roundImage = [[UIImageView alloc] init];
     [_roundView addSubview:_roundImage];
     [_roundImage setImage:[UIImage imageNamed:@"round"]];
-    // 关卡
+    // 2.2关卡
     _roundLabel = [[UILabel alloc] init];
     _roundLabel.text = _textContent;
     _roundLabel.textColor = SDGRGBColor(71, 123, 186);
     _roundLabel.font = SDGFont;
     [_roundView addSubview:_roundLabel];
-    // 计时标签
+    // 2.3计时标签
     _timerItem = [[UILabel alloc] init];
     _timerItem.text = @"00:00";
     _timerItem.textAlignment = NSTextAlignmentRight;
     _timerItem.textColor = SDGRGBColor(71, 123, 186);
     _timerItem.font = SDGFont;
     [_roundView addSubview:_timerItem];
+    
     // 3. 创建卡片
     [self createCards];
 }

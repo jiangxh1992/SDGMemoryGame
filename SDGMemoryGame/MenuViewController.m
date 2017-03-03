@@ -29,6 +29,7 @@
     
     // 1. 配置UI
     [self setUI];
+    
 }
 
 - (void)viewWillLayoutSubviews {
@@ -46,7 +47,9 @@
     _mediumButton.center = CGPointMake(_easyButton.center.x, _easyButton.center.y + button_height + 10);
     _difficultButton.frame = CGRectMake(0, 0, button_width, button_height);
     _difficultButton.center = CGPointMake(_mediumButton.center.x, _mediumButton.center.y + button_height + 10);
-
+    
+    _bgView.frame = CGRectMake(0, 0, SDGScreenHeight * (width/height), SDGScreenHeight);
+    _bgView.center = self.view.center;
 }
 
 /**
@@ -54,7 +57,7 @@
  */
 - (void)setUI {
     [self.navigationController setNavigationBarHidden:YES];
-    self.view.backgroundColor = [UIColor orangeColor];
+    self.view.backgroundColor = [UIColor whiteColor];
 
     // 背景图片
     _bgView = [[UIImageView alloc] init];
