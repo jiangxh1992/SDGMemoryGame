@@ -89,6 +89,8 @@
     GameViewController *gameViewController = [[GameViewController alloc] init];
     gameViewController.GameLevel = sender.tag;
     gameViewController.round = 1;
+    gameViewController.matchCount = 0;
+    gameViewController.rightCount = 0;
     [self.navigationController pushViewController:gameViewController animated:YES];
 }
 

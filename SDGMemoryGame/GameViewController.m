@@ -9,6 +9,7 @@
 #import "GameViewController.h"
 #import "SDGImage.h"
 #import <QuartzCore/CAAnimation.h>
+#import <AVFoundation/AVFoundation.h>
 #define SDGMargin 2     // 间隙
 #define AniDuration 0.1 // 翻转动画持续时间
 #define maxRound 9      // 最大关卡
@@ -35,11 +36,11 @@
 @property (nonatomic, copy)NSString *textContent;             // 关卡文字内容
 
 @property (nonatomic, strong)NSTimer *timer;                  // 计时器
-@property (nonatomic, assign)int matchCount;                  // 匹配总数统计
-@property (nonatomic, assign)int errorCount;                  // 匹配错误统计
 @property (nonatomic, assign)int secTimer;                    // 已用的秒数
 
 @property (nonatomic, strong)dispatch_queue_t animationQueue; // 异步动画队列
+
+@property (nonatomic, strong)AVAudioPlayer *audioPlayer;      // 背景音乐播放器
 
 @end
 
@@ -53,6 +54,9 @@
     
     // 初始化界面UI
     [self initUI];
+    
+    // 播放背景音乐
+    [self.audioPlayer play];
     
     // 注册屏幕旋转通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceChanged) name:UIDeviceOrientationDidChangeNotification object:nil];
@@ -95,6 +99,31 @@
     }
 }
 
+#pragma -mark getters
+// audioPlayer懒加载getter方法
+- (AVAudioPlayer *)audioPlayer {
+    if (!_audioPlayer) {
+        // 资源路径
+        NSString *urlStr = [[NSBundle mainBundle]pathForResource:@"bg" ofType:@"mp3"];
+        NSURL *url = [NSURL fileURLWithPath:urlStr];
+        
+        // 初始化播放器，注意这里的Url参数只能为本地文件路径，不支持HTTP Url
+        NSError *error = nil;
+        _audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:&error];
+        
+        //设置播放器属性
+        _audioPlayer.numberOfLoops = -1;// 不循环
+        _audioPlayer.volume = 1.0; // 音量
+        [_audioPlayer prepareToPlay];// 加载音频文件到缓存【这个函数在调用play函数时会自动调用】
+        
+        if(error){
+            NSLog(@"初始化播放器过程发生错误,错误信息:%@",error.localizedDescription);
+            return nil;
+        }
+    }
+    return _audioPlayer;
+}
+
 #pragma -mark instance methods
 - (void)initData {
     // 1.根据游戏难度设置棋局规模
@@ -126,8 +155,6 @@
     _cardArray = [[NSMutableArray alloc] initWithCapacity:(_sizeRow * _sizeCol)];
     _imageArray = [[NSMutableArray alloc] initWithCapacity:(_sizeRow * _sizeCol)];
     _cardStack = [[NSMutableArray alloc] init];
-    _matchCount = 0;
-    _errorCount = 0;
     _secTimer = 0;
     _animationQueue = dispatch_queue_create("animation.memorygame.sdg", DISPATCH_QUEUE_CONCURRENT);
     _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(update) userInfo:nil repeats:YES];
@@ -290,6 +317,8 @@
  * 判断
  */
 - (bool)countResultAfterSender:(UIButton *)sender {
+    // 匹配次数
+    _matchCount++;
     if (_cardStack.count < 2) return NO;
     // 判断是否匹配成功
     UIButton *lastButton = [_cardStack objectAtIndex:0];
@@ -297,6 +326,8 @@
     SDGImage *lastImage = [_imageArray objectAtIndex:lastButton.tag];
     SDGImage *currentImage = [_imageArray objectAtIndex:sender.tag];
     if ([lastImage.card_id isEqualToString:currentImage.card_id]) {
+        // 匹配成功次数
+        _rightCount++;
         // 隐藏匹配成功的卡片按钮
         [_cardStack removeObject:sender];
         [_cardStack removeObject:lastButton];
@@ -351,6 +382,8 @@
  * 游戏结束
  */
 - (void)gameOver {
+    [self.audioPlayer stop];
+    self.audioPlayer = nil;
     // 关底
     if (_round >= maxRound) {
         [self.navigationController popToRootViewControllerAnimated:YES];
@@ -359,11 +392,15 @@
         GameViewController *nextGame = [[GameViewController alloc] init];
         nextGame.GameLevel = _GameLevel;
         nextGame.round = _round + 1;
+        nextGame.matchCount = _matchCount;
+        nextGame.rightCount = _rightCount;
         [self.navigationController pushViewController:nextGame animated:NO];
     }
 }
 
 - (void)home {
+    [self.audioPlayer stop];
+    self.audioPlayer = nil;
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
