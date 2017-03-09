@@ -13,8 +13,7 @@
 #define CATEGORY_DYNAMIC_FONT_SIZE_MAXIMUM_VALUE 35
 #define CATEGORY_DYNAMIC_FONT_SIZE_MINIMUM_VALUE 3
 
--(void) adjustFontSizeToFillItsContents
-{
+-(void)adjustFontSizeToFillItsSize {
     NSString* text = self.text;
     
     for (int i = CATEGORY_DYNAMIC_FONT_SIZE_MAXIMUM_VALUE; i>CATEGORY_DYNAMIC_FONT_SIZE_MINIMUM_VALUE; i--) {

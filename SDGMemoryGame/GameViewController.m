@@ -7,21 +7,26 @@
 //
 
 #import "GameViewController.h"
+#import "SDGTransitionViewController.h"
 #import "SDGImage.h"
 #import <QuartzCore/CAAnimation.h>
 #import <AVFoundation/AVFoundation.h>
 #define SDGMargin 2     // 间隙
 #define AniDuration 0.1 // 翻转动画持续时间
-#define maxRound 9      // 最大关卡
 #define maxDelay 10     // 最大停顿时间
 #define roundHeight 50  // 关卡标识高度
 
-@interface GameViewController ()
+NS_OPTIONS(NSUInteger, SDGAlertViewTag) {
+    SDGAlertViewTagBack,
+    SDGAlertViewTagGame
+};
 
-@property (nonatomic, assign)int matchedCount;                // 匹配成功计数(用于判断游戏结束)
+@interface GameViewController ()<UIAlertViewDelegate>
+
 @property (nonatomic, assign)float delayDuration;             // 卡牌显示停顿时间(关卡越往后时间越短)
 @property (nonatomic, assign)int sizeRow;                     // 宫格行数
 @property (nonatomic, assign)int sizeCol;                     // 宫格列数
+@property (nonatomic, assign)BOOL isTimer;                    // 是否在计时
 
 @property (nonatomic, strong)NSMutableArray *cardArray;       // 卡片按钮数组
 @property (nonatomic, strong)NSMutableArray *imageArray;      // 卡片图片数组
@@ -34,9 +39,13 @@
 @property (nonatomic, strong)UIImageView *roundImage;
 @property (nonatomic, strong)UILabel *roundLabel;
 @property (nonatomic, copy)NSString *textContent;             // 关卡文字内容
+@property (nonatomic, strong)UIAlertView *backAlert;
+@property (nonatomic, strong)UIAlertView *gameAlert;
 
 @property (nonatomic, strong)NSTimer *timer;                  // 计时器
 @property (nonatomic, assign)int secTimer;                    // 已用的秒数
+@property (nonatomic, assign)int matchCount;                  // 匹配总数统计
+@property (nonatomic, assign)int matchedCount;                // 匹配成功计数(用于判断游戏结束)
 
 @property (nonatomic, strong)dispatch_queue_t animationQueue; // 异步动画队列
 
@@ -68,7 +77,7 @@
     float barHeight = SDGTopBarHeight;//isportrait ? SDGTopBarHeight : SDGTopBarHeight / 3 * 2;
     int maxSize = _sizeCol > _sizeRow ? _sizeCol : _sizeRow;
     if (_sizeRow == _sizeCol) ++maxSize;
-    int btn_width = (width - SDGMargin * maxSize - roundHeight) / maxSize;
+    int btn_width = (width - SDGMargin * maxSize) / maxSize;
     int btn_height = btn_width;//(SDGScreenHeight - barHeight - SDGMargin * (_sizeRow + 1)) / _sizeRow;
     int gap_height = (SDGScreenHeight - barHeight -_sizeRow * (btn_height + SDGMargin) + SDGMargin) / 2;
     int gap_width = (SDGScreenWidth - _sizeCol * (btn_width + SDGMargin) + SDGMargin) / 2;
@@ -83,10 +92,10 @@
     _roundImage.frame = CGRectMake(0, 0, btn_height / 2, btn_width / 2);
     // 关卡
     _roundLabel.frame = CGRectMake(_roundImage.frame.size.width + 5, 0, btn_width * 1.5, btn_height / 2);
-    [_roundLabel adjustFontSizeToFillItsContents];
+    [_roundLabel adjustFontSizeToFillItsSize];
     // 计时器
     _timerItem.frame = CGRectMake(_roundView.frame.size.width / 2, 0, btn_width * 2, btn_height / 2);
-    [_timerItem adjustFontSizeToFillItsContents];
+    [_timerItem adjustFontSizeToFillItsSize];
 
     // 卡片尺寸位置
     for (int i = 0; i < _sizeRow; i++) {
@@ -124,7 +133,7 @@
     return _audioPlayer;
 }
 
-#pragma -mark instance methods
+#pragma -mark private instance methods
 - (void)initData {
     // 1.根据游戏难度设置棋局规模
     switch (_GameLevel) {
@@ -134,12 +143,12 @@
             _sizeCol = 4;
             break;
         case SDGGameLevelMedium:
-            _textContent = [NSString stringWithFormat:@"Medium: R%i", _round];
+            _textContent = [NSString stringWithFormat:@"Middle: R%i", _round];
             _sizeRow = 4;
             _sizeCol = 4;
             break;
         case SDGGameLevelDifficult:
-            _textContent = [NSString stringWithFormat:@"Difficult: R%i", _round];
+            _textContent = [NSString stringWithFormat:@"Hard: R%i", _round];
             _sizeRow = 4;
             _sizeCol = 5;
             break;
@@ -151,6 +160,7 @@
     _delayDuration = (maxDelay - _round) / 3;
 
     // 3.变量初始化
+    _matchCount = 0;
     _matchedCount = 0;
     _cardArray = [[NSMutableArray alloc] initWithCapacity:(_sizeRow * _sizeCol)];
     _imageArray = [[NSMutableArray alloc] initWithCapacity:(_sizeRow * _sizeCol)];
@@ -158,6 +168,7 @@
     _secTimer = 0;
     _animationQueue = dispatch_queue_create("animation.memorygame.sdg", DISPATCH_QUEUE_CONCURRENT);
     _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(update) userInfo:nil repeats:YES];
+    _isTimer = YES;
     
     // 4.产生随机图片
     for (int i = 0; i <  _sizeRow * _sizeCol; i += 2) {
@@ -214,7 +225,7 @@
     _timerItem = [[UILabel alloc] init];
     _timerItem.text = @"00:00";
     _timerItem.textAlignment = NSTextAlignmentRight;
-    _timerItem.textColor = SDGRGBColor(71, 123, 186);
+    _timerItem.textColor = SDGThemeColor;
     _timerItem.font = SDGFont;
     [_roundView addSubview:_timerItem];
     
@@ -327,13 +338,12 @@
     SDGImage *currentImage = [_imageArray objectAtIndex:sender.tag];
     if ([lastImage.card_id isEqualToString:currentImage.card_id]) {
         // 匹配成功次数
-        _rightCount++;
+        _matchedCount++;
         // 隐藏匹配成功的卡片按钮
         [_cardStack removeObject:sender];
         [_cardStack removeObject:lastButton];
         lastButton.userInteractionEnabled = NO;
         sender.userInteractionEnabled = NO;
-        _matchedCount += 2;
         // 移除动画
         dispatch_async(dispatch_get_main_queue(), ^{
             [lastButton.layer addAnimation:[self animationFade] forKey:@"animationFade"];
@@ -342,7 +352,7 @@
         
         // 判断游戏结束
         dispatch_sync(dispatch_get_main_queue(), ^{
-            if (_matchedCount == _sizeRow * _sizeCol) [self gameOver];
+            if (_matchedCount * 2 == _sizeRow * _sizeCol) [self gameOver];
         });
         return YES;
     }
@@ -382,32 +392,36 @@
  * 游戏结束
  */
 - (void)gameOver {
+    // 关闭背景音乐
     [self.audioPlayer stop];
     self.audioPlayer = nil;
-    // 关底
-    if (_round >= maxRound) {
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }
-    else {
-        GameViewController *nextGame = [[GameViewController alloc] init];
-        nextGame.GameLevel = _GameLevel;
-        nextGame.round = _round + 1;
-        nextGame.matchCount = _matchCount;
-        nextGame.rightCount = _rightCount;
-        [self.navigationController pushViewController:nextGame animated:NO];
-    }
+    // 积分刷新
+    _score += 100 * _matchedCount / _matchCount - _secTimer / 5;
+    // 跳转到过度界面
+    SDGTransitionViewController *transVC = [[SDGTransitionViewController alloc] init];
+    transVC.GameLevel = _GameLevel;
+    transVC.round = _round;
+    transVC.matchCount = _matchCount;
+    transVC.rightCount = _matchedCount;
+    transVC.timeUsed = _secTimer;
+    transVC.score = _score;
+    [self.navigationController pushViewController:transVC animated:YES];
 }
 
+/**
+ * 回到主页面
+ */
 - (void)home {
-    [self.audioPlayer stop];
-    self.audioPlayer = nil;
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    _isTimer = NO;
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"放弃游戏" message:@"确定要放弃挑战退出游戏吗？" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Confirm", nil];
+    [alert show];
 }
 
 /**
  * 定时刷新
  */
 - (void)update {
+    if (!_isTimer) return;
     _secTimer ++;
     int seconds = _secTimer % 60;
     int mins = _secTimer / 60;
@@ -418,6 +432,21 @@
  * 屏幕旋转
  */
 - (void)deviceChanged {
+}
+
+#pragma mark- AlertView Delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case 0:
+            _isTimer = YES;
+            break;
+        case 1:
+            [self.audioPlayer stop];
+            self.audioPlayer = nil;
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        default:
+            break;
+    }
 }
 
 @end

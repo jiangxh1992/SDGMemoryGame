@@ -10,6 +10,6 @@
 
 @interface UILabel (DynamicFontSize)
 
--(void) adjustFontSizeToFillItsContents;
+-(void)adjustFontSizeToFillItsSize;
 
 @end

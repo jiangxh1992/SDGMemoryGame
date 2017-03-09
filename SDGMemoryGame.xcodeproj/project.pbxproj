@@ -12,7 +12,6 @@
 		D24136FE1E6ADF9B00690921 /* bg.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D24136FD1E6ADF9A00690921 /* bg.mp3 */; };
 		D260DB631E6430FB0008115E /* SDGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D260DB621E6430FB0008115E /* SDGButton.m */; };
 		D26987751E699D820096B8B7 /* SDGTransitionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D26987731E699D820096B8B7 /* SDGTransitionViewController.m */; };
-		D26987761E699D820096B8B7 /* SDGTransitionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D26987741E699D820096B8B7 /* SDGTransitionViewController.xib */; };
 		D282E4121E68297000527E38 /* MarkerFelt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D282E4111E6828E100527E38 /* MarkerFelt.ttf */; };
 		D2D6E6131E55AD1200DB39B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D6E6121E55AD1200DB39B9 /* main.m */; };
 		D2D6E6161E55AD1300DB39B9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D6E6151E55AD1300DB39B9 /* AppDelegate.m */; };
@@ -53,7 +52,6 @@
 		D260DB621E6430FB0008115E /* SDGButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDGButton.m; sourceTree = "<group>"; };
 		D26987721E699D820096B8B7 /* SDGTransitionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDGTransitionViewController.h; sourceTree = "<group>"; };
 		D26987731E699D820096B8B7 /* SDGTransitionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDGTransitionViewController.m; sourceTree = "<group>"; };
-		D26987741E699D820096B8B7 /* SDGTransitionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SDGTransitionViewController.xib; sourceTree = "<group>"; };
 		D282E4111E6828E100527E38 /* MarkerFelt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MarkerFelt.ttf; sourceTree = "<group>"; };
 		D2D6E60E1E55AD1200DB39B9 /* SDGMemoryGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SDGMemoryGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2D6E6121E55AD1200DB39B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -132,7 +130,6 @@
 				D2D6E65B1E56F81700DB39B9 /* MenuViewController.m */,
 				D26987721E699D820096B8B7 /* SDGTransitionViewController.h */,
 				D26987731E699D820096B8B7 /* SDGTransitionViewController.m */,
-				D26987741E699D820096B8B7 /* SDGTransitionViewController.xib */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -325,7 +322,6 @@
 				D282E4121E68297000527E38 /* MarkerFelt.ttf in Resources */,
 				D2D6E6211E55AD1300DB39B9 /* LaunchScreen.storyboard in Resources */,
 				D2D6E61E1E55AD1300DB39B9 /* Assets.xcassets in Resources */,
-				D26987761E699D820096B8B7 /* SDGTransitionViewController.xib in Resources */,
 				D2D6E61C1E55AD1300DB39B9 /* Main.storyboard in Resources */,
 				D24136FE1E6ADF9B00690921 /* bg.mp3 in Resources */,
 			);
