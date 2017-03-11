@@ -23,6 +23,9 @@
 		D2D6E64C1E55EADF00DB39B9 /* GameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D6E64A1E55EADF00DB39B9 /* GameViewController.m */; };
 		D2D6E6511E56F43800DB39B9 /* RootNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D6E6501E56F43800DB39B9 /* RootNavigationController.m */; };
 		D2D6E65D1E56F81700DB39B9 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D6E65B1E56F81700DB39B9 /* MenuViewController.m */; };
+		D2DC08D71E73C3B500D0B04D /* close.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D2DC08D51E73C3B500D0B04D /* close.mp3 */; };
+		D2DC08D81E73C3B500D0B04D /* open.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D2DC08D61E73C3B500D0B04D /* open.mp3 */; };
+		D2DC08DA1E73C50700D0B04D /* matched.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D2DC08D91E73C50700D0B04D /* matched.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +77,9 @@
 		D2D6E6501E56F43800DB39B9 /* RootNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootNavigationController.m; sourceTree = "<group>"; };
 		D2D6E65A1E56F81700DB39B9 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		D2D6E65B1E56F81700DB39B9 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		D2DC08D51E73C3B500D0B04D /* close.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = close.mp3; sourceTree = "<group>"; };
+		D2DC08D61E73C3B500D0B04D /* open.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = open.mp3; sourceTree = "<group>"; };
+		D2DC08D91E73C50700D0B04D /* matched.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = matched.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +190,9 @@
 		D2D6E6111E55AD1200DB39B9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D2DC08D91E73C50700D0B04D /* matched.mp3 */,
+				D2DC08D51E73C3B500D0B04D /* close.mp3 */,
+				D2DC08D61E73C3B500D0B04D /* open.mp3 */,
 				D24136FD1E6ADF9A00690921 /* bg.mp3 */,
 				D282E4111E6828E100527E38 /* MarkerFelt.ttf */,
 				D2D6E6121E55AD1200DB39B9 /* main.m */,
@@ -320,9 +329,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				D282E4121E68297000527E38 /* MarkerFelt.ttf in Resources */,
+				D2DC08D81E73C3B500D0B04D /* open.mp3 in Resources */,
 				D2D6E6211E55AD1300DB39B9 /* LaunchScreen.storyboard in Resources */,
 				D2D6E61E1E55AD1300DB39B9 /* Assets.xcassets in Resources */,
+				D2DC08D71E73C3B500D0B04D /* close.mp3 in Resources */,
 				D2D6E61C1E55AD1300DB39B9 /* Main.storyboard in Resources */,
+				D2DC08DA1E73C50700D0B04D /* matched.mp3 in Resources */,
 				D24136FE1E6ADF9B00690921 /* bg.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

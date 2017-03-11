@@ -10,12 +10,18 @@
 #import "SDGTransitionViewController.h"
 #import "SDGImage.h"
 #import <QuartzCore/CAAnimation.h>
+#import <AudioToolbox/AudioToolbox.h>
 #import <AVFoundation/AVFoundation.h>
 #define SDGMargin 2     // 间隙
 #define AniDuration 0.1 // 翻转动画持续时间
 #define maxDelay 10     // 最大停顿时间
 #define roundHeight 50  // 关卡标识高度
 
+// 注册音效
+// 定义sound的ID
+static SystemSoundID card_open_sound_id = 0;
+static SystemSoundID card_close_sound_id = 0;
+static SystemSoundID card_matched_sound_id = 0;
 NS_OPTIONS(NSUInteger, SDGAlertViewTag) {
     SDGAlertViewTagBack,
     SDGAlertViewTagGame
@@ -170,7 +176,7 @@ NS_OPTIONS(NSUInteger, SDGAlertViewTag) {
     _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(update) userInfo:nil repeats:YES];
     _isTimer = YES;
     
-    // 4.产生随机图片
+    // 4. 产生随机图片
     for (int i = 0; i <  _sizeRow * _sizeCol; i += 2) {
         SDGImage *image1 = [[SDGImage alloc] init];
         image1.image = [UIImage imageNamed:[NSString stringWithFormat:@"card_%i", i/2 + 1]];
@@ -190,6 +196,22 @@ NS_OPTIONS(NSUInteger, SDGAlertViewTag) {
         if(random == j) continue;
         [_imageArray exchangeObjectAtIndex:j withObjectAtIndex:random];
     }
+    
+    // 5. 注册sound id
+    //[self registerSoundWithName:@"open" andID:card_open_sound_id];
+    //[self registerSoundWithName:@"close" andID:card_close_sound_id];
+    //[self registerSoundWithName:@"test" andID:card_test_sound_id];
+    NSString *audioFile=[[NSBundle mainBundle] pathForResource:@"open" ofType:@"mp3"];
+    NSURL *fileUrl=[NSURL fileURLWithPath:audioFile];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)(fileUrl), &card_open_sound_id);
+    
+    NSString *audioFile2=[[NSBundle mainBundle] pathForResource:@"close" ofType:@"mp3"];
+    NSURL *fileUrl2=[NSURL fileURLWithPath:audioFile2];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)(fileUrl2), &card_close_sound_id);
+    
+    NSString *audioFile3=[[NSBundle mainBundle] pathForResource:@"matched" ofType:@"mp3"];
+    NSURL *fileUrl3=[NSURL fileURLWithPath:audioFile3];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)(fileUrl3), &card_matched_sound_id);
 }
 
 - (void)initUI {
@@ -284,6 +306,17 @@ NS_OPTIONS(NSUInteger, SDGAlertViewTag) {
 }
 
 /**
+ * 系统声音资源注册函数
+ */
+- (void) registerSoundWithName: (NSString *)name andID:(SystemSoundID)sound_id {
+    // 1.获取音频文件url
+    NSString *audioFile=[[NSBundle mainBundle] pathForResource:name ofType:@"mp3"];
+    NSURL *fileUrl=[NSURL fileURLWithPath:audioFile];
+    // 2.将音效文件加入到系统音频服务中并返回一个长整形ID
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)(fileUrl), &sound_id);
+}
+
+/**
  * 按钮点击事件
  */
 - (void) cardSelected:(UIButton *)sender {
@@ -296,6 +329,7 @@ NS_OPTIONS(NSUInteger, SDGAlertViewTag) {
  * 翻开卡片
  */
 - (void)openCard: (UIButton *)sender {
+    AudioServicesPlaySystemSound(card_open_sound_id);
     sender.selected = YES;
     
     if (_cardStack.count == 2) {
@@ -349,7 +383,8 @@ NS_OPTIONS(NSUInteger, SDGAlertViewTag) {
             [lastButton.layer addAnimation:[self animationFade] forKey:@"animationFade"];
             [sender.layer addAnimation:[self animationFade] forKey:@"animationFade"];
         });
-        
+        // 匹配成功音效
+        AudioServicesPlaySystemSound(card_matched_sound_id);
         // 判断游戏结束
         dispatch_sync(dispatch_get_main_queue(), ^{
             if (_matchedCount * 2 == _sizeRow * _sizeCol) [self gameOver];
@@ -374,6 +409,7 @@ NS_OPTIONS(NSUInteger, SDGAlertViewTag) {
  * 关闭卡片
  */
 - (void)closeCard:(UIButton *)sender {
+    AudioServicesPlaySystemSound(card_close_sound_id);
     sender.selected = NO;
     dispatch_async(_animationQueue, ^{
         // 1. 翻转90度
@@ -392,11 +428,13 @@ NS_OPTIONS(NSUInteger, SDGAlertViewTag) {
  * 游戏结束
  */
 - (void)gameOver {
+    [NSThread sleepForTimeInterval:1.0];
     // 关闭背景音乐
     [self.audioPlayer stop];
     self.audioPlayer = nil;
     // 积分刷新
     _score += 100 * _matchedCount / _matchCount - _secTimer / 5;
+    [NSThread sleepForTimeInterval:1.0];
     // 跳转到过度界面
     SDGTransitionViewController *transVC = [[SDGTransitionViewController alloc] init];
     transVC.GameLevel = _GameLevel;
