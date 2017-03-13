@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D21A2B051E66B1140041AA98 /* UILabel+DynamicFontSize.m in Sources */ = {isa = PBXBuildFile; fileRef = D21A2B041E66B1140041AA98 /* UILabel+DynamicFontSize.m */; };
+		D232F1391E755D50002D24DB /* PlayerRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = D232F1381E755D50002D24DB /* PlayerRecord.m */; };
 		D23E61DF1E58331200E3870C /* SDGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = D23E61DE1E58331200E3870C /* SDGImage.m */; };
 		D24136FE1E6ADF9B00690921 /* bg.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D24136FD1E6ADF9A00690921 /* bg.mp3 */; };
 		D260DB631E6430FB0008115E /* SDGButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D260DB621E6430FB0008115E /* SDGButton.m */; };
@@ -48,6 +49,8 @@
 /* Begin PBXFileReference section */
 		D21A2B031E66B1140041AA98 /* UILabel+DynamicFontSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+DynamicFontSize.h"; sourceTree = "<group>"; };
 		D21A2B041E66B1140041AA98 /* UILabel+DynamicFontSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+DynamicFontSize.m"; sourceTree = "<group>"; };
+		D232F1371E755D50002D24DB /* PlayerRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerRecord.h; sourceTree = "<group>"; };
+		D232F1381E755D50002D24DB /* PlayerRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerRecord.m; sourceTree = "<group>"; };
 		D23E61DD1E58331200E3870C /* SDGImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDGImage.h; sourceTree = "<group>"; };
 		D23E61DE1E58331200E3870C /* SDGImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDGImage.m; sourceTree = "<group>"; };
 		D24136FD1E6ADF9A00690921 /* bg.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bg.mp3; sourceTree = "<group>"; };
@@ -110,6 +113,8 @@
 		D269876E1E699CD90096B8B7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D232F1371E755D50002D24DB /* PlayerRecord.h */,
+				D232F1381E755D50002D24DB /* PlayerRecord.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -363,6 +368,7 @@
 				D26987751E699D820096B8B7 /* SDGTransitionViewController.m in Sources */,
 				D260DB631E6430FB0008115E /* SDGButton.m in Sources */,
 				D23E61DF1E58331200E3870C /* SDGImage.m in Sources */,
+				D232F1391E755D50002D24DB /* PlayerRecord.m in Sources */,
 				D2D6E64C1E55EADF00DB39B9 /* GameViewController.m in Sources */,
 				D2D6E65D1E56F81700DB39B9 /* MenuViewController.m in Sources */,
 				D21A2B051E66B1140041AA98 /* UILabel+DynamicFontSize.m in Sources */,

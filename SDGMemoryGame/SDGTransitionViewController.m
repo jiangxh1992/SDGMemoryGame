@@ -9,6 +9,10 @@
 #import "SDGTransitionViewController.h"
 #import "GameViewController.h"
 
+NS_OPTIONS(NSUInteger, SDGAlertViewTag) {
+    SDGAlertViewTagBack,
+    SDGAlertViewTagRecord
+};
 @interface SDGTransitionViewController ()
 
 @property (nonatomic, strong)UIImageView *bgView;             // 背景图片
@@ -27,6 +31,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setUI];
+    
+    if (_round >= maxRound) {
+        [self newRecord];
+    }
 }
 
 - (void)viewWillLayoutSubviews {
@@ -135,22 +143,52 @@
 }
 
 - (void)home {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"放弃游戏" message:@"确定要放弃挑战退出游戏吗？" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Confirm", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"GIVE UP" message:@"Are you sure you want to give up？" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Confirm", nil];
+    alert.tag = SDGAlertViewTagBack;
     [alert show];
 }
 
+/**
+ * 成功进入排行榜
+ */
+- (void)newRecord {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"NEW RECORD!" message:@"Your score will be recorded, please leave your name:" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Confirm", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alert.tag = SDGAlertViewTagRecord;
+    [alert show];
+}
+
+- (void)saveRecordOfUser:(NSString *)name {
+    NSLog(@"Name:%@ \n Score:%d", name, _score);
+}
+
+/**
+ * 社交分享
+ */
 - (void)share {
 }
 
 #pragma mark- AlertView Delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-        case 0:
-            break;
-        case 1:
-            [self.navigationController popToRootViewControllerAnimated:YES];
-        default:
-            break;
+    if (alertView.tag == SDGAlertViewTagBack) {
+        switch (buttonIndex) {
+            case 0:
+                break;
+            case 1:
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            default:
+                break;
+        }
+    }else if (alertView.tag == SDGAlertViewTagRecord) {
+        switch (buttonIndex) {
+            case 0:
+                break;
+            case 1:
+                [self saveRecordOfUser:[alertView textFieldAtIndex:0].text];
+                break;
+            default:
+                break;
+        }
     }
 }
 

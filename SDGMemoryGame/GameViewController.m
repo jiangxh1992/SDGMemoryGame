@@ -22,7 +22,7 @@
 static SystemSoundID card_open_sound_id = 0;
 static SystemSoundID card_close_sound_id = 0;
 static SystemSoundID card_matched_sound_id = 0;
-NS_OPTIONS(NSUInteger, SDGAlertViewTag) {
+NS_OPTIONS(NSUInteger, SDGGameAlertViewTag) {
     SDGAlertViewTagBack,
     SDGAlertViewTagGame
 };
@@ -209,9 +209,9 @@ NS_OPTIONS(NSUInteger, SDGAlertViewTag) {
     NSURL *fileUrl2=[NSURL fileURLWithPath:audioFile2];
     AudioServicesCreateSystemSoundID((__bridge CFURLRef)(fileUrl2), &card_close_sound_id);
     
-    NSString *audioFile3=[[NSBundle mainBundle] pathForResource:@"matched" ofType:@"mp3"];
-    NSURL *fileUrl3=[NSURL fileURLWithPath:audioFile3];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)(fileUrl3), &card_matched_sound_id);
+    //NSString *audioFile3=[[NSBundle mainBundle] pathForResource:@"matched" ofType:@"mp3"];
+    //NSURL *fileUrl3=[NSURL fileURLWithPath:audioFile3];
+    //AudioServicesCreateSystemSoundID((__bridge CFURLRef)(fileUrl3), &card_matched_sound_id);
 }
 
 - (void)initUI {
@@ -409,6 +409,7 @@ NS_OPTIONS(NSUInteger, SDGAlertViewTag) {
  * 关闭卡片
  */
 - (void)closeCard:(UIButton *)sender {
+    if (!sender.selected) return;
     AudioServicesPlaySystemSound(card_close_sound_id);
     sender.selected = NO;
     dispatch_async(_animationQueue, ^{
