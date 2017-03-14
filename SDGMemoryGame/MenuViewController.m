@@ -12,8 +12,6 @@
 
 @interface MenuViewController ()
 
-// 背景图片
-@property (nonatomic, strong)UIImageView *bgView;
 // 按钮
 @property (nonatomic, strong)SDGButton *easyButton;
 @property (nonatomic, strong)SDGButton *mediumButton;
@@ -33,10 +31,8 @@
 }
 
 - (void)viewWillLayoutSubviews {
-    
-    float height = SDGScreenHeight > SDGScreenWidth ? SDGScreenHeight : SDGScreenWidth;
+    [super viewWillLayoutSubviews];
     float width = SDGScreenWidth < SDGScreenHeight ? SDGScreenWidth : SDGScreenHeight;
-    
     // 尺寸调整
     float button_width = width/2;
     float button_height = button_width/3;
@@ -46,9 +42,6 @@
     _mediumButton.center = CGPointMake(_easyButton.center.x, _easyButton.center.y + button_height + 10);
     _difficultButton.frame = CGRectMake(0, 0, button_width, button_height);
     _difficultButton.center = CGPointMake(_mediumButton.center.x, _mediumButton.center.y + button_height + 10);
-    
-    _bgView.frame = CGRectMake(0, 0, SDGScreenHeight * (width/height), SDGScreenHeight);
-    _bgView.center = self.view.center;
 }
 
 /**
@@ -57,12 +50,6 @@
 - (void)setUI {
     [self.navigationController setNavigationBarHidden:YES];
     self.view.backgroundColor = [UIColor whiteColor];
-
-    // 背景图片
-    _bgView = [[UIImageView alloc] init];
-    [_bgView setImage:[UIImage imageNamed:@"menu_bg"]];
-    [self.view addSubview:_bgView];
-    // ...
     
     // 按钮
     _easyButton = [SDGButton sdg_buttonWithName:@"btn_easy"];

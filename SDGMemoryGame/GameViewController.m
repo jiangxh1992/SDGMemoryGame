@@ -9,23 +9,12 @@
 #import "GameViewController.h"
 #import "SDGTransitionViewController.h"
 #import "SDGImage.h"
-#import <QuartzCore/CAAnimation.h>
-#import <AudioToolbox/AudioToolbox.h>
-#import <AVFoundation/AVFoundation.h>
+#import "SDGSoundPlayer.h"
+#import "GameRecord.h"
+#import "SDGAnimation.h"
 #define SDGMargin 2     // 间隙
-#define AniDuration 0.1 // 翻转动画持续时间
 #define maxDelay 10     // 最大停顿时间
 #define roundHeight 50  // 关卡标识高度
-
-// 注册音效
-// 定义sound的ID
-static SystemSoundID card_open_sound_id = 0;
-static SystemSoundID card_close_sound_id = 0;
-static SystemSoundID card_matched_sound_id = 0;
-NS_OPTIONS(NSUInteger, SDGGameAlertViewTag) {
-    SDGAlertViewTagBack,
-    SDGAlertViewTagGame
-};
 
 @interface GameViewController ()<UIAlertViewDelegate>
 
@@ -38,7 +27,6 @@ NS_OPTIONS(NSUInteger, SDGGameAlertViewTag) {
 @property (nonatomic, strong)NSMutableArray *imageArray;      // 卡片图片数组
 @property (nonatomic, strong)NSMutableArray *cardStack;       // 翻开的卡片按钮堆栈
 
-@property (nonatomic, strong)UIImageView *gameBackGround;     // 背景图片
 @property (nonatomic, strong)UIButton *homeButton;            // home按钮
 @property (nonatomic, strong)UILabel *timerItem;              // 计时标签
 @property (nonatomic, strong)UIView *roundView;               // 关卡视图
@@ -55,7 +43,6 @@ NS_OPTIONS(NSUInteger, SDGGameAlertViewTag) {
 
 @property (nonatomic, strong)dispatch_queue_t animationQueue; // 异步动画队列
 
-@property (nonatomic, strong)AVAudioPlayer *audioPlayer;      // 背景音乐播放器
 
 @end
 
@@ -66,19 +53,14 @@ NS_OPTIONS(NSUInteger, SDGGameAlertViewTag) {
     [super viewDidLoad];
     // 数据初始化
     [self initData];
-    
     // 初始化界面UI
     [self initUI];
-    
     // 播放背景音乐
-    [self.audioPlayer play];
-    
-    // 注册屏幕旋转通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceChanged) name:UIDeviceOrientationDidChangeNotification object:nil];
+    [SDGSoundPlayer playBackGroundMusic];
 }
 
 - (void)viewWillLayoutSubviews {
-    float height = SDGScreenHeight > SDGScreenWidth ? SDGScreenHeight : SDGScreenWidth;
+    [super viewWillLayoutSubviews];
     float width = SDGScreenWidth < SDGScreenHeight ? SDGScreenWidth : SDGScreenHeight;
     float barHeight = SDGTopBarHeight;//isportrait ? SDGTopBarHeight : SDGTopBarHeight / 3 * 2;
     int maxSize = _sizeCol > _sizeRow ? _sizeCol : _sizeRow;
@@ -88,9 +70,6 @@ NS_OPTIONS(NSUInteger, SDGGameAlertViewTag) {
     int gap_height = (SDGScreenHeight - barHeight -_sizeRow * (btn_height + SDGMargin) + SDGMargin) / 2;
     int gap_width = (SDGScreenWidth - _sizeCol * (btn_width + SDGMargin) + SDGMargin) / 2;
     
-    // 背景图片
-    _gameBackGround.frame = CGRectMake(0, 0, SDGScreenHeight * (width/height), SDGScreenHeight);
-    _gameBackGround.center = self.view.center;
     // 返回按钮
     _homeButton.frame = CGRectMake(15, barHeight, barHeight, barHeight / 1.5);
     // 指示视图
@@ -112,31 +91,6 @@ NS_OPTIONS(NSUInteger, SDGGameAlertViewTag) {
             card.frame = CGRectMake(x, y, btn_width, btn_height);
         }
     }
-}
-
-#pragma -mark getters
-// audioPlayer懒加载getter方法
-- (AVAudioPlayer *)audioPlayer {
-    if (!_audioPlayer) {
-        // 资源路径
-        NSString *urlStr = [[NSBundle mainBundle]pathForResource:@"bg" ofType:@"mp3"];
-        NSURL *url = [NSURL fileURLWithPath:urlStr];
-        
-        // 初始化播放器，注意这里的Url参数只能为本地文件路径，不支持HTTP Url
-        NSError *error = nil;
-        _audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:url error:&error];
-        
-        //设置播放器属性
-        _audioPlayer.numberOfLoops = -1;// 不循环
-        _audioPlayer.volume = 1.0; // 音量
-        [_audioPlayer prepareToPlay];// 加载音频文件到缓存【这个函数在调用play函数时会自动调用】
-        
-        if(error){
-            NSLog(@"初始化播放器过程发生错误,错误信息:%@",error.localizedDescription);
-            return nil;
-        }
-    }
-    return _audioPlayer;
 }
 
 #pragma -mark private instance methods
@@ -197,32 +151,14 @@ NS_OPTIONS(NSUInteger, SDGGameAlertViewTag) {
         [_imageArray exchangeObjectAtIndex:j withObjectAtIndex:random];
     }
     
-    // 5. 注册sound id
-    //[self registerSoundWithName:@"open" andID:card_open_sound_id];
-    //[self registerSoundWithName:@"close" andID:card_close_sound_id];
-    //[self registerSoundWithName:@"test" andID:card_test_sound_id];
-    NSString *audioFile=[[NSBundle mainBundle] pathForResource:@"open" ofType:@"mp3"];
-    NSURL *fileUrl=[NSURL fileURLWithPath:audioFile];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)(fileUrl), &card_open_sound_id);
-    
-    NSString *audioFile2=[[NSBundle mainBundle] pathForResource:@"close" ofType:@"mp3"];
-    NSURL *fileUrl2=[NSURL fileURLWithPath:audioFile2];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)(fileUrl2), &card_close_sound_id);
-    
-    //NSString *audioFile3=[[NSBundle mainBundle] pathForResource:@"matched" ofType:@"mp3"];
-    //NSURL *fileUrl3=[NSURL fileURLWithPath:audioFile3];
-    //AudioServicesCreateSystemSoundID((__bridge CFURLRef)(fileUrl3), &card_matched_sound_id);
+    // 5. 预先初始化单例
+    [SDGSoundPlayer Ins];
+    [SDGAnimation Ins];
+    [GameRecord Ins];
 }
 
 - (void)initUI {
-    // 隐藏导航栏
-    [self.navigationController setNavigationBarHidden:YES];
     // 0. 背景图片
-    self.view.backgroundColor = [UIColor whiteColor];
-    _gameBackGround = [[UIImageView alloc] init];
-    [_gameBackGround setImage:[UIImage imageNamed:@"menu_bg"]];
-    _gameBackGround.layer.opacity = 0.6;
-    [self.view addSubview:_gameBackGround];
     
     // 1. 返回按钮
     _homeButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -280,43 +216,6 @@ NS_OPTIONS(NSUInteger, SDGGameAlertViewTag) {
 }
 
 /**
- * 翻转动画
- */
-- (CAAnimation *)animationRotate {
-    CATransform3D rotationTransform = CATransform3DMakeScale(0, 1, 1); //CATransform3DMakeRotation(M_PI/2, 0, 1, 0);
-    CABasicAnimation* animation = [CABasicAnimation animationWithKeyPath:@"transform"];
-    animation.toValue = [NSValue valueWithCATransform3D:rotationTransform];
-    animation.duration = AniDuration;
-    animation.repeatCount = 1;
-    return animation;
-}
-
-/**
- * 消失动画
- */
-- (CAAnimation *)animationFade {
-    CATransform3D scaleTransform = CATransform3DMakeScale(0, 0, 1);
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
-    animation.toValue = [NSValue valueWithCATransform3D:scaleTransform];
-    animation.duration = AniDuration * 2;
-    animation.repeatCount = 1;
-    animation.fillMode = kCAFillModeForwards;
-    animation.removedOnCompletion = NO;
-    return animation;
-}
-
-/**
- * 系统声音资源注册函数
- */
-- (void) registerSoundWithName: (NSString *)name andID:(SystemSoundID)sound_id {
-    // 1.获取音频文件url
-    NSString *audioFile=[[NSBundle mainBundle] pathForResource:name ofType:@"mp3"];
-    NSURL *fileUrl=[NSURL fileURLWithPath:audioFile];
-    // 2.将音效文件加入到系统音频服务中并返回一个长整形ID
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)(fileUrl), &sound_id);
-}
-
-/**
  * 按钮点击事件
  */
 - (void) cardSelected:(UIButton *)sender {
@@ -329,7 +228,7 @@ NS_OPTIONS(NSUInteger, SDGGameAlertViewTag) {
  * 翻开卡片
  */
 - (void)openCard: (UIButton *)sender {
-    AudioServicesPlaySystemSound(card_open_sound_id);
+    //[SDGSoundPlayer playSoundEffect:SDGSoundEffectIDOpenCard];
     sender.selected = YES;
     
     if (_cardStack.count == 2) {
@@ -345,7 +244,7 @@ NS_OPTIONS(NSUInteger, SDGGameAlertViewTag) {
     dispatch_async(_animationQueue, ^{
         // 1. 翻转90度
         dispatch_sync(dispatch_get_main_queue(), ^{
-            [sender.layer addAnimation:[self animationRotate] forKey:@"animationRotate"];
+            [sender.layer addAnimation:[SDGAnimation animationFlip] forKey:@"animationRotate"];
         });
         [NSThread sleepForTimeInterval:AniDuration];
         // 2. 替换图片
@@ -380,11 +279,12 @@ NS_OPTIONS(NSUInteger, SDGGameAlertViewTag) {
         sender.userInteractionEnabled = NO;
         // 移除动画
         dispatch_async(dispatch_get_main_queue(), ^{
-            [lastButton.layer addAnimation:[self animationFade] forKey:@"animationFade"];
-            [sender.layer addAnimation:[self animationFade] forKey:@"animationFade"];
+            [lastButton.layer addAnimation:[SDGAnimation animationFade] forKey:@"animationFade"];
+            [sender.layer addAnimation:[SDGAnimation animationFade] forKey:@"animationFade"];
         });
         // 匹配成功音效
-        AudioServicesPlaySystemSound(card_matched_sound_id);
+        [SDGSoundPlayer playSoundEffect:SDGSoundEffectIDCloseCard];
+#warning "之类临时播放关闭音效，应该是匹配成功音效"
         // 判断游戏结束
         dispatch_sync(dispatch_get_main_queue(), ^{
             if (_matchedCount * 2 == _sizeRow * _sizeCol) [self gameOver];
@@ -410,12 +310,12 @@ NS_OPTIONS(NSUInteger, SDGGameAlertViewTag) {
  */
 - (void)closeCard:(UIButton *)sender {
     if (!sender.selected) return;
-    AudioServicesPlaySystemSound(card_close_sound_id);
+    [SDGSoundPlayer playSoundEffect:SDGSoundEffectIDCloseCard];
     sender.selected = NO;
     dispatch_async(_animationQueue, ^{
         // 1. 翻转90度
         dispatch_sync(dispatch_get_main_queue(), ^{
-            [sender.layer addAnimation:[self animationRotate] forKey:@"animationRotate"];
+            [sender.layer addAnimation:[SDGAnimation animationFlip] forKey:@"animationRotate"];
         });
         [NSThread sleepForTimeInterval:AniDuration];
         // 2. 替换图片
@@ -431,8 +331,7 @@ NS_OPTIONS(NSUInteger, SDGGameAlertViewTag) {
 - (void)gameOver {
     [NSThread sleepForTimeInterval:1.0];
     // 关闭背景音乐
-    [self.audioPlayer stop];
-    self.audioPlayer = nil;
+    [SDGSoundPlayer stopBackGroundMusic];
     // 积分刷新
     _score += 100 * _matchedCount / _matchCount - _secTimer / 5;
     [NSThread sleepForTimeInterval:1.0];
@@ -440,7 +339,7 @@ NS_OPTIONS(NSUInteger, SDGGameAlertViewTag) {
     SDGTransitionViewController *transVC = [[SDGTransitionViewController alloc] init];
     transVC.GameLevel = _GameLevel;
     transVC.round = _round;
-    transVC.matchCount = _matchCount;
+    transVC.matchCount = _matchCount - _sizeRow * _sizeCol;
     transVC.rightCount = _matchedCount;
     transVC.timeUsed = _secTimer;
     transVC.score = _score;
@@ -452,7 +351,7 @@ NS_OPTIONS(NSUInteger, SDGGameAlertViewTag) {
  */
 - (void)home {
     _isTimer = NO;
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"放弃游戏" message:@"确定要放弃挑战退出游戏吗？" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Confirm", nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"GIVE UP" message:@"Are you sure you want to give up the game？" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Confirm", nil];
     [alert show];
 }
 
@@ -467,12 +366,6 @@ NS_OPTIONS(NSUInteger, SDGGameAlertViewTag) {
     _timerItem.text = [NSString stringWithFormat:@"%2d:%2d",mins,seconds];
 }
 
-/**
- * 屏幕旋转
- */
-- (void)deviceChanged {
-}
-
 #pragma mark- AlertView Delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     switch (buttonIndex) {
@@ -480,8 +373,7 @@ NS_OPTIONS(NSUInteger, SDGGameAlertViewTag) {
             _isTimer = YES;
             break;
         case 1:
-            [self.audioPlayer stop];
-            self.audioPlayer = nil;
+            [SDGSoundPlayer stopBackGroundMusic];
             [self.navigationController popToRootViewControllerAnimated:YES];
         default:
             break;

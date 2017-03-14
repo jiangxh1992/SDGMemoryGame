@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "RootNavigationController.h"
 #import "MenuViewController.h"
 
 @interface AppDelegate ()
@@ -24,7 +23,7 @@
     // 菜单界面
     MenuViewController *menuVC = [[MenuViewController alloc] init];
     // 跟导航控制器
-    RootNavigationController *rootVC = [[RootNavigationController alloc] initWithRootViewController:menuVC];
+    UINavigationController *rootVC = [[UINavigationController alloc] initWithRootViewController:menuVC];
     self.window.rootViewController = rootVC;
     return YES;
 }

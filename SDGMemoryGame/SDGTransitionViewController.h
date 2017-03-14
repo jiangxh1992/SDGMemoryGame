@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface SDGTransitionViewController : UIViewController
+#import "SDGViewController.h"
+@interface SDGTransitionViewController : SDGViewController
 
 @property (nonatomic, assign)SDGGameLevel GameLevel; // 游戏难度
 @property (nonatomic, assign)int round;              // 第几关

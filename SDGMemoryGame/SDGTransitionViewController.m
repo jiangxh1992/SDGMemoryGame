@@ -8,20 +8,16 @@
 
 #import "SDGTransitionViewController.h"
 #import "GameViewController.h"
+#import "PlayerRecord.h"
 
-NS_OPTIONS(NSUInteger, SDGAlertViewTag) {
-    SDGAlertViewTagBack,
-    SDGAlertViewTagRecord
-};
 @interface SDGTransitionViewController ()
 
-@property (nonatomic, strong)UIImageView *bgView;             // 背景图片
-@property (nonatomic, strong)UIButton *homeButton;            // home按钮
-@property (nonatomic, strong)UIButton *nextButton;            // 下一关
-@property (nonatomic, strong)UIButton *shareButton;           // 分享按钮
-@property (nonatomic, strong)UILabel *rightRateLabel;         // 正确率标签
-@property (nonatomic, strong)UILabel *timeUsedLabel;          // 已用时标签
-@property (nonatomic, strong)UILabel *scoreLabel;             // 积分标签
+@property (nonatomic, strong) UIButton *homeButton;            // home按钮
+@property (nonatomic, strong) UIButton *nextButton;            // 下一关
+@property (nonatomic, strong) UIButton *shareButton;           // 分享按钮
+@property (nonatomic, strong) UILabel *rightRateLabel;         // 正确率标签
+@property (nonatomic, strong) UILabel *timeUsedLabel;          // 已用时标签
+@property (nonatomic, strong) UILabel *scoreLabel;             // 积分标签
 
 @end
 
@@ -38,46 +34,36 @@ NS_OPTIONS(NSUInteger, SDGAlertViewTag) {
 }
 
 - (void)viewWillLayoutSubviews {
-    float height = SDGScreenHeight > SDGScreenWidth ? SDGScreenHeight : SDGScreenWidth;
+    [super viewWillLayoutSubviews];
     float width = SDGScreenWidth < SDGScreenHeight ? SDGScreenWidth : SDGScreenHeight;
-    // 1.背景
-    _bgView.frame = CGRectMake(0, 0, SDGScreenHeight * (width/height), SDGScreenHeight);
-    _bgView.layer.opacity = 0.5;
-    _bgView.center = self.view.center;
-    // 2.返回按钮
+    // 返回按钮
     _homeButton.frame = CGRectMake(15, SDGTopBarHeight, SDGTopBarHeight, SDGTopBarHeight / 1.5);
     int labelHeight = width / 5;
-    // 3.
+    //
     _timeUsedLabel.frame = CGRectMake(0, 0, SDGScreenWidth, labelHeight);
     _timeUsedLabel.center = CGPointMake(SDGScreenWidth / 2, SDGScreenHeight / 2 - labelHeight * 3 / 2);
     [_timeUsedLabel adjustFontSizeToFillItsSize];
-    // 4.
+    //
     _rightRateLabel.frame = CGRectMake(0, 0, SDGScreenWidth, labelHeight);
     _rightRateLabel.center = CGPointMake(SDGScreenWidth / 2, SDGScreenHeight / 2 - labelHeight / 2);
     [_rightRateLabel adjustFontSizeToFillItsSize];
-    // 5.
+    //
     _scoreLabel.frame = CGRectMake(0, 0, SDGScreenWidth, labelHeight);
     _scoreLabel.center = CGPointMake(SDGScreenWidth / 2, SDGScreenHeight / 2 + labelHeight / 2);
     [_scoreLabel adjustFontSizeToFillItsSize];
     
-    // 6.下一关按钮
+    // 下一关按钮
     _nextButton.frame = CGRectMake(0, 0, SDGScreenWidth, labelHeight);
     _nextButton.center = CGPointMake(SDGScreenWidth / 2, SDGScreenHeight - labelHeight);
     _nextButton.titleLabel.frame = _nextButton.frame;
     [_nextButton.titleLabel adjustFontSizeToFillItsSize];
     
-    // 7.分享按钮
+    // 分享按钮
     _shareButton.frame = CGRectMake(SDGScreenWidth - labelHeight, SDGScreenHeight - labelHeight, labelHeight, labelHeight);
 }
 
 # pragma -mark private instance methods
 - (void)setUI {
-    [self.navigationController setNavigationBarHidden:YES];
-    self.view.backgroundColor = [UIColor whiteColor];
-    // 背景图片
-    _bgView = [[UIImageView alloc] init];
-    [_bgView setImage:[UIImage imageNamed:@"menu_bg"]];
-    [self.view addSubview:_bgView];
     
     // 返回按钮
     _homeButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -95,7 +81,8 @@ NS_OPTIONS(NSUInteger, SDGAlertViewTag) {
     
     // 正确率
     _rightRateLabel = [[UILabel alloc] init];
-    _rightRateLabel.text = [NSString stringWithFormat:@"ACCURATE RATE: %d%%", _rightCount*100 / _matchCount];
+    int rate = _rightCount >= _matchCount ? 100 : _rightCount*100 / _matchCount;
+    _rightRateLabel.text = [NSString stringWithFormat:@"ACCURATE RATE: %d%%", rate];
     _rightRateLabel.font = SDGFont;
     _rightRateLabel.textColor = SDGThemeColor;
     _rightRateLabel.textAlignment = NSTextAlignmentCenter;
@@ -121,7 +108,7 @@ NS_OPTIONS(NSUInteger, SDGAlertViewTag) {
     // 分享按钮
     _shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_shareButton setImage:[UIImage imageNamed:@"share"] forState:UIControlStateNormal];
-    _shareButton.layer.opacity = 0.8;
+    _shareButton.layer.opacity = 0.6;
     [_shareButton addTarget:self action:@selector(share) forControlEvents:UIControlEventTouchUpInside];
     if (_round >= maxRound) {
         [self.view addSubview:_shareButton];
@@ -160,6 +147,9 @@ NS_OPTIONS(NSUInteger, SDGAlertViewTag) {
 
 - (void)saveRecordOfUser:(NSString *)name {
     NSLog(@"Name:%@ \n Score:%d", name, _score);
+    PlayerRecord *newRecord = [[PlayerRecord alloc] init];
+    newRecord.name = name;
+    newRecord.score = _score;
 }
 
 /**
