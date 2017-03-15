@@ -41,6 +41,7 @@
 		D2DC08D71E73C3B500D0B04D /* close.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D2DC08D51E73C3B500D0B04D /* close.mp3 */; };
 		D2DC08D81E73C3B500D0B04D /* open.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D2DC08D61E73C3B500D0B04D /* open.mp3 */; };
 		D2DC08DA1E73C50700D0B04D /* matched.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D2DC08D91E73C50700D0B04D /* matched.mp3 */; };
+		D2E7B24B1E79514C0051009C /* SDGRankTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2E7B24A1E79514C0051009C /* SDGRankTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,6 +128,8 @@
 		D2DC08D51E73C3B500D0B04D /* close.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = close.mp3; sourceTree = "<group>"; };
 		D2DC08D61E73C3B500D0B04D /* open.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = open.mp3; sourceTree = "<group>"; };
 		D2DC08D91E73C50700D0B04D /* matched.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = matched.mp3; sourceTree = "<group>"; };
+		D2E7B2491E79514C0051009C /* SDGRankTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDGRankTableViewController.h; sourceTree = "<group>"; };
+		D2E7B24A1E79514C0051009C /* SDGRankTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDGRankTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,6 +218,8 @@
 				D29A81B21E77CE5E00E80960 /* SDGViewController.m */,
 				D29A81B41E77D21000E80960 /* SDGRankViewController.h */,
 				D29A81B51E77D21000E80960 /* SDGRankViewController.m */,
+				D2E7B2491E79514C0051009C /* SDGRankTableViewController.h */,
+				D2E7B24A1E79514C0051009C /* SDGRankTableViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -457,6 +462,7 @@
 				D260DB631E6430FB0008115E /* SDGButton.m in Sources */,
 				D232F1511E76CF05002D24DB /* MJFoundation.m in Sources */,
 				D232F1591E76CF05002D24DB /* NSString+MJExtension.m in Sources */,
+				D2E7B24B1E79514C0051009C /* SDGRankTableViewController.m in Sources */,
 				D232F1521E76CF05002D24DB /* MJProperty.m in Sources */,
 				D29A81B61E77D21000E80960 /* SDGRankViewController.m in Sources */,
 				D29A81B31E77CE5E00E80960 /* SDGViewController.m in Sources */,

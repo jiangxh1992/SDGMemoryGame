@@ -9,9 +9,6 @@
 #import "GameViewController.h"
 #import "SDGTransitionViewController.h"
 #import "SDGImage.h"
-#import "SDGSoundPlayer.h"
-#import "GameRecord.h"
-#import "SDGAnimation.h"
 #define SDGMargin 2     // 间隙
 #define maxDelay 10     // 最大停顿时间
 #define roundHeight 50  // 关卡标识高度

@@ -145,11 +145,23 @@
     [alert show];
 }
 
+/**
+ * 添加新纪录
+ */
 - (void)saveRecordOfUser:(NSString *)name {
     NSLog(@"Name:%@ \n Score:%d", name, _score);
     PlayerRecord *newRecord = [[PlayerRecord alloc] init];
     newRecord.name = name;
     newRecord.score = _score;
+    // 取出已有记录
+    NSMutableArray *savedRecords = [GameRecord Ins].SavedRecord;
+    if (!savedRecords) {
+        savedRecords = [[NSMutableArray alloc] init];
+    }
+    // 添加新纪录
+    [savedRecords addObject:newRecord];
+    // 保存最新记录
+    [GameRecord saveRecords:savedRecords];
 }
 
 /**
