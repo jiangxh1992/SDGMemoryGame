@@ -15,9 +15,14 @@
 
 // 按钮
 @property (nonatomic, strong) SDGButton *rankButton;
+
 @property (nonatomic, strong) SDGButton *easyButton;
 @property (nonatomic, strong) SDGButton *mediumButton;
 @property (nonatomic, strong) SDGButton *difficultButton;
+
+@property (nonatomic, strong) SDGButton *easyRankButton;
+@property (nonatomic, strong) SDGButton *mediumRankButton;
+@property (nonatomic, strong) SDGButton *difficultRankButton;
 
 @end
 
@@ -39,14 +44,20 @@
     float button_height = button_width/3;
     float centerX = self.view.center.x;
     float centerY = self.view.center.y;
-    _rankButton.frame = CGRectMake(0, 0, button_width, button_height);
-    _rankButton.center = CGPointMake(centerX, centerY - button_height - 20);
+    //_rankButton.frame = CGRectMake(0, 0, button_width, button_height);
+    //_rankButton.center = CGPointMake(centerX, centerY - button_height - 20);
+    // 进入游戏按钮
+    
     _easyButton.frame = CGRectMake(0, 0, button_width, button_height);
-    _easyButton.center = self.view.center;
+    _easyButton.center = CGPointMake(centerX - button_height / 2, centerY);
     _mediumButton.frame = CGRectMake(0, 0, button_width, button_height);
-    _mediumButton.center = CGPointMake(centerX, _easyButton.center.y + button_height + 10);
+    _mediumButton.center = CGPointMake(centerX - button_height / 2, _easyButton.center.y + button_height + 10);
     _difficultButton.frame = CGRectMake(0, 0, button_width, button_height);
-    _difficultButton.center = CGPointMake(centerX, _mediumButton.center.y + button_height + 10);
+    _difficultButton.center = CGPointMake(centerX - button_height / 2, _mediumButton.center.y + button_height + 10);
+    // 排名按钮
+    _easyRankButton.frame = CGRectMake(CGRectGetMaxX(_easyButton.frame), CGRectGetMinY(_easyButton.frame), button_height, button_height);
+    _mediumRankButton.frame = CGRectMake(CGRectGetMaxX(_mediumButton.frame), CGRectGetMinY(_mediumButton.frame), button_height, button_height);
+    _difficultRankButton.frame = CGRectMake(CGRectGetMaxX(_difficultButton.frame), CGRectGetMinY(_difficultButton.frame), button_height, button_height);
 }
 
 /**
@@ -57,23 +68,38 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     // 按钮
-    _rankButton = [SDGButton sdg_buttonWithName:@"btn_ranking"];
+    //_rankButton = [SDGButton sdg_buttonWithName:@"btn_ranking"];
     _easyButton = [SDGButton sdg_buttonWithName:@"btn_easy"];
+    [_easyButton setTag:SDGGameLevelEasy];
     _mediumButton = [SDGButton sdg_buttonWithName:@"btn_medium"];
+    [_mediumButton setTag:SDGGameLevelMedium];
     _difficultButton = [SDGButton sdg_buttonWithName:@"btn_difficult"];
+    [_difficultButton setTag:SDGGameLevelDifficult];
+    
+    _easyRankButton = [SDGButton sdg_buttonWithName:@"btn_rank"];
+    [_easyRankButton setTag:SDGGameLevelEasy];
+    _mediumRankButton = [SDGButton sdg_buttonWithName:@"btn_rank"];
+    [_mediumRankButton setTag:SDGGameLevelMedium];
+    _difficultRankButton = [SDGButton sdg_buttonWithName:@"btn_rank"];
+    [_difficultButton setTag:SDGGameLevelDifficult];
     // 添加按钮
-    [self.view addSubview:_rankButton];
+    //[self.view addSubview:_rankButton];
     [self.view addSubview:_easyButton];
     [self.view addSubview:_mediumButton];
     [self.view addSubview:_difficultButton];
+    [self.view addSubview:_easyRankButton];
+    [self.view addSubview:_mediumRankButton];
+    [self.view addSubview:_difficultButton];
     // 注册点击事件
-    [_rankButton addTarget:self action:@selector(enterRanking:) forControlEvents:UIControlEventTouchUpInside];
+    //[_rankButton addTarget:self action:@selector(enterRanking:) forControlEvents:UIControlEventTouchUpInside];
+    
     [_easyButton addTarget:self action:@selector(enterGame:) forControlEvents:UIControlEventTouchUpInside];
-    [_easyButton setTag:SDGGameLevelEasy];
     [_mediumButton addTarget:self action:@selector(enterGame:) forControlEvents:UIControlEventTouchUpInside];
-    [_mediumButton setTag:SDGGameLevelMedium];
     [_difficultButton addTarget:self action:@selector(enterGame:) forControlEvents:UIControlEventTouchUpInside];
-    [_difficultButton setTag:SDGGameLevelDifficult];
+    
+    [_easyRankButton addTarget:self action:@selector(enterRanking:) forControlEvents:UIControlEventTouchUpInside];
+    [_mediumRankButton addTarget:self action:@selector(enterRanking:) forControlEvents:UIControlEventTouchUpInside];
+    [_difficultRankButton addTarget:self action:@selector(enterRanking:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 /**
@@ -88,6 +114,7 @@
 }
 - (void)enterRanking:(UIButton *)sender {
     SDGRankViewController *rankVC = [[SDGRankViewController alloc] init];
+    rankVC.level = sender.tag;
     [self.navigationController pushViewController:rankVC animated:YES];
 }
 

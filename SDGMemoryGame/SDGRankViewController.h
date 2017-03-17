@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "SDGViewController.h"
 @interface SDGRankViewController : SDGViewController
+@property (nonatomic, assign) SDGGameLevel level;
 @property (nonatomic,strong) NSMutableArray *dataSource;
 @end

@@ -59,7 +59,7 @@
     [_nextButton.titleLabel adjustFontSizeToFillItsSize];
     
     // 分享按钮
-    _shareButton.frame = CGRectMake(SDGScreenWidth - labelHeight, SDGScreenHeight - labelHeight, labelHeight, labelHeight);
+    _shareButton.frame = CGRectMake(SDGScreenWidth - labelHeight, SDGScreenHeight - labelHeight, labelHeight*2/3, labelHeight*2/3);
 }
 
 # pragma -mark private instance methods
@@ -154,14 +154,14 @@
     newRecord.name = name;
     newRecord.score = _score;
     // 取出已有记录
-    NSMutableArray *savedRecords = [GameRecord Ins].SavedRecord;
+    NSMutableArray *savedRecords = [GameRecord getRecordsOfGameLevel:_GameLevel];
     if (!savedRecords) {
         savedRecords = [[NSMutableArray alloc] init];
     }
     // 添加新纪录
     [savedRecords addObject:newRecord];
     // 保存最新记录
-    [GameRecord saveRecords:savedRecords];
+    [GameRecord saveRecords:savedRecords ofGameLevel:_GameLevel];
 }
 
 /**

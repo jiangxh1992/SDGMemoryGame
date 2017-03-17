@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     SDGRankTableViewController *ranktable = [[SDGRankTableViewController alloc] init];
-    ranktable.dataSource = [GameRecord Ins].SavedRecord;
+    ranktable.dataSource = [GameRecord getRecordsOfGameLevel:_level];
     [self.view addSubview:ranktable.view];
     [self addChildViewController:ranktable];
     

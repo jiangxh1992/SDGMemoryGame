@@ -10,9 +10,8 @@
 
 @interface GameRecord : NSObject
 
-@property (nonatomic,strong,readonly) NSMutableArray *SavedRecord;
-
 + (instancetype)Ins;
-+ (void)saveRecords: (NSMutableArray *)newRecords;
++ (void)saveRecords: (NSMutableArray *)newRecords ofGameLevel:(SDGGameLevel)level;
++ (NSMutableArray *)getRecordsOfGameLevel:(SDGGameLevel)level;
 
 @end
