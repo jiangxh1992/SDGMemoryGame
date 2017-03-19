@@ -10,17 +10,29 @@
 #import "SDGRankTableViewController.h"
 
 @interface SDGRankViewController ()
-@property (nonatomic, strong)UIButton *homeButton;            // home按钮
+@property (nonatomic, strong) UIButton *homeButton;            // home按钮
+@property (nonatomic, strong) UIImageView *nullView;           // 没有数据界面
 @end
 
 @implementation SDGRankViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    SDGRankTableViewController *ranktable = [[SDGRankTableViewController alloc] init];
-    ranktable.dataSource = [GameRecord getRecordsOfGameLevel:_level];
-    [self.view addSubview:ranktable.view];
-    [self addChildViewController:ranktable];
+    // 请求数据
+    _dataSource = [GameRecord getRecordsOfGameLevel:_level];
+    if (_dataSource.count > 0) {
+        // 显示排名数据
+        SDGRankTableViewController *ranktable = [[SDGRankTableViewController alloc] init];
+        ranktable.dataSource = _dataSource;
+        [self.view addSubview:ranktable.view];
+        [self addChildViewController:ranktable];
+    }
+    else {
+        _nullView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SDGScreenWidth/2, SDGScreenWidth / 2)];
+        _nullView.center = self.view.center;
+        [_nullView setImage:[UIImage imageNamed:@"null"]];
+        [self.view addSubview:_nullView];
+    }
     
     // 返回按钮
     _homeButton = [UIButton buttonWithType:UIButtonTypeCustom];

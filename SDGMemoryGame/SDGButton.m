@@ -12,7 +12,6 @@
 
 + (SDGButton *)sdg_button {
     SDGButton *button = [SDGButton buttonWithType:UIButtonTypeCustom];
-    
     button.layer.cornerRadius = 5;
     button.layer.masksToBounds = YES;
     

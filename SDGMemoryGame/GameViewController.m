@@ -225,7 +225,7 @@
  * 翻开卡片
  */
 - (void)openCard: (UIButton *)sender {
-    //[SDGSoundPlayer playSoundEffect:SDGSoundEffectIDOpenCard];
+    [SDGSoundPlayer playSoundEffect:SDGSoundEffectIDOpenCard];
     sender.selected = YES;
     
     if (_cardStack.count == 2) {
@@ -250,7 +250,8 @@
             [sender setBackgroundImage:sdgImage.image forState:UIControlStateNormal];
         });
         [NSThread sleepForTimeInterval:AniDuration];
-        if ([self countResultAfterSender:sender]) return;
+        
+        if([self countResultAfterSender:sender]) return;
     });
 }
 
@@ -281,7 +282,7 @@
         });
         // 匹配成功音效
         [SDGSoundPlayer playSoundEffect:SDGSoundEffectIDCloseCard];
-#warning "之类临时播放关闭音效，应该是匹配成功音效"
+#warning 之类临时播放关闭音效，应该是匹配成功音效
         // 判断游戏结束
         dispatch_sync(dispatch_get_main_queue(), ^{
             if (_matchedCount * 2 == _sizeRow * _sizeCol) [self gameOver];
@@ -330,7 +331,18 @@
     // 关闭背景音乐
     [SDGSoundPlayer stopBackGroundMusic];
     // 积分刷新
-    _score += 100 * _matchedCount / _matchCount - _secTimer / 5;
+#warning 成绩结算
+    // 去掉首次翻开的匹配次数不计
+    _matchCount -= _sizeCol * _sizeRow / 2;
+    // 纠正
+    if (_matchCount <= _matchedCount) _matchCount = _matchedCount;
+    // 本局成绩
+    int curScore = (100 * _matchedCount / _matchCount) - (_secTimer / 10);
+    // 最少得1分
+    if (curScore <= 0) curScore = 1;
+    // 成绩累加
+    _score += curScore;
+    
     [NSThread sleepForTimeInterval:1.0];
     // 跳转到过度界面
     SDGTransitionViewController *transVC = [[SDGTransitionViewController alloc] init];
