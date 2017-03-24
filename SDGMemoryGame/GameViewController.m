@@ -9,6 +9,7 @@
 #import "GameViewController.h"
 #import "SDGTransitionViewController.h"
 #import "SDGImage.h"
+#import "SDGButton.h"
 #define SDGMargin 2     // 间隙
 #define maxDelay 10     // 最大停顿时间
 #define roundHeight 50  // 关卡标识高度
@@ -63,7 +64,7 @@
     int maxSize = _sizeCol > _sizeRow ? _sizeCol : _sizeRow;
     if (_sizeRow == _sizeCol) ++maxSize;
     int btn_width = (width - SDGMargin * maxSize) / maxSize;
-    int btn_height = btn_width;//(SDGScreenHeight - barHeight - SDGMargin * (_sizeRow + 1)) / _sizeRow;
+    int btn_height = btn_width;
     int gap_height = (SDGScreenHeight - barHeight -_sizeRow * (btn_height + SDGMargin) + SDGMargin) / 2;
     int gap_width = (SDGScreenWidth - _sizeCol * (btn_width + SDGMargin) + SDGMargin) / 2;
     
@@ -195,15 +196,12 @@
     // card size
     for (int i = 0; i < _sizeRow; i++) {
         for (int j = 0; j < _sizeCol; j++) {
-            UIButton *card = [[UIButton alloc] initWithFrame:CGRectZero];
-            [card setBackgroundImage:[UIImage imageNamed:@"card_back"] forState:UIControlStateNormal];
-            card.layer.cornerRadius = 5;
+            UIButton *card = [UIButton buttonWithType:UIButtonTypeCustom];
+            [card setBackgroundImage:[UIImage imageNamed:@"card_back_normal"] forState:UIControlStateNormal];
+            card.layer.cornerRadius = 3;
+            card.layer.masksToBounds = YES;
             card.layer.borderWidth = 2;
             card.layer.borderColor = [UIColor whiteColor].CGColor;
-            [card.layer setMasksToBounds:YES];
-            card.layer.shadowOffset = CGSizeMake(1, 1);
-            card.layer.shadowColor = [UIColor blackColor].CGColor;
-            card.layer.shadowOpacity = 0.8;
             [card addTarget:self action:@selector(cardSelected:) forControlEvents:UIControlEventTouchUpInside];
             card.tag = i * _sizeCol + j;
             [_cardArray addObject:card];
@@ -318,7 +316,7 @@
         [NSThread sleepForTimeInterval:AniDuration];
         // 2. 替换图片
         dispatch_sync(dispatch_get_main_queue(), ^{
-            [sender setBackgroundImage:[UIImage imageNamed:@"card_back"] forState:UIControlStateNormal];
+            [sender setBackgroundImage:[UIImage imageNamed:@"card_back_normal"] forState:UIControlStateNormal];
         });
     });
 }

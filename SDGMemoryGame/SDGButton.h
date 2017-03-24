@@ -13,5 +13,6 @@
 + (SDGButton *)sdg_button;
 + (SDGButton *)sdg_buttonWithName:(NSString *)name;
 + (SDGButton *)sdg_buttonWithTitle:(NSString *)title;
++ (SDGButton *)sdg_buttonWithFrame:(CGRect)frame;
 
 @end

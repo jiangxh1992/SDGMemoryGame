@@ -40,7 +40,7 @@
     float width = SDGScreenWidth < SDGScreenHeight ? SDGScreenWidth : SDGScreenHeight;
     // 尺寸调整
     float button_width = width/3;
-    float button_height = button_width/3;
+    float button_height = button_width/3 + 10;
     float centerX = self.view.center.x;
     float centerY = self.view.center.y;
     // 进入游戏按钮
