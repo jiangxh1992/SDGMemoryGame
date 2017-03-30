@@ -196,12 +196,8 @@
     // card size
     for (int i = 0; i < _sizeRow; i++) {
         for (int j = 0; j < _sizeCol; j++) {
-            UIButton *card = [UIButton buttonWithType:UIButtonTypeCustom];
-            [card setBackgroundImage:[UIImage imageNamed:@"card_back_normal"] forState:UIControlStateNormal];
-            card.layer.cornerRadius = 3;
-            card.layer.masksToBounds = YES;
-            card.layer.borderWidth = 2;
-            card.layer.borderColor = [UIColor whiteColor].CGColor;
+            SDGButton *card = [SDGButton sdg_buttonWithBackGround:@"card_back_normal"];
+            card.isDelaying = NO;
             [card addTarget:self action:@selector(cardSelected:) forControlEvents:UIControlEventTouchUpInside];
             card.tag = i * _sizeCol + j;
             [_cardArray addObject:card];
@@ -222,7 +218,7 @@
 /**
  * 翻开卡片
  */
-- (void)openCard: (UIButton *)sender {
+- (void)openCard: (SDGButton *)sender {
     [SDGSoundPlayer playSoundEffect:SDGSoundEffectIDOpenCard];
     sender.selected = YES;
     
@@ -256,12 +252,12 @@
 /**
  * 判断
  */
-- (bool)countResultAfterSender:(UIButton *)sender {
+- (bool)countResultAfterSender:(SDGButton *)sender {
     // 匹配次数
     _matchCount++;
     if (_cardStack.count < 2) return NO;
     // 判断是否匹配成功
-    UIButton *lastButton = [_cardStack objectAtIndex:0];
+    SDGButton *lastButton = [_cardStack objectAtIndex:0];
     if (lastButton == sender) return NO;
     SDGImage *lastImage = [_imageArray objectAtIndex:lastButton.tag];
     SDGImage *currentImage = [_imageArray objectAtIndex:sender.tag];
@@ -289,12 +285,19 @@
     }
     else {
         // 延时关闭显示的两张卡片
+        lastButton.isDelaying = YES;
+        sender.isDelaying = YES;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_delayDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             if (sender.selected && lastButton.selected) {
-                [self closeCard:lastButton];
-                [self closeCard:sender];
-                [_cardStack removeObject:lastButton];
-                [_cardStack removeObject:sender];
+                if (lastButton.isDelaying) {
+                    [self closeCard:lastButton];
+                    [_cardStack removeObject:lastButton];
+                }
+                if (sender.isDelaying) {
+                    [self closeCard:sender];
+                    [_cardStack removeObject:sender];
+
+                }
             }
         });
         return NO;
@@ -304,8 +307,9 @@
 /**
  * 关闭卡片
  */
-- (void)closeCard:(UIButton *)sender {
+- (void)closeCard:(SDGButton *)sender {
     if (!sender.selected) return;
+    sender.isDelaying = NO;
     [SDGSoundPlayer playSoundEffect:SDGSoundEffectIDCloseCard];
     sender.selected = NO;
     dispatch_async(_animationQueue, ^{

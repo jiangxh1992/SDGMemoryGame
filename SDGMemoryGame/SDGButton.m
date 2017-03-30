@@ -12,7 +12,7 @@
 
 + (SDGButton *)sdg_button {
     SDGButton *button = [SDGButton buttonWithType:UIButtonTypeCustom];
-    button.layer.cornerRadius = 5;
+    button.layer.cornerRadius = 3;
     button.layer.masksToBounds = YES;
     
     button.layer.shadowOffset = CGSizeMake(0, 0);
@@ -40,6 +40,14 @@
 + (SDGButton *)sdg_buttonWithFrame:(CGRect)frame {
     SDGButton *button = [SDGButton sdg_button];
     button.frame = frame;
+    return button;
+}
+
++ (SDGButton *)sdg_buttonWithBackGround:(NSString *)name {
+    SDGButton *button = [SDGButton sdg_button];
+    [button setBackgroundImage:[UIImage imageNamed:name] forState:UIControlStateNormal];
+    button.layer.borderWidth = 2;
+    button.layer.borderColor = [UIColor whiteColor].CGColor;
     return button;
 }
 

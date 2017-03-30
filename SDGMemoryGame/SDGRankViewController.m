@@ -41,6 +41,10 @@
     [self.view addSubview:_homeButton];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [GameRecord saveRecords:_dataSource ofGameLevel:_level];
+}
+
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     // 返回按钮
