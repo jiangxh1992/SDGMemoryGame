@@ -10,6 +10,9 @@
 #import "GameViewController.h"
 #import "PlayerRecord.h"
 
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKUI/ShareSDK+SSUI.h>
+
 @interface SDGTransitionViewController ()
 
 @property (nonatomic, strong) UIButton *homeButton;            // home按钮
@@ -18,6 +21,8 @@
 @property (nonatomic, strong) UILabel *rightRateLabel;         // 正确率标签
 @property (nonatomic, strong) UILabel *timeUsedLabel;          // 已用时标签
 @property (nonatomic, strong) UILabel *scoreLabel;             // 积分标签
+
+@property (nonatomic, copy) NSString *name;
 
 @end
 
@@ -168,6 +173,52 @@
  * 社交分享
  */
 - (void)share {
+    // 创建分享参数
+    NSString *level = @"Easy";
+    if (_GameLevel == SDGGameLevelMedium) level = @"Middle";
+    if (_GameLevel == SDGGameLevelDifficult) level = @"Hard";
+    NSString *shareText = [NSString stringWithFormat:@"%@在UNV记忆游戏中%@模式得分：%d http://www.unv.org",_name,level,_score];
+    NSArray *imageArray = @[[UIImage imageNamed:@"share.png"]];
+    if (imageArray) {
+        NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+        [shareParams SSDKSetupShareParamsByText:shareText
+                                         images:imageArray
+                                            url:[NSURL URLWithString:@"http://mob.com"]
+                                          title:@"联合国小游戏"
+                                           type:SSDKContentTypeAuto];
+        [shareParams SSDKEnableUseClientShare];
+        
+        // 分享
+        [ShareSDK showShareActionSheet:_shareButton
+                                items:nil
+                          shareParams:shareParams
+                  onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+                      switch (state) {
+                          case SSDKResponseStateSuccess:
+                          {
+                              UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"分享成功"
+                                                                                  message:nil
+                                                                                 delegate:nil
+                                                                        cancelButtonTitle:@"确定"
+                                                                        otherButtonTitles:nil];
+                              [alertView show];
+                              break;
+                          }
+                          case SSDKResponseStateFail:
+                          {
+                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享失败"
+                                                                              message:[NSString stringWithFormat:@"%@",error]
+                                                                             delegate:nil
+                                                                    cancelButtonTitle:@"OK"
+                                                                    otherButtonTitles:nil, nil];
+                              [alert show];
+                              break;
+                          }
+                          default:
+                              break;
+                      }
+        }];
+    }
 }
 
 #pragma mark- AlertView Delegate
@@ -186,7 +237,8 @@
             case 0:
                 break;
             case 1:
-                [self saveRecordOfUser:[alertView textFieldAtIndex:0].text];
+                _name = [alertView textFieldAtIndex:0].text;
+                [self saveRecordOfUser:_name];
                 break;
             default:
                 break;

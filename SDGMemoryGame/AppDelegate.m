@@ -9,6 +9,20 @@
 #import "AppDelegate.h"
 #import "MenuViewController.h"
 
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKConnector/ShareSDKConnector.h>
+
+//腾讯开放平台（对应QQ和QQ空间）SDK头文件
+#import <TencentOpenAPI/TencentOAuth.h>
+#import <TencentOpenAPI/QQApiInterface.h>
+
+//微信SDK头文件
+#import "WXApi.h"
+
+//新浪微博SDK头文件
+#import "WeiboSDK.h"
+//新浪微博SDK需要在项目Build Settings中的Other Linker Flags添加"-ObjC"
+
 @interface AppDelegate ()
 
 @end
@@ -17,6 +31,49 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    /* 初始化sharesdk */
+    [ShareSDK registerApp:@"253a2deb6558"
+          activePlatforms: @[@(SSDKPlatformTypeSinaWeibo),
+                             @(SSDKPlatformTypeWechat),
+                             @(SSDKPlatformTypeQQ)]
+                 onImport:^(SSDKPlatformType platformType) {
+                     switch (platformType) {
+                         case SSDKPlatformTypeWechat:
+                             [ShareSDKConnector connectWeChat:[WXApi class]];
+                             break;
+                         case SSDKPlatformTypeQQ:
+                             [ShareSDKConnector connectQQ:[QQApiInterface class] tencentOAuthClass:[TencentOAuth class]];
+                             break;
+                         case SSDKPlatformTypeSinaWeibo:
+                             [ShareSDKConnector connectWeibo:[WeiboSDK class]];
+                             break;
+                             
+                         default:
+                             break;
+                     }
+                 } onConfiguration:^(SSDKPlatformType platformType, NSMutableDictionary *appInfo) {
+                     switch (platformType) {
+                         case SSDKPlatformTypeSinaWeibo:
+                             [appInfo SSDKSetupSinaWeiboByAppKey:@"3202668036"
+                                                      appSecret:@"84413fe6b014f694bcdda5ac2ff8d562"
+                                                    redirectUri:@"http://www.sharesdk.cn"
+                                                       authType:SSDKAuthTypeBoth];
+                             break;
+                         case SSDKPlatformTypeWechat:
+                             [appInfo SSDKSetupWeChatByAppId:@""
+                                                   appSecret:@""];
+                             break;
+                         case SSDKPlatformTypeQQ:
+                             [appInfo SSDKSetupQQByAppId:@""
+                                                  appKey:@""
+                                                authType:@""];
+                             break;
+                             
+                         default:
+                             break;
+                     }
+                 }];
+    
     // 设置window窗口
     self.window = [[UIWindow alloc] init];
     self.window.frame = [UIScreen mainScreen].bounds;
@@ -27,7 +84,6 @@
     self.window.rootViewController = rootVC;
     return YES;
 }
-
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
