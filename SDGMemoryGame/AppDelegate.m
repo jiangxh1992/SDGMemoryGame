@@ -33,9 +33,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     /* 初始化sharesdk */
     [ShareSDK registerApp:@"253a2deb6558"
-          activePlatforms: @[@(SSDKPlatformTypeSinaWeibo),
-                             @(SSDKPlatformTypeWechat),
-                             @(SSDKPlatformTypeQQ)]
+          activePlatforms: @[@(SSDKPlatformTypeSinaWeibo),         // 微博
+                             @(SSDKPlatformSubTypeWechatSession),  // 微信好友
+                             @(SSDKPlatformSubTypeWechatTimeline), // 微信朋友圈
+                             @(SSDKPlatformSubTypeQZone),          // qq空间
+                             @(SSDKPlatformSubTypeQQFriend)]       // qq好友
                  onImport:^(SSDKPlatformType platformType) {
                      switch (platformType) {
                          case SSDKPlatformTypeWechat:

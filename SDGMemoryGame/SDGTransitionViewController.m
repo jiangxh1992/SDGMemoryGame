@@ -178,48 +178,48 @@
     NSString *level = @"Easy";
     if (_GameLevel == SDGGameLevelMedium) level = @"Middle";
     if (_GameLevel == SDGGameLevelDifficult) level = @"Hard";
+    
     NSString *shareText = [NSString stringWithFormat:@"\"%@\"在UNDP记忆游戏中%@模式得分：%d",_name,level,_score];
-    NSArray *imageArray = @[[UIImage imageNamed:@"share.png"]];
-    if (imageArray) {
-        NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
-        [shareParams SSDKSetupShareParamsByText:shareText
-                                         images:imageArray
-                                            url:[NSURL URLWithString:@"http://www.un.org/sustainabledevelopment/zh/oceans/"]
-                                          title:shareText
-                                           type:SSDKContentTypeAuto];
-        [shareParams SSDKEnableUseClientShare];
-        
-        // 分享
-        [ShareSDK showShareActionSheet:_shareButton
-                                items:nil
-                          shareParams:shareParams
-                  onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
-                      switch (state) {
-                          case SSDKResponseStateSuccess:
-                          {
-                              UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"分享成功"
-                                                                                  message:nil
-                                                                                 delegate:nil
-                                                                        cancelButtonTitle:@"确定"
-                                                                        otherButtonTitles:nil];
-                              [alertView show];
-                              break;
-                          }
-                          case SSDKResponseStateFail:
-                          {
-                              UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享失败"
-                                                                              message:[NSString stringWithFormat:@"%@",error]
+    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+    [shareParams SSDKSetupShareParamsByText:shareText
+                                     images:@[SDGSharePicUrl]
+                                        url:[NSURL URLWithString:SDGshareLink]
+                                      title:shareText
+                                       type:SSDKContentTypeAuto];
+    [shareParams SSDKEnableUseClientShare];
+    
+    // 分享
+    SSUIShareActionSheetController *sheet = [ShareSDK showShareActionSheet:_shareButton
+                            items:nil
+                      shareParams:shareParams
+              onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+                  switch (state) {
+                      case SSDKResponseStateSuccess:
+                      {
+                          UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"分享成功"
+                                                                              message:nil
                                                                              delegate:nil
-                                                                    cancelButtonTitle:@"OK"
-                                                                    otherButtonTitles:nil, nil];
-                              [alert show];
-                              break;
-                          }
-                          default:
-                              break;
+                                                                    cancelButtonTitle:@"确定"
+                                                                    otherButtonTitles:nil];
+                          [alertView show];
+                          break;
                       }
-        }];
-    }
+                      case SSDKResponseStateFail:
+                      {
+                          UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分享失败"
+                                                                          message:[NSString stringWithFormat:@"%@",error]
+                                                                         delegate:nil
+                                                                cancelButtonTitle:@"OK"
+                                                                otherButtonTitles:nil, nil];
+                          [alert show];
+                          break;
+                      }
+                      default:
+                          break;
+                  }
+    }];
+    // 跳过微博前编辑界面
+    [sheet.directSharePlatforms addObject:@(SSDKPlatformTypeSinaWeibo)];
 }
 
 #pragma mark- AlertView Delegate

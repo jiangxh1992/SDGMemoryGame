@@ -25,6 +25,11 @@
 #define maxRound 1// 每种难度最大关卡数
 #define AniDuration 0.1 // 翻转动画持续时间
 
+// 社交分享预览图片地址
+#define SDGSharePicUrl @"http://www.un.org/sustainabledevelopment/zh/wp-content/uploads/sites/6/2016/05/C-Sustainable-Development-Goals-1.jpg"
+// 社交分享链接地址
+#define SDGshareLink @"http://www.un.org/sustainabledevelopment/zh/oceans/"
+
 /* 颜色 */
 #define SDGRGBColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 #define SDGThemeColor SDGRGBColor(71, 123, 186)
