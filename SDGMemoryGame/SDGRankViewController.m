@@ -8,6 +8,7 @@
 
 #import "SDGRankViewController.h"
 #import "SDGRankTableViewController.h"
+#import "SDGButton.h"
 
 @interface SDGRankViewController ()
 @property (nonatomic, strong) UIButton *homeButton;            // home按钮
@@ -35,8 +36,8 @@
     }
     
     // 返回按钮
-    _homeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_homeButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    _homeButton = [SDGButton sdg_buttonWithName:@"back"];
+    [_homeButton.layer addAnimation:[SDGAnimation animationScale] forKey:@"animationScaleback"];
     [_homeButton addTarget:self action:@selector(home) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_homeButton];
 }

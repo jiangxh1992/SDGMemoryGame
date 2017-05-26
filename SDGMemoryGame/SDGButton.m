@@ -24,7 +24,7 @@
 
 + (SDGButton *)sdg_buttonWithName:(NSString *)name {
     SDGButton *button = [SDGButton sdg_button];
-    UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_normal",name]];
+    UIImage *image = [UIImage imageNamed:name];
     [button setImage:image forState:UIControlStateNormal];
     [button setImageEdgeInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
     return button;

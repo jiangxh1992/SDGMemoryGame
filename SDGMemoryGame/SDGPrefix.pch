@@ -22,7 +22,7 @@
 #define SDGScreenHeight [UIScreen mainScreen].bounds.size.height
 #define SDGScreenWidth [UIScreen mainScreen].bounds.size.width
 #define SDGTopBarHeight 50
-#define maxRound 1// 每种难度最大关卡数
+#define maxRound 3// 每种难度最大关卡数
 #define AniDuration 0.1 // 翻转动画持续时间
 
 // 社交分享预览图片地址

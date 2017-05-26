@@ -9,6 +9,7 @@
 #import "SDGTransitionViewController.h"
 #import "GameViewController.h"
 #import "PlayerRecord.h"
+#import "SDGButton.h"
 
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKUI/ShareSDK+SSUI.h>
@@ -108,14 +109,15 @@
     [_nextButton setTitleColor:SDGThemeColor forState:UIControlStateNormal];
     _nextButton.titleLabel.font = SDGFont;
     [_nextButton addTarget:self action:@selector(nextGame) forControlEvents:UIControlEventTouchUpInside];
+    [_nextButton.layer addAnimation:[SDGAnimation animationScale] forKey:@"animationScalenext"];
     [self.view addSubview:_nextButton];
     
     // 分享按钮
-    _shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_shareButton setImage:[UIImage imageNamed:@"share"] forState:UIControlStateNormal];
+    _shareButton = [SDGButton sdg_buttonWithName:@"share"];
     _shareButton.layer.opacity = 0.8;
-    _shareButton.layer.cornerRadius = 20;
+    _shareButton.layer.cornerRadius = 0;
     [_shareButton addTarget:self action:@selector(share) forControlEvents:UIControlEventTouchUpInside];
+    [_shareButton.layer addAnimation:[SDGAnimation animationScale] forKey:@"animationScaleShare"];
     if (_round >= maxRound) {
         [self.view addSubview:_shareButton];
     }
@@ -174,6 +176,7 @@
  * 社交分享
  */
 - (void)share {
+    [_shareButton.layer addAnimation:[SDGAnimation animationScale] forKey:@"buttonScale"];
     // 创建分享参数
     NSString *level = @"Easy";
     if (_GameLevel == SDGGameLevelMedium) level = @"Middle";

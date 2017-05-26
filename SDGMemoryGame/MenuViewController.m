@@ -77,6 +77,7 @@
     [_mediumRankButton setTag:SDGGameLevelMedium];
     _difficultRankButton = [SDGButton sdg_buttonWithName:@"btn_rank"];
     [_difficultRankButton setTag:SDGGameLevelDifficult];
+    
     // 添加按钮
     [self.view addSubview:_easyButton];
     [self.view addSubview:_mediumButton];
@@ -92,6 +93,10 @@
     [_easyRankButton addTarget:self action:@selector(enterRanking:) forControlEvents:UIControlEventTouchUpInside];
     [_mediumRankButton addTarget:self action:@selector(enterRanking:) forControlEvents:UIControlEventTouchUpInside];
     [_difficultRankButton addTarget:self action:@selector(enterRanking:) forControlEvents:UIControlEventTouchUpInside];
+    // 按钮动画
+    [_easyRankButton.layer addAnimation:[SDGAnimation animationScale] forKey:@"animationScale1"];
+    [_mediumRankButton.layer addAnimation:[SDGAnimation animationScale] forKey:@"animationScale2"];
+    [_difficultRankButton.layer addAnimation:[SDGAnimation animationScale] forKey:@"animationScale3"];
 }
 
 /**

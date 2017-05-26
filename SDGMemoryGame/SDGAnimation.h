@@ -12,4 +12,5 @@
 + (instancetype)Ins;
 + (CAAnimation *)animationFlip;
 + (CAAnimation *)animationFade;
++ (CAAnimation *)animationScale;
 @end

@@ -30,6 +30,9 @@
 + (CAAnimation *)animationFade {
     return [SDGAnimation Ins].animationFade;
 }
++ (CAAnimation *)animationScale {
+    return [SDGAnimation Ins].animationScale;
+}
 
 /**
  * 翻转动画
@@ -52,6 +55,21 @@
     animation.toValue = [NSValue valueWithCATransform3D:scaleTransform];
     animation.duration = AniDuration * 2;
     animation.repeatCount = 1;
+    animation.fillMode = kCAFillModeForwards;
+    animation.removedOnCompletion = NO;
+    return animation;
+}
+
+/**
+ * 按钮缩放动画
+ */
+- (CAAnimation *)animationScale {
+    CATransform3D scaleTransform = CATransform3DMakeScale(1.2, 1.2, 1);
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
+    animation.toValue = [NSValue valueWithCATransform3D:scaleTransform];
+    animation.duration = AniDuration *2;
+    animation.repeatCount = HUGE_VALF;
+    animation.autoreverses = YES;
     animation.fillMode = kCAFillModeForwards;
     animation.removedOnCompletion = NO;
     return animation;
