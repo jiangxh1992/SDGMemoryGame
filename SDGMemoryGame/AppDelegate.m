@@ -56,17 +56,17 @@
                          case SSDKPlatformTypeSinaWeibo:
                              [appInfo SSDKSetupSinaWeiboByAppKey:@"3202668036"
                                                       appSecret:@"84413fe6b014f694bcdda5ac2ff8d562"
-                                                    redirectUri:@"http://www.sharesdk.cn"
+                                                    redirectUri:@"http://www.un.org/sustainabledevelopment/zh/oceans/"
                                                        authType:SSDKAuthTypeBoth];
                              break;
                          case SSDKPlatformTypeWechat:
-                             [appInfo SSDKSetupWeChatByAppId:@""
-                                                   appSecret:@""];
+                             [appInfo SSDKSetupWeChatByAppId:@"wx202d867bad2378e1"
+                                                   appSecret:@"6ed26df7e77ef42fa4dd84ee712aa29e"];
                              break;
                          case SSDKPlatformTypeQQ:
-                             [appInfo SSDKSetupQQByAppId:@""
-                                                  appKey:@""
-                                                authType:@""];
+                             [appInfo SSDKSetupQQByAppId:@"1106188728"
+                                                  appKey:@"xrQAU1kB7x53UkGO"
+                                                authType:SSDKAuthTypeBoth];
                              break;
                              
                          default:

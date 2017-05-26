@@ -571,7 +571,7 @@
 				TargetAttributes = {
 					D2D6E60D1E55AD1200DB39B9 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = C6G3U74T9Y;
+						DevelopmentTeam = V4SYMZQA29;
 						ProvisioningStyle = Automatic;
 					};
 					D2D6E6261E55AD1300DB39B9 = {
@@ -832,7 +832,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = C6G3U74T9Y;
+				DEVELOPMENT_TEAM = V4SYMZQA29;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/SDGMemoryGame",
@@ -849,7 +849,7 @@
 					"$(PROJECT_DIR)/SDGMemoryGame/PlatformSDK/SinaWeiboSDK",
 					"$(PROJECT_DIR)/SDGMemoryGame/PlatformSDK/WeChatSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "jiangxh-SDGMeoryGame";
+				PRODUCT_BUNDLE_IDENTIFIER = SDGMeoryGame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -858,7 +858,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = C6G3U74T9Y;
+				DEVELOPMENT_TEAM = V4SYMZQA29;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/SDGMemoryGame",
@@ -875,7 +875,7 @@
 					"$(PROJECT_DIR)/SDGMemoryGame/PlatformSDK/SinaWeiboSDK",
 					"$(PROJECT_DIR)/SDGMemoryGame/PlatformSDK/WeChatSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "jiangxh-SDGMeoryGame";
+				PRODUCT_BUNDLE_IDENTIFIER = SDGMeoryGame;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

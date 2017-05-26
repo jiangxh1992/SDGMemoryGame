@@ -113,7 +113,8 @@
     // 分享按钮
     _shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_shareButton setImage:[UIImage imageNamed:@"share"] forState:UIControlStateNormal];
-    _shareButton.layer.opacity = 0.6;
+    _shareButton.layer.opacity = 0.8;
+    _shareButton.layer.cornerRadius = 20;
     [_shareButton addTarget:self action:@selector(share) forControlEvents:UIControlEventTouchUpInside];
     if (_round >= maxRound) {
         [self.view addSubview:_shareButton];
@@ -177,14 +178,14 @@
     NSString *level = @"Easy";
     if (_GameLevel == SDGGameLevelMedium) level = @"Middle";
     if (_GameLevel == SDGGameLevelDifficult) level = @"Hard";
-    NSString *shareText = [NSString stringWithFormat:@"%@在UNV记忆游戏中%@模式得分：%d http://www.unv.org",_name,level,_score];
+    NSString *shareText = [NSString stringWithFormat:@"\"%@\"在UNDP记忆游戏中%@模式得分：%d",_name,level,_score];
     NSArray *imageArray = @[[UIImage imageNamed:@"share.png"]];
     if (imageArray) {
         NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
         [shareParams SSDKSetupShareParamsByText:shareText
                                          images:imageArray
-                                            url:[NSURL URLWithString:@"http://mob.com"]
-                                          title:@"联合国小游戏"
+                                            url:[NSURL URLWithString:@"http://www.un.org/sustainabledevelopment/zh/oceans/"]
+                                          title:shareText
                                            type:SSDKContentTypeAuto];
         [shareParams SSDKEnableUseClientShare];
         
