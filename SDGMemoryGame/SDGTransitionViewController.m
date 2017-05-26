@@ -72,8 +72,8 @@
 - (void)setUI {
     
     // 返回按钮
-    _homeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_homeButton setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    _homeButton = [SDGButton sdg_buttonWithName:@"back"];
+    [_homeButton.layer addAnimation:[SDGAnimation animationScale] forKey:@"animationScaleHome"];
     [_homeButton addTarget:self action:@selector(home) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_homeButton];
     

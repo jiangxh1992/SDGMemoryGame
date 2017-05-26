@@ -16,7 +16,7 @@
     button.layer.masksToBounds = YES;
     
     button.layer.shadowOffset = CGSizeMake(0, 0);
-    button.layer.shadowColor = [UIColor blackColor].CGColor;
+    button.layer.shadowColor = [UIColor grayColor].CGColor;
     button.layer.shadowOpacity = 1.0;
     
     return button;
