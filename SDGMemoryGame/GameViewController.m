@@ -209,30 +209,25 @@
 /**
  * 按钮点击事件
  */
-- (void) cardSelected:(UIButton *)sender {
+- (void) cardSelected:(SDGButton *)sender {
+    // 禁止重复点击以及点击三张以上卡片
     if (sender.isSelected || _cardStack.count >= 3) return;
-    // 显示卡片
-    [self openCard:sender];
-}
-
-/**
- * 翻开卡片
- */
-- (void)openCard: (SDGButton *)sender {
+    
+    // 翻开卡片
     [SDGSoundPlayer playSoundEffect:SDGSoundEffectIDOpenCard];
     sender.selected = YES;
-    
-    if (_cardStack.count == 2) {
-        // 关闭前两张
-        UIButton *card1 = [_cardStack objectAtIndex:0];
-        [self closeCard:card1];
-        UIButton *card2 = [_cardStack objectAtIndex:1];
-        [self closeCard:card2];
-        [_cardStack removeAllObjects];
-    }
     // 入栈
     [_cardStack addObject:sender];
+    
+    SDGButton *card1, *card2;
+    if(_cardStack.count >=2) {
+        card1 = [_cardStack objectAtIndex:0];
+        card2 = [_cardStack objectAtIndex:1];
+    }
+    
+    // 翻开动画
     dispatch_async(_animationQueue, ^{
+        bool isTwoCard = (_cardStack.count == 2);
         // 1. 翻转90度
         dispatch_sync(dispatch_get_main_queue(), ^{
             [sender.layer addAnimation:[SDGAnimation animationFlip] forKey:@"animationRotate"];
@@ -245,61 +240,58 @@
         });
         [NSThread sleepForTimeInterval:AniDuration];
         
-        if([self countResultAfterSender:sender]) return;
+        if (isTwoCard) {
+            _matchCount++; // 匹配次数
+            if ([self isMatchedCard1:card1 card2:card2]) {
+                // 当前两张匹配成功
+                _matchedCount++;
+                // 移除匹配成功的两张卡片
+                [self removeCard1:card1 card2:card2];
+                // 判断游戏结束
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                    if (_matchedCount * 2 == _sizeRow * _sizeCol) [self gameOver];
+                });
+            }else{
+                // 延时关闭显示的两张卡片
+                card1.isDelaying = YES;
+                card2.isDelaying = YES;
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_delayDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    if (card2.selected && card1.selected) {
+                        if (card1.isDelaying) {
+                            [self closeCard:card1];
+                        }
+                        if (card2.isDelaying) {
+                            [self closeCard:card2];
+                            
+                        }
+                    }
+                });
+            }
+        }
+
     });
+    
+    if (_cardStack.count == 3) {
+        if(![self isMatchedCard1:card1 card2:card2]) {
+            // 关闭前两张
+            [self closeCard:card1];
+            [self closeCard:card2];
+        }
+    }
+    
 }
 
 /**
  * 判断
  */
-- (bool)countResultAfterSender:(SDGButton *)sender {
-    // 匹配次数
-    _matchCount++;
-    if (_cardStack.count < 2) return NO;
+- (bool)isMatchedCard1:(SDGButton *)card1 card2:(SDGButton*)card2 {
     // 判断是否匹配成功
-    SDGButton *lastButton = [_cardStack objectAtIndex:0];
-    if (lastButton == sender) return NO;
-    SDGImage *lastImage = [_imageArray objectAtIndex:lastButton.tag];
-    SDGImage *currentImage = [_imageArray objectAtIndex:sender.tag];
+    SDGImage *lastImage = [_imageArray objectAtIndex:card1.tag];
+    SDGImage *currentImage = [_imageArray objectAtIndex:card2.tag];
     if ([lastImage.card_id isEqualToString:currentImage.card_id]) {
-        // 匹配成功次数
-        _matchedCount++;
-        // 隐藏匹配成功的卡片按钮
-        [_cardStack removeObject:sender];
-        [_cardStack removeObject:lastButton];
-        lastButton.userInteractionEnabled = NO;
-        sender.userInteractionEnabled = NO;
-        // 移除动画
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [lastButton.layer addAnimation:[SDGAnimation animationFade] forKey:@"animationFade"];
-            [sender.layer addAnimation:[SDGAnimation animationFade] forKey:@"animationFade"];
-        });
-        // 匹配成功音效
-        [SDGSoundPlayer playSoundEffect:SDGSoundEffectIDCloseCard];
-#warning 之类临时播放关闭音效，应该是匹配成功音效
-        // 判断游戏结束
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            if (_matchedCount * 2 == _sizeRow * _sizeCol) [self gameOver];
-        });
         return YES;
     }
     else {
-        // 延时关闭显示的两张卡片
-        lastButton.isDelaying = YES;
-        sender.isDelaying = YES;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(_delayDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            if (sender.selected && lastButton.selected) {
-                if (lastButton.isDelaying) {
-                    [self closeCard:lastButton];
-                    [_cardStack removeObject:lastButton];
-                }
-                if (sender.isDelaying) {
-                    [self closeCard:sender];
-                    [_cardStack removeObject:sender];
-
-                }
-            }
-        });
         return NO;
     }
 }
@@ -308,10 +300,12 @@
  * 关闭卡片
  */
 - (void)closeCard:(SDGButton *)sender {
+    [_cardStack removeObject:sender];
     if (!sender.selected) return;
     sender.isDelaying = NO;
     [SDGSoundPlayer playSoundEffect:SDGSoundEffectIDCloseCard];
     sender.selected = NO;
+    
     dispatch_async(_animationQueue, ^{
         // 1. 翻转90度
         dispatch_sync(dispatch_get_main_queue(), ^{
@@ -322,6 +316,24 @@
         dispatch_sync(dispatch_get_main_queue(), ^{
             [sender setBackgroundImage:[UIImage imageNamed:@"card_back_normal"] forState:UIControlStateNormal];
         });
+    });
+}
+
+/**
+ * 匹配成功移除两张卡片
+ */
+- (void)removeCard1:(SDGButton *)card1 card2:(SDGButton*)card2{
+    [_cardStack removeObject:card1];
+    [_cardStack removeObject:card2];
+    // 匹配成功音效
+    [SDGSoundPlayer playSoundEffect:SDGSoundEffectIDCloseCard];
+    // 隐藏匹配成功的卡片按钮
+    card1.userInteractionEnabled = NO;
+    card2.userInteractionEnabled = NO;
+    // 移除动画
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [card1.layer addAnimation:[SDGAnimation animationFade] forKey:@"animationFade"];
+        [card2.layer addAnimation:[SDGAnimation animationFade] forKey:@"animationFade"];
     });
 }
 
