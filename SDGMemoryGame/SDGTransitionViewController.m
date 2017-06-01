@@ -34,7 +34,7 @@
     [super viewDidLoad];
     [self setUI];
     
-    if (_round >= maxRound) {
+    if (_GameState == SDGGameSateSuccess) {
         [self newRecord];
     }
 }
@@ -45,15 +45,16 @@
     // 返回按钮
     _homeButton.frame = CGRectMake(15, SDGTopBarHeight, SDGTopBarHeight, SDGTopBarHeight / 1.5);
     int labelHeight = width / 5;
-    //
-    _timeUsedLabel.frame = CGRectMake(0, 0, SDGScreenWidth, labelHeight);
-    _timeUsedLabel.center = CGPointMake(SDGScreenWidth / 2, SDGScreenHeight / 2 - labelHeight * 3 / 2);
-    [_timeUsedLabel adjustFontSizeToFillItsSize];
-    //
+    
+    // 游戏状态
     _rightRateLabel.frame = CGRectMake(0, 0, SDGScreenWidth, labelHeight);
-    _rightRateLabel.center = CGPointMake(SDGScreenWidth / 2, SDGScreenHeight / 2 - labelHeight / 2);
+    _rightRateLabel.center = CGPointMake(SDGScreenWidth / 2, SDGScreenHeight / 2 - labelHeight * 3 / 2);
     [_rightRateLabel adjustFontSizeToFillItsSize];
-    //
+    // 已用时间
+    _timeUsedLabel.frame = CGRectMake(0, 0, SDGScreenWidth, labelHeight);
+    _timeUsedLabel.center = CGPointMake(SDGScreenWidth / 2, SDGScreenHeight / 2 - labelHeight / 2);
+    [_timeUsedLabel adjustFontSizeToFillItsSize];
+    // 分数
     _scoreLabel.frame = CGRectMake(0, 0, SDGScreenWidth, labelHeight);
     _scoreLabel.center = CGPointMake(SDGScreenWidth / 2, SDGScreenHeight / 2 + labelHeight / 2);
     [_scoreLabel adjustFontSizeToFillItsSize];
@@ -75,28 +76,42 @@
     _homeButton = [SDGButton sdg_buttonWithName:@"back"];
     [_homeButton.layer addAnimation:[SDGAnimation animationScale] forKey:@"animationScaleHome"];
     [_homeButton addTarget:self action:@selector(home) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_homeButton];
+    if (_GameState == SDGGameSateNextRound) {
+        [self.view addSubview:_homeButton];
+    }
     
-    // 已用时间
-    _timeUsedLabel = [[UILabel alloc] init];
-    _timeUsedLabel.text = [NSString stringWithFormat:@"TIME USED: %d min %ds", _timeUsed / 60, _timeUsed % 60];
-    _timeUsedLabel.font = SDGFont;
-    _timeUsedLabel.textColor = SDGThemeColor;
-    _timeUsedLabel.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:_timeUsedLabel];
-    
-    // 正确率
+    // 游戏状态
     _rightRateLabel = [[UILabel alloc] init];
-    int rate = _rightCount >= _matchCount ? 100 : _rightCount*100 / _matchCount;
-    _rightRateLabel.text = [NSString stringWithFormat:@"ACCURATE RATE: %d%%", rate];
+    //int rate = _rightCount >= _matchCount ? 100 : _rightCount*100 / _matchCount;
+    switch (_GameState) {
+        case SDGGameSateNextRound:
+            _rightRateLabel.text = @"ROUND PASSED! ^_^";
+            break;
+        case SDGGameSateSuccess:
+            _rightRateLabel.text = @"SUCCESS! ^_^";
+            break;
+        case SDGGameSateFailure:
+            _rightRateLabel.text = @"FAILURE! +_+";
+            break;
+        default:
+            break;
+    }
     _rightRateLabel.font = SDGFont;
     _rightRateLabel.textColor = SDGThemeColor;
     _rightRateLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:_rightRateLabel];
     
+    // 已用时间
+    _timeUsedLabel = [[UILabel alloc] init];
+    _timeUsedLabel.text = [NSString stringWithFormat:@"TIME USED: %ds", _timeUsed];
+    _timeUsedLabel.font = SDGFont;
+    _timeUsedLabel.textColor = SDGThemeColor;
+    _timeUsedLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:_timeUsedLabel];
+    
     // 积分
     _scoreLabel = [[UILabel alloc] init];
-    _scoreLabel.text = [NSString stringWithFormat:@"SCORE: %d", _score];
+    _scoreLabel.text = [NSString stringWithFormat:@"SCORE: %d(+%d)", _score,_curScore];
     _scoreLabel.font = SDGFont;
     _scoreLabel.textColor = SDGThemeColor;
     _scoreLabel.textAlignment = NSTextAlignmentCenter;
@@ -104,7 +119,7 @@
     
     // 下一关按钮
     _nextButton = [[UIButton alloc] init];
-    NSString *text = _round >= maxRound ? @"HOME >" : @"NEXT ROUND >";
+    NSString *text = (_GameState == SDGGameSateNextRound) ? @"NEXT ROUND >" : @"HOME >";
     [_nextButton setTitle:text forState:UIControlStateNormal];
     [_nextButton setTitleColor:SDGThemeColor forState:UIControlStateNormal];
     _nextButton.titleLabel.font = SDGFont;
@@ -118,23 +133,24 @@
     _shareButton.layer.cornerRadius = 0;
     [_shareButton addTarget:self action:@selector(share) forControlEvents:UIControlEventTouchUpInside];
     [_shareButton.layer addAnimation:[SDGAnimation animationScale] forKey:@"animationScaleShare"];
-    if (_round >= maxRound) {
+    if (_GameState == SDGGameSateSuccess) {
         [self.view addSubview:_shareButton];
     }
 }
 
 - (void)nextGame {
     // 关底
-    if (_round >= maxRound) {
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }
-    else {
+    if (_GameState == SDGGameSateNextRound) {
         GameViewController *nextGame = [[GameViewController alloc] init];
         nextGame.GameLevel = _GameLevel;
         nextGame.round = _round + 1;
         nextGame.score = _score;
         [self.navigationController pushViewController:nextGame animated:YES];
+        return;
     }
+    
+    // 返回主菜单
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)home {

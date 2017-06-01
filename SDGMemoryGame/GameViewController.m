@@ -38,8 +38,11 @@
 @property (nonatomic, assign)int secTimer;                    // 已用的秒数
 @property (nonatomic, assign)int matchCount;                  // 匹配总数统计
 @property (nonatomic, assign)int matchedCount;                // 匹配成功计数(用于判断游戏结束)
+@property (nonatomic, assign)int limitTime;                   // 时间限制
 
 @property (nonatomic, strong)dispatch_queue_t animationQueue; // 异步动画队列
+
+@property (nonatomic, assign)BOOL isGameOver;                 // 游戏是否结束
 
 
 @end
@@ -99,22 +102,25 @@
             _textContent = [NSString stringWithFormat:@"Easy: R%i", _round];
             _sizeRow = 3;
             _sizeCol = 4;
+            _limitTime = limitTimeEasy - _round;
             break;
         case SDGGameLevelMedium:
             _textContent = [NSString stringWithFormat:@"Middle: R%i", _round];
             _sizeRow = 4;
             _sizeCol = 5;
+            _limitTime = limitTimeMedium - _round;
             break;
         case SDGGameLevelDifficult:
             _textContent = [NSString stringWithFormat:@"Hard: R%i", _round];
             _sizeRow = 5;
             _sizeCol = 6;
+            _limitTime = limitTimeHard - _round;
             break;
         default:
             break;
     }
     
-    // 2. 根据关卡调整难度，卡片停顿的时间
+    // 2. 根据关卡调整难度，卡片停顿的时间以及限制时间
     _delayDuration = (maxDelay - _round) / 3;
 
     // 3.变量初始化
@@ -127,6 +133,7 @@
     _animationQueue = dispatch_queue_create("animation.memorygame.sdg", DISPATCH_QUEUE_CONCURRENT);
     _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(update) userInfo:nil repeats:YES];
     _isTimer = YES;
+    _isGameOver = NO;
     
     // 4. 产生随机图片
     for (int i = 0; i <  _sizeRow * _sizeCol; i += 2) {
@@ -179,7 +186,7 @@
     [_roundView addSubview:_roundLabel];
     // 2.3计时标签
     _timerItem = [[UILabel alloc] init];
-    _timerItem.text = @"00:00";
+    _timerItem.text = @"";
     _timerItem.textAlignment = NSTextAlignmentRight;
     _timerItem.textColor = SDGThemeColor;
     _timerItem.font = SDGFont;
@@ -249,7 +256,10 @@
                 [self removeCard1:card1 card2:card2];
                 // 判断游戏结束
                 dispatch_sync(dispatch_get_main_queue(), ^{
-                    if (_matchedCount * 2 == _sizeRow * _sizeCol) [self gameOver];
+                    if (_matchedCount * 2 == _sizeRow * _sizeCol) {
+                        SDGGameSate state = _round >= maxRound ? SDGGameSateSuccess : SDGGameSateNextRound;
+                        [self gameOver:state];
+                    };
                 });
             }else{
                 // 延时关闭显示的两张卡片
@@ -340,8 +350,12 @@
 /**
  * 游戏结束
  */
-- (void)gameOver {
-    [NSThread sleepForTimeInterval:1.0];
+- (void)gameOver:(SDGGameSate)gameState {
+    _isTimer = NO;
+    [_timer invalidate];
+    _timer = nil;
+    [NSThread sleepForTimeInterval:0.5];
+    
     // 关闭背景音乐
     [SDGSoundPlayer stopBackGroundMusic];
     // 积分刷新
@@ -360,12 +374,14 @@
     [NSThread sleepForTimeInterval:1.0];
     // 跳转到过度界面
     SDGTransitionViewController *transVC = [[SDGTransitionViewController alloc] init];
+    transVC.GameState = gameState;
     transVC.GameLevel = _GameLevel;
     transVC.round = _round;
     transVC.matchCount = _matchCount - _sizeRow * _sizeCol;
     transVC.rightCount = _matchedCount;
     transVC.timeUsed = _secTimer;
     transVC.score = _score;
+    transVC.curScore = curScore;
     [self.navigationController pushViewController:transVC animated:YES];
 }
 
@@ -384,9 +400,12 @@
 - (void)update {
     if (!_isTimer) return;
     _secTimer ++;
-    int seconds = _secTimer % 60;
-    int mins = _secTimer / 60;
-    _timerItem.text = [NSString stringWithFormat:@"%2d:%2d",mins,seconds];
+    _timerItem.text = [NSString stringWithFormat:@"%2d",_limitTime - _secTimer];
+    
+    // 游戏失败
+    if(_isTimer && _secTimer >= _limitTime) {
+        [self gameOver:SDGGameSateFailure];
+    }
 }
 
 #pragma mark- AlertView Delegate

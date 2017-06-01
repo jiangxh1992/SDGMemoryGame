@@ -28,4 +28,11 @@ typedef NS_ENUM(NSUInteger, SDGGameAlertViewTag) {
     SDGAlertViewTagGame
 };
 
+// 游戏状态
+typedef NS_ENUM(NSUInteger, SDGGameSate) {
+    SDGGameSateNextRound,
+    SDGGameSateFailure,
+    SDGGameSateSuccess
+};
+
 #endif /* SDGEnum_h */
