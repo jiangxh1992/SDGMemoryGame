@@ -103,12 +103,12 @@
         case SDGGameLevelMedium:
             _textContent = [NSString stringWithFormat:@"Middle: R%i", _round];
             _sizeRow = 4;
-            _sizeCol = 4;
+            _sizeCol = 5;
             break;
         case SDGGameLevelDifficult:
             _textContent = [NSString stringWithFormat:@"Hard: R%i", _round];
-            _sizeRow = 4;
-            _sizeCol = 5;
+            _sizeRow = 5;
+            _sizeCol = 6;
             break;
         default:
             break;
