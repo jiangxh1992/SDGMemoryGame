@@ -36,8 +36,7 @@
     }
     
     // 返回按钮
-    _homeButton = [SDGButton sdg_buttonWithName:@"back"];
-    [_homeButton.layer addAnimation:[SDGAnimation animationScale] forKey:@"animationScaleback"];
+    _homeButton = [SDGButton sdg_buttonWithPngName:@"back" animation:YES];
     [_homeButton addTarget:self action:@selector(home) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_homeButton];
 }
@@ -49,7 +48,8 @@
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     // 返回按钮
-    _homeButton.frame = CGRectMake(15, SDGTopBarHeight / 2, SDGTopBarHeight, SDGTopBarHeight / 1.5);
+    _homeButton.frame = CGRectMake(25, SDGTopBarHeight, SDGTopBarHeight, SDGTopBarHeight / 1.5);
+    [_homeButton sizeToFit];
 }
 
 /**

@@ -73,6 +73,7 @@
     
     // 返回按钮
     _homeButton.frame = CGRectMake(15, barHeight, barHeight, barHeight / 1.5);
+    [_homeButton sizeToFit];
     // 指示视图
     _roundView.frame = CGRectMake(gap_width, barHeight + gap_height - btn_width/2, SDGScreenWidth - 2 * gap_width, gap_height);
     _roundImage.frame = CGRectMake(0, 0, btn_height / 2, btn_width / 2);
@@ -136,13 +137,16 @@
     _isGameOver = NO;
     
     // 4. 产生随机图片
+    int randomStart = arc4random() % maxCardNumber;
     for (int i = 0; i <  _sizeRow * _sizeCol; i += 2) {
+        int card_id = (randomStart + i/2) % maxCardNumber + 1;
+        NSLog(@"card_id:%i",card_id);
         SDGImage *image1 = [[SDGImage alloc] init];
-        image1.image = [UIImage imageNamed:[NSString stringWithFormat:@"card_%i", i/2 + 1]];
+        image1.image = [UIImage imageNamed:[NSString stringWithFormat:@"card_%i", card_id]];
         image1.card_id = [NSString stringWithFormat:@"card_id_%i",i];
         
         SDGImage *image2 = [[SDGImage alloc] init];
-        image2.image = [UIImage imageNamed:[NSString stringWithFormat:@"card_%i", i/2 + 1]];
+        image2.image = [UIImage imageNamed:[NSString stringWithFormat:@"card_%i", card_id]];
         image2.card_id = [NSString stringWithFormat:@"card_id_%i",i];
         
         [_imageArray addObject:image1];
@@ -163,11 +167,8 @@
 }
 
 - (void)initUI {
-    // 0. 背景图片
-    
     // 1. 返回按钮
-    _homeButton = [SDGButton sdg_buttonWithName:@"back"];
-    [_homeButton.layer addAnimation:[SDGAnimation animationScale] forKey:@"animationScaleHome"];
+    _homeButton = [SDGButton sdg_buttonWithText:@"< GIVE UP +_+" animation:YES];
     [_homeButton addTarget:self action:@selector(home) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_homeButton];
     
@@ -181,7 +182,7 @@
     // 2.2关卡
     _roundLabel = [[UILabel alloc] init];
     _roundLabel.text = _textContent;
-    _roundLabel.textColor = SDGRGBColor(71, 123, 186);
+    _roundLabel.textColor = SDGThemeColor;
     _roundLabel.font = SDGFont;
     [_roundView addSubview:_roundLabel];
     // 2.3计时标签
@@ -203,7 +204,7 @@
     // card size
     for (int i = 0; i < _sizeRow; i++) {
         for (int j = 0; j < _sizeCol; j++) {
-            SDGButton *card = [SDGButton sdg_buttonWithBackGround:@"card_back_normal"];
+            SDGButton *card = [SDGButton sdg_buttonWithCardBgName:@"card_back_normal" animation:NO];
             card.isDelaying = NO;
             [card addTarget:self action:@selector(cardSelected:) forControlEvents:UIControlEventTouchUpInside];
             card.tag = i * _sizeCol + j;
@@ -246,6 +247,9 @@
             [sender setBackgroundImage:sdgImage.image forState:UIControlStateNormal];
         });
         [NSThread sleepForTimeInterval:AniDuration];
+        
+        // 游戏结束
+        if (!_isTimer) return;
         
         if (isTwoCard) {
             _matchCount++; // 匹配次数
@@ -390,8 +394,9 @@
  */
 - (void)home {
     _isTimer = NO;
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"GIVE UP" message:@"Are you sure you want to give up the game？" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Confirm", nil];
-    [alert show];
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"GIVE UP" message:@"Are you sure you want to give up the game？" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Confirm", nil];
+//    [alert show];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 /**

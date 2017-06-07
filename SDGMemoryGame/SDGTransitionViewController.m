@@ -44,6 +44,7 @@
     float width = SDGScreenWidth < SDGScreenHeight ? SDGScreenWidth : SDGScreenHeight;
     // 返回按钮
     _homeButton.frame = CGRectMake(15, SDGTopBarHeight, SDGTopBarHeight, SDGTopBarHeight / 1.5);
+    [_homeButton sizeToFit];
     int labelHeight = width / 5;
     
     // 游戏状态
@@ -73,11 +74,10 @@
 - (void)setUI {
     
     // 返回按钮
-    _homeButton = [SDGButton sdg_buttonWithName:@"back"];
-    [_homeButton.layer addAnimation:[SDGAnimation animationScale] forKey:@"animationScaleHome"];
+    _homeButton = [SDGButton sdg_buttonWithText:@"< GIVE UP +_+" animation:YES];
     [_homeButton addTarget:self action:@selector(home) forControlEvents:UIControlEventTouchUpInside];
     if (_GameState == SDGGameSateNextRound) {
-        [self.view addSubview:_homeButton];
+        //[self.view addSubview:_homeButton];
     }
     
     // 游戏状态
@@ -91,7 +91,7 @@
             _rightRateLabel.text = @"SUCCESS! ^_^";
             break;
         case SDGGameSateFailure:
-            _rightRateLabel.text = @"FAILURE! +_+";
+            _rightRateLabel.text = @"FAILURE! π_π";
             break;
         default:
             break;
@@ -118,21 +118,16 @@
     [self.view addSubview:_scoreLabel];
     
     // 下一关按钮
-    _nextButton = [[UIButton alloc] init];
     NSString *text = (_GameState == SDGGameSateNextRound) ? @"NEXT ROUND >" : @"HOME >";
-    [_nextButton setTitle:text forState:UIControlStateNormal];
-    [_nextButton setTitleColor:SDGThemeColor forState:UIControlStateNormal];
-    _nextButton.titleLabel.font = SDGFont;
+    _nextButton = [SDGButton sdg_buttonWithText:text animation:YES];
     [_nextButton addTarget:self action:@selector(nextGame) forControlEvents:UIControlEventTouchUpInside];
-    [_nextButton.layer addAnimation:[SDGAnimation animationScale] forKey:@"animationScalenext"];
     [self.view addSubview:_nextButton];
     
     // 分享按钮
-    _shareButton = [SDGButton sdg_buttonWithName:@"share"];
+    _shareButton = [SDGButton sdg_buttonWithPngName:@"share" animation:YES];
     _shareButton.layer.opacity = 0.8;
     _shareButton.layer.cornerRadius = 0;
     [_shareButton addTarget:self action:@selector(share) forControlEvents:UIControlEventTouchUpInside];
-    [_shareButton.layer addAnimation:[SDGAnimation animationScale] forKey:@"animationScaleShare"];
     if (_GameState == SDGGameSateSuccess) {
         [self.view addSubview:_shareButton];
     }
@@ -154,9 +149,10 @@
 }
 
 - (void)home {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"GIVE UP" message:@"Are you sure you want to give up？" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Confirm", nil];
-    alert.tag = SDGAlertViewTagBack;
-    [alert show];
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"GIVE UP" message:@"Are you sure you want to give up？" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Confirm", nil];
+//    alert.tag = SDGAlertViewTagBack;
+//    [alert show];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 /**

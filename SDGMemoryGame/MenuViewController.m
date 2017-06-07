@@ -64,18 +64,18 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     // 按钮
-    _easyButton = [SDGButton sdg_buttonWithName:@"btn_easy"];
+    _easyButton = [SDGButton sdg_buttonWithPngName:@"btn_easy" animation:NO];
     [_easyButton setTag:SDGGameLevelEasy];
-    _mediumButton = [SDGButton sdg_buttonWithName:@"btn_medium"];
+    _mediumButton = [SDGButton sdg_buttonWithPngName:@"btn_medium" animation:NO];
     [_mediumButton setTag:SDGGameLevelMedium];
-    _difficultButton = [SDGButton sdg_buttonWithName:@"btn_difficult"];
+    _difficultButton = [SDGButton sdg_buttonWithPngName:@"btn_difficult" animation:NO];
     [_difficultButton setTag:SDGGameLevelDifficult];
     
-    _easyRankButton = [SDGButton sdg_buttonWithName:@"btn_rank"];
+    _easyRankButton = [SDGButton sdg_buttonWithPngName:@"btn_rank" animation:YES];
     [_easyRankButton setTag:SDGGameLevelEasy];
-    _mediumRankButton = [SDGButton sdg_buttonWithName:@"btn_rank"];
+    _mediumRankButton = [SDGButton sdg_buttonWithPngName:@"btn_rank" animation:YES];
     [_mediumRankButton setTag:SDGGameLevelMedium];
-    _difficultRankButton = [SDGButton sdg_buttonWithName:@"btn_rank"];
+    _difficultRankButton = [SDGButton sdg_buttonWithPngName:@"btn_rank" animation:YES];
     [_difficultRankButton setTag:SDGGameLevelDifficult];
     
     // 添加按钮
@@ -93,10 +93,6 @@
     [_easyRankButton addTarget:self action:@selector(enterRanking:) forControlEvents:UIControlEventTouchUpInside];
     [_mediumRankButton addTarget:self action:@selector(enterRanking:) forControlEvents:UIControlEventTouchUpInside];
     [_difficultRankButton addTarget:self action:@selector(enterRanking:) forControlEvents:UIControlEventTouchUpInside];
-    // 按钮动画
-    [_easyRankButton.layer addAnimation:[SDGAnimation animationScale] forKey:@"animationScale1"];
-    [_mediumRankButton.layer addAnimation:[SDGAnimation animationScale] forKey:@"animationScale2"];
-    [_difficultRankButton.layer addAnimation:[SDGAnimation animationScale] forKey:@"animationScale3"];
 }
 
 /**

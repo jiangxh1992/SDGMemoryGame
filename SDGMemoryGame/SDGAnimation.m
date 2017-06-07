@@ -64,7 +64,7 @@
  * 按钮缩放动画
  */
 - (CAAnimation *)animationScale {
-    CATransform3D scaleTransform = CATransform3DMakeScale(1.2, 1.2, 1);
+    CATransform3D scaleTransform = CATransform3DMakeScale(1.1, 1.1, 1);
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform"];
     animation.toValue = [NSValue valueWithCATransform3D:scaleTransform];
     animation.duration = AniDuration *2;

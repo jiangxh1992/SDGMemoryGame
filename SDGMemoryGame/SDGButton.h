@@ -12,9 +12,15 @@
 
 @property(nonatomic, assign) BOOL isDelaying;
 
-+ (SDGButton *)sdg_button;
-+ (SDGButton *)sdg_buttonWithName:(NSString *)name;
-+ (SDGButton *)sdg_buttonWithTitle:(NSString *)title;
-+ (SDGButton *)sdg_buttonWithFrame:(CGRect)frame;
-+ (SDGButton *)sdg_buttonWithBackGround: (NSString *)name;
+// 基础带阴影圆角按钮
++ (SDGButton *)sdg_button:(BOOL)animation;
+
+// 带背景图片的矩形按钮
++ (SDGButton *)sdg_buttonWithPngName:(NSString *)name animation:(BOOL)animation;
+// 带主题背景色的文字按钮
++ (SDGButton *)sdg_buttonColorBgWithTitle:(NSString *)title animation:(BOOL)animation;
+// 游戏卡片按钮
++ (SDGButton *)sdg_buttonWithCardBgName: (NSString *)name animation:(BOOL)animation;
+// 纯文字按钮
++ (SDGButton *)sdg_buttonWithText:(NSString *)text animation:(BOOL)animation;
 @end

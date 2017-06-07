@@ -24,10 +24,11 @@
 #define SDGTopBarHeight 50
 #define maxRound 9      // 每种难度最大关卡数
 #define AniDuration 0.2 // 翻转动画持续时间
+#define maxCardNumber 17
 
 #define limitTimeEasy 30
 #define limitTimeMedium 50
-#define limitTimeHard 80
+#define limitTimeHard 90
 
 // 社交分享预览图片地址
 #define SDGSharePicUrl @"http://www.un.org/sustainabledevelopment/zh/wp-content/uploads/sites/6/2016/05/C-Sustainable-Development-Goals-1.jpg"
