@@ -19,7 +19,7 @@
     // 按钮阴影
     button.layer.shadowOffset = CGSizeMake(0, 0);
     button.layer.shadowColor = [UIColor grayColor].CGColor;
-    button.layer.shadowOpacity = 1.0;
+    button.layer.shadowOpacity = 0.8;
     
     if (animation) {
         // 按钮动画

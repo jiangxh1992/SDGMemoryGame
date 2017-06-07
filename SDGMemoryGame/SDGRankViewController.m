@@ -36,7 +36,7 @@
     }
     
     // 返回按钮
-    _homeButton = [SDGButton sdg_buttonWithPngName:@"back" animation:YES];
+    _homeButton = [SDGButton sdg_buttonWithText:@"< BACK" animation:YES];
     [_homeButton addTarget:self action:@selector(home) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_homeButton];
 }

@@ -75,13 +75,13 @@
     _homeButton.frame = CGRectMake(15, barHeight, barHeight, barHeight / 1.5);
     [_homeButton sizeToFit];
     // 指示视图
-    _roundView.frame = CGRectMake(gap_width, barHeight + gap_height - btn_width/2, SDGScreenWidth - 2 * gap_width, gap_height);
+    _roundView.frame = CGRectMake(gap_width, barHeight + gap_height - btn_width * 2 /3, SDGScreenWidth - 2 * gap_width, gap_height);
     _roundImage.frame = CGRectMake(0, 0, btn_height / 2, btn_width / 2);
     // 关卡
-    _roundLabel.frame = CGRectMake(_roundImage.frame.size.width + 5, 0, btn_width * 1.5, btn_height / 2);
+    _roundLabel.frame = CGRectMake(_roundImage.frame.size.width + 5, 0, btn_width * 1.5, btn_height * 2 / 3);
     [_roundLabel adjustFontSizeToFillItsSize];
     // 计时器
-    _timerItem.frame = CGRectMake(_roundView.frame.size.width / 2, 0, btn_width * 2, btn_height / 2);
+    _timerItem.frame = CGRectMake(_roundView.frame.size.width - btn_width * 1.5, 0, btn_width, btn_height * 2 / 3);
     [_timerItem adjustFontSizeToFillItsSize];
 
     // 卡片尺寸位置
@@ -396,6 +396,7 @@
     _isTimer = NO;
 //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"GIVE UP" message:@"Are you sure you want to give up the game？" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Confirm", nil];
 //    [alert show];
+    [SDGSoundPlayer stopBackGroundMusic];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
@@ -404,8 +405,8 @@
  */
 - (void)update {
     if (!_isTimer) return;
-    _secTimer ++;
     _timerItem.text = [NSString stringWithFormat:@"%2d",_limitTime - _secTimer];
+    _secTimer ++;
     
     // 游戏失败
     if(_isTimer && _secTimer >= _limitTime) {
